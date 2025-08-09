@@ -289,7 +289,7 @@ Veuillez entrer le code d'authentification :`);
         // Accès direct au dashboard (déjà authentifié)
         console.log('🔐 Accès dashboard (authentifié)');
         
-        const dashboardUrl = 'http://localhost:8081/admin/pwa-dashboard/';
+        const dashboardUrl = '../admin/pwa-dashboard/index.html';
         const newWindow = window.open(dashboardUrl, '_blank', 'width=1400,height=900');
         
         if (!newWindow) {
@@ -304,7 +304,7 @@ Veuillez entrer le code d'authentification :`);
         // Ouvrir formulaire d'inscription CYNTHIA_ASSISTANT
         console.log('🏠 Ouverture formulaire vente résidentielle');
         
-        const inscriptionUrl = 'http://localhost:8080';
+        const inscriptionUrl = '../../assistant/index.html';
         const newWindow = window.open(inscriptionUrl, '_blank', 'width=1200,height=800');
         
         if (!newWindow) {

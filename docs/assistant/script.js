@@ -751,8 +751,8 @@ function toggleAdminMode() {
 }
 
 function openDashboard() {
-    // Tenter d'ouvrir le dashboard WEBAPP
-    const dashboardUrl = 'http://localhost:8081/admin/pwa-dashboard/';
+    // Ouvrir le dashboard WEBAPP via GitHub Pages
+    const dashboardUrl = '../webapp/admin/pwa-dashboard/index.html';
     const newWindow = window.open(dashboardUrl, '_blank');
     
     if (!newWindow) {
@@ -764,8 +764,8 @@ function openDashboard() {
 }
 
 function openWebapp() {
-    // Ouvrir le portail web WEBAPP
-    const webappUrl = 'http://localhost:8081/portal/';
+    // Ouvrir le portail web WEBAPP via GitHub Pages
+    const webappUrl = '../webapp/portal/index.html';
     const newWindow = window.open(webappUrl, '_blank');
     
     if (!newWindow) {
