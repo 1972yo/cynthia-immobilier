@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Cynthia Bernier - Espace de Travail</title>
+    <meta name="description" content="Dashboard professionnel de Cynthia Bernier, courtière immobilière résidentielle à Lebel-sur-Quévillon">
+    
+    <link rel="stylesheet" href="dashboard.css">
+    
+    <!-- PWA Meta -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#D00">
+    <link rel="apple-touch-icon" href="../../assets/images/icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+</head>
+<body class="dashboard-page">
+    
+    <!-- Header Dashboard -->
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="cynthia-info">
+                    <div class="cynthia-details">
+                        <h1>📊 Dashboard Cynthia Bernier</h1>
+                        <p>Espace de travail professionnel - Lebel-sur-Quévillon</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button onclick="refreshDashboard()" class="btn-refresh">🔄 Actualiser</button>
+                    <button onclick="openPortal()" class="btn-portal">🌐 Retour Portail</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <main class="dashboard-content" id="dashboardContent">
+        <div class="container">
+            
+            <!-- Stats rapides -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📋</div>
+                    <div class="stat-info">
+                        <h3 id="totalForms">0</h3>
+                        <p>Formulaires reçus</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏠</div>
+                    <div class="stat-info">
+                        <h3 id="totalVentes">0</h3>
+                        <p>Inscriptions vente</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🔍</div>
+                    <div class="stat-info">
+                        <h3 id="totalAchats">0</h3>
+                        <p>Demandes achat</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-info">
+                        <h3 id="totalEvaluations">0</h3>
+                        <p>Évaluations demandées</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions rapides -->
+            <div class="card actions-card">
+                <h2>⚡ Actions rapides</h2>
+                <div class="actions-grid">
+                    <button onclick="openEmailIA()" class="action-btn action-btn-featured">
+                        <div class="action-icon">🤖</div>
+                        <h4>Gestion Emails & IA</h4>
+                        <p>Assistant intelligent pour emails</p>
+                    </button>
+                    <button onclick="openMarketingIA()" class="action-btn action-btn-featured-marketing">
+                        <div class="action-icon">🌐</div>
+                        <h4>IA Marketing & Publication</h4>
+                        <p>Site web, fiches, réseaux sociaux</p>
+                    </button>
+                    <button onclick="openFormulaire()" class="action-btn">
+                        <div class="action-icon">📝</div>
+                        <h4>Nouveau formulaire</h4>
+                        <p>Ouvrir CYNTHIA_ASSISTANT</p>
+                    </button>
+                    <button onclick="openCentris()" class="action-btn">
+                        <div class="action-icon">🔗</div>
+                        <h4>Centris.ca</h4>
+                        <p>Accéder à la plateforme</p>
+                    </button>
+                    <button onclick="exportData()" class="action-btn">
+                        <div class="action-icon">📤</div>
+                        <h4>Exporter données</h4>
+                        <p>Télécharger les fiches</p>
+                    </button>
+                    <button onclick="manageClients()" class="action-btn">
+                        <div class="action-icon">👥</div>
+                        <h4>Gestion clients</h4>
+                        <p>Voir tous les contacts</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Contrôles système ON/OFF -->
+            <div class="card system-controls-card">
+                <h2>⚙️ Contrôles système</h2>
+                <div class="controls-grid">
+                    <div class="control-item">
+                        <div class="control-info">
+                            <h4>🤖 Assistant IA</h4>
+                            <p>Suggestions automatiques d'emails</p>
+                        </div>
+                        <div class="control-switch">
+                            <label class="switch">
+                                <input type="checkbox" id="aiAssistantToggle" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="control-item">
+                        <div class="control-info">
+                            <h4>📧 Email automatique</h4>
+                            <p>Envoi auto des confirmations</p>
+                        </div>
+                        <div class="control-switch">
+                            <label class="switch">
+                                <input type="checkbox" id="autoEmailToggle" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="control-item">
+                        <div class="control-info">
+                            <h4>🔔 Notifications push</h4>
+                            <p>Alertes nouveaux formulaires</p>
+                        </div>
+                        <div class="control-switch">
+                            <label class="switch">
+                                <input type="checkbox" id="notificationsToggle" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="control-item">
+                        <div class="control-info">
+                            <h4>📊 Analytics avancées</h4>
+                            <p>Suivi détaillé des performances</p>
+                        </div>
+                        <div class="control-switch">
+                            <label class="switch">
+                                <input type="checkbox" id="analyticsToggle">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="control-item">
+                        <div class="control-info">
+                            <h4>🌐 Site public</h4>
+                            <p>Accessibilité publique du portail</p>
+                        </div>
+                        <div class="control-switch">
+                            <label class="switch">
+                                <input type="checkbox" id="publicSiteToggle">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="control-item">
+                        <div class="control-info">
+                            <h4>🔄 Sync automatique</h4>
+                            <p>Synchronisation des données</p>
+                        </div>
+                        <div class="control-switch">
+                            <label class="switch">
+                                <input type="checkbox" id="autoSyncToggle" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paramètres & Profil -->
+            <div class="card settings-card">
+                <h2>⚙️ Paramètres & Profil</h2>
+                <div class="settings-tabs">
+                    <button onclick="showSettingsTab('profile')" class="settings-tab active" data-tab="profile">👤 Profil</button>
+                    <button onclick="showSettingsTab('security')" class="settings-tab" data-tab="security">🔐 Sécurité</button>
+                    <button onclick="showSettingsTab('preferences')" class="settings-tab" data-tab="preferences">🎨 Préférences</button>
+                    <button onclick="showSettingsTab('backup')" class="settings-tab" data-tab="backup">💾 Sauvegarde</button>
+                </div>
+                <div class="settings-content">
+                    <!-- Onglet Profil -->
+                    <div id="profile-tab" class="settings-tab-content active">
+                        <div class="profile-section">
+                            <div class="profile-photo-section">
+                                <div class="current-photo">
+                                    <img src="../../assets/images/cynthia-photo.jpg" alt="Photo Cynthia" id="profilePhotoPreview" class="profile-photo-img">
+                                    <div class="photo-overlay">
+                                        <button onclick="changeProfilePhoto()" class="btn-change-photo">📷 Changer</button>
+                                    </div>
+                                </div>
+                                <input type="file" id="photoUpload" accept="image/*" style="display: none;">
+                            </div>
+                            <div class="profile-info-section">
+                                <div class="info-group">
+                                    <label>👤 Nom complet</label>
+                                    <input type="text" id="profileName" value="Cynthia Bernier" class="settings-input">
+                                </div>
+                                <div class="info-group">
+                                    <label>💼 Titre professionnel</label>
+                                    <input type="text" id="profileTitle" value="Courtière immobilière résidentielle" class="settings-input">
+                                </div>
+                                <div class="info-group">
+                                    <label>📍 Localisation</label>
+                                    <input type="text" id="profileLocation" value="Lebel-sur-Quévillon, Nord-du-Québec" class="settings-input">
+                                </div>
+                                <div class="info-group">
+                                    <label>📞 Téléphone principal</label>
+                                    <input type="tel" id="profilePhone" value="418-XXX-XXXX" class="settings-input">
+                                </div>
+                                <div class="info-group">
+                                    <label>📧 Email professionnel</label>
+                                    <input type="email" id="profileEmail" value="cynthia@domain.com" class="settings-input">
+                                </div>
+                                <div class="info-group">
+                                    <label>🏢 Licence OACIQ</label>
+                                    <input type="text" id="profileLicense" placeholder="Numéro de licence" class="settings-input">
+                                </div>
+                                <button onclick="saveProfileSettings()" class="btn-save-settings">💾 Sauvegarder le profil</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Onglet Sécurité -->
+                    <div id="security-tab" class="settings-tab-content">
+                        <div class="security-section">
+                            <div class="security-item">
+                                <h4>🔑 Codes d'accès dashboard</h4>
+                                <p>Gérer les codes d'authentification pour accéder au dashboard</p>
+                                <div class="codes-list" id="accessCodesList">
+                                    <div class="code-item">
+                                        <span class="code-value">CYNTHIA2024</span>
+                                        <button onclick="removeAccessCode('CYNTHIA2024')" class="btn-remove-code">🗑️</button>
+                                    </div>
+                                    <div class="code-item">
+                                        <span class="code-value">LEBEL2024</span>
+                                        <button onclick="removeAccessCode('LEBEL2024')" class="btn-remove-code">🗑️</button>
+                                    </div>
+                                </div>
+                                <button onclick="addNewAccessCode()" class="btn-add-code">➕ Ajouter un code</button>
+                            </div>
+                            <div class="security-item">
+                                <h4>🔐 Mot de passe principal</h4>
+                                <p>Changez votre mot de passe principal (optionnel)</p>
+                                <div class="password-change">
+                                    <input type="password" id="currentPassword" placeholder="Mot de passe actuel" class="settings-input">
+                                    <input type="password" id="newPassword" placeholder="Nouveau mot de passe" class="settings-input">
+                                    <input type="password" id="confirmPassword" placeholder="Confirmer nouveau mot de passe" class="settings-input">
+                                    <button onclick="changePassword()" class="btn-change-password">🔄 Changer le mot de passe</button>
+                                </div>
+                            </div>
+                            <div class="security-item">
+                                <h4>🕒 Sessions actives</h4>
+                                <p>Gérer les sessions de connexion actives</p>
+                                <div class="sessions-list">
+                                    <div class="session-item">
+                                        <div class="session-info">
+                                            <strong>Session actuelle</strong>
+                                            <small>Windows PC - Chrome - Maintenant</small>
+                                        </div>
+                                        <span class="session-status active">🟢 Active</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="security-item">
+                                <h4>🔧 Accès technique à distance</h4>
+                                <p>Autoriser l'équipe technique à accéder temporairement pour assistance</p>
+                                <div class="remote-access-controls">
+                                    <div class="access-status" id="remoteAccessStatus">
+                                        <span class="status-indicator offline">🔴</span>
+                                        <span class="status-text">Accès technique désactivé</span>
+                                    </div>
+                                    <div class="access-actions">
+                                        <button onclick="enableRemoteAccess()" class="btn-enable-remote" id="enableRemoteBtn">
+                                            🔧 Activer accès tech (30 min)
+                                        </button>
+                                        <button onclick="disableRemoteAccess()" class="btn-disable-remote" id="disableRemoteBtn" style="display: none;">
+                                            ❌ Désactiver accès tech
+                                        </button>
+                                        <button onclick="generateSupportCode()" class="btn-support-code">
+                                            🔑 Générer code support
+                                        </button>
+                                    </div>
+                                    <div class="support-info" id="supportInfo" style="display: none;">
+                                        <div class="support-code-display">
+                                            <strong>Code support:</strong>
+                                            <span class="support-code" id="supportCodeDisplay">SUPPORT-XXXX</span>
+                                            <button onclick="copySupportCode()" class="btn-copy-code">📋</button>
+                                        </div>
+                                        <small class="support-note">Partagez ce code avec l'équipe technique pour assistance</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Onglet Préférences -->
+                    <div id="preferences-tab" class="settings-tab-content">
+                        <div class="preferences-section">
+                            <div class="pref-group">
+                                <h4>🎨 Apparence</h4>
+                                <div class="pref-item">
+                                    <label>Thème interface</label>
+                                    <select id="themeSelect" class="settings-select">
+                                        <option value="light">☀️ Clair</option>
+                                        <option value="dark">🌙 Sombre</option>
+                                        <option value="auto">🔄 Automatique</option>
+                                    </select>
+                                </div>
+                                <div class="pref-item">
+                                    <label>Couleur d'accent</label>
+                                    <div class="color-picker">
+                                        <button class="color-option active" data-color="#D00" style="background: #D00;"></button>
+                                        <button class="color-option" data-color="#0ea5e9" style="background: #0ea5e9;"></button>
+                                        <button class="color-option" data-color="#7c3aed" style="background: #7c3aed;"></button>
+                                        <button class="color-option" data-color="#059669" style="background: #059669;"></button>
+                                        <button class="color-option" data-color="#ea580c" style="background: #ea580c;"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pref-group">
+                                <h4>🔔 Notifications</h4>
+                                <div class="pref-item">
+                                    <label>Notifications email</label>
+                                    <label class="pref-switch">
+                                        <input type="checkbox" id="emailNotifications" checked>
+                                        <span class="pref-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="pref-item">
+                                    <label>Son de notification</label>
+                                    <label class="pref-switch">
+                                        <input type="checkbox" id="soundNotifications">
+                                        <span class="pref-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="pref-item">
+                                    <label>Notifications desktop</label>
+                                    <label class="pref-switch">
+                                        <input type="checkbox" id="desktopNotifications" checked>
+                                        <span class="pref-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="pref-group">
+                                <h4>🏠 Préférences métier</h4>
+                                <div class="pref-item">
+                                    <label>Secteurs de service prioritaires</label>
+                                    <textarea id="serviceSectors" class="settings-textarea" placeholder="Ex: Lebel-sur-Quévillon, Val-d'Or, Amos...">Lebel-sur-Quévillon, Nord-du-Québec, Abitibi-Témiscamingue</textarea>
+                                </div>
+                                <div class="pref-item">
+                                    <label>Signature email par défaut</label>
+                                    <textarea id="emailSignature" class="settings-textarea" placeholder="Votre signature professionnelle">Cynthia Bernier
+Courtière immobilière résidentielle
+📞 418-XXX-XXXX
+📧 cynthia@domain.com
+🏠 Lebel-sur-Quévillon, QC</textarea>
+                                </div>
+                            </div>
+                            <button onclick="savePreferences()" class="btn-save-settings">💾 Sauvegarder les préférences</button>
+                        </div>
+                    </div>
+
+                    <!-- Onglet Sauvegarde -->
+                    <div id="backup-tab" class="settings-tab-content">
+                        <div class="backup-section">
+                            <div class="backup-item">
+                                <h4>💾 Sauvegarde automatique</h4>
+                                <p>Vos données sont sauvegardées automatiquement dans le navigateur</p>
+                                <div class="backup-info">
+                                    <div class="backup-stat">
+                                        <strong>Dernière sauvegarde:</strong> <span id="lastBackupTime">Maintenant</span>
+                                    </div>
+                                    <div class="backup-stat">
+                                        <strong>Taille des données:</strong> <span id="dataSize">Calcul...</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="backup-actions">
+                                <button onclick="createBackup()" class="btn-backup">📤 Créer une sauvegarde</button>
+                                <button onclick="restoreBackup()" class="btn-restore">📥 Restaurer sauvegarde</button>
+                                <button onclick="clearAllData()" class="btn-clear-data">🗑️ Effacer toutes les données</button>
+                            </div>
+                            <div class="backup-item">
+                                <h4>☁️ Synchronisation cloud (à venir)</h4>
+                                <p>Prochainement: synchronisation avec Google Drive, OneDrive</p>
+                                <button disabled class="btn-cloud-sync">☁️ Configurer sync cloud</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications récentes -->
+            <div class="card notifications-card">
+                <h2>🔔 Notifications récentes</h2>
+                <div class="notifications-list" id="notificationsList">
+                    <div class="notification-item">
+                        <div class="notification-icon">ℹ️</div>
+                        <div class="notification-content">
+                            <p><strong>Dashboard initialisé</strong></p>
+                            <small>Bienvenue dans votre espace de travail, Cynthia!</small>
+                            <span class="notification-time">Maintenant</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Données récentes -->
+            <div class="card data-card">
+                <h2>📊 Données récentes</h2>
+                <div class="data-table">
+                    <table id="recentDataTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Propriété</th>
+                                <th>Client</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTableBody">
+                            <tr>
+                                <td colspan="5" class="no-data">Aucune donnée disponible</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/identity-protection.js"></script>
+    <script src="dashboard.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!-- 📧 TEMPLATE EMAILJS POUR CYNTHIA BERNIER -->
+<!-- À copier dans EmailJS Dashboard → Templates -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #01242D; }
+        .header { background: #D00; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; max-width: 800px; margin: 0 auto; }
+        .section { margin: 20px 0; }
+        .section h3 { color: #D00; border-bottom: 2px solid #D00; padding-bottom: 5px; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+        .info-item { background: #f8f9fa; padding: 10px; border-radius: 5px; }
+        .ai-analysis { background: #e7f3ff; padding: 15px; border-left: 4px solid #0066cc; margin: 15px 0; }
+        .priority-haute { background: #ffebee; border-left-color: #f44336; }
+        .priority-moyenne { background: #fff3e0; border-left-color: #ff9800; }
+        .priority-basse { background: #e8f5e8; border-left-color: #4caf50; }
+        .footer { text-align: center; color: #666; font-size: 12px; margin: 30px 0; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏠 Nouvelle Fiche d'Inscription</h1>
+        <p>Cynthia Bernier - Courtier Immobilier</p>
+    </div>
+
+    <div class="content">
+        <!-- Analyse IA -->
+        <div class="ai-analysis priority-{{ai_priorite|lower}}">
+            <h3>🤖 Analyse Intelligente</h3>
+            <div class="info-grid">
+                <div><strong>Type Client:</strong> {{ai_type_client}}</div>
+                <div><strong>Priorité:</strong> {{ai_priorite}}</div>
+                <div><strong>Budget Estimé:</strong> {{ai_budget}}</div>
+                <div><strong>Score Qualité:</strong> {{ai_score}}/10</div>
+            </div>
+            
+            <div style="margin: 10px 0;">
+                <strong>⚠️ Points d'Attention:</strong>
+                <ul>{{ai_points_attention}}</ul>
+            </div>
+            
+            <div>
+                <strong>📋 Recommandations:</strong>
+                <ul>{{ai_recommandations}}</ul>
+            </div>
+        </div>
+
+        <!-- Informations Propriété -->
+        <div class="section">
+            <h3>📍 Informations de la Propriété</h3>
+            <div class="info-grid">
+                <div class="info-item"><strong>Adresse:</strong> {{adresse}}</div>
+                <div class="info-item"><strong>Année:</strong> {{annee_construction}}</div>
+                <div class="info-item"><strong>Évaluation:</strong> {{evaluation_municipale}}</div>
+                <div class="info-item"><strong>Numéro lot:</strong> {{num_lot}}</div>
+            </div>
+        </div>
+
+        <!-- Propriétaires -->
+        <div class="section">
+            <h3>👥 Contact Principal</h3>
+            <div class="info-grid">
+                <div class="info-item"><strong>Nom:</strong> {{proprietaire_1}}</div>
+                <div class="info-item"><strong>Téléphone 1:</strong> {{telephone_1}}</div>
+                <div class="info-item"><strong>Téléphone 2:</strong> {{telephone_2}}</div>
+                <div class="info-item"><strong>Type:</strong> {{prop1_type}}</div>
+            </div>
+        </div>
+
+        <!-- Caractéristiques -->
+        <div class="section">
+            <h3>🏗️ Caractéristiques Techniques</h3>
+            <div class="info-grid">
+                <div class="info-item"><strong>Fondation:</strong> {{fondation}}</div>
+                <div class="info-item"><strong>Toiture:</strong> {{toiture}}</div>
+                <div class="info-item"><strong>Revêtement:</strong> {{revetement_ext}}</div>
+                <div class="info-item"><strong>Équipements:</strong> {{equipements}}</div>
+            </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="section">
+            <h3>📝 Notes Spéciales</h3>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; white-space: pre-line;">{{notes_speciales}}</div>
+        </div>
+
+        <!-- Métadonnées -->
+        <div class="footer">
+            <p>📱 Envoyé depuis: {{device_info}} | 🕐 {{timestamp}}</p>
+            <p style="color: #D00;"><strong>Cynthia Bernier - Courtier Immobilier Résidentiel</strong></p>
+        </div>
+    </div>
+</body>
+</html>

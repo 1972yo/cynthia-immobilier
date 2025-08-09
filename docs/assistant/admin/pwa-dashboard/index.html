@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Cynthia | Mon espace de travail</title>
+    
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#D00">
+    <link rel="apple-touch-icon" href="../../assets/images/icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Dashboard Cynthia">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body class="dashboard-body">
+    
+    <!-- Header Dashboard -->
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="user-info">
+                <img src="../../assets/images/cynthia-avatar.jpg" alt="Cynthia" class="user-avatar">
+                <div class="user-details">
+                    <h2>Cynthia Bernier</h2>
+                    <p>Mon espace de travail</p>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <button onclick="toggleEmergencyMode()" class="btn-emergency" id="emergencyBtn">
+                    🚨 Urgence
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation principale -->
+    <nav class="main-nav">
+        <button class="nav-btn active" onclick="showSection('overview')" id="overviewBtn">
+            📊 Vue d'ensemble
+        </button>
+        <button class="nav-btn" onclick="showSection('features')" id="featuresBtn">
+            ⚙️ Mes fonctionnalités
+        </button>
+        <button class="nav-btn" onclick="showSection('properties')" id="propertiesBtn">
+            🏠 Mes fiches
+        </button>
+        <button class="nav-btn" onclick="showSection('contacts')" id="contactsBtn">
+            👥 Mes contacts
+        </button>
+    </nav>
+
+    <!-- Contenu principal -->
+    <main class="dashboard-main" id="dashboardContent">
+        
+        <!-- Section Vue d'ensemble -->
+        <section class="dashboard-section active" id="overviewSection">
+            <h3>📊 Vue d'ensemble</h3>
+            
+            <!-- Statistiques rapides -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalProperties">0</div>
+                    <div class="stat-label">Propriétés</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalContacts">0</div>
+                    <div class="stat-label">Contacts</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="activeFeatures">2</div>
+                    <div class="stat-label">Fonctions actives</div>
+                </div>
+            </div>
+            
+            <!-- Statut fonctionnalités -->
+            <div class="card">
+                <h4>🎛️ État de mes outils</h4>
+                <div class="features-status" id="featuresOverview">
+                    <!-- Chargé dynamiquement -->
+                </div>
+            </div>
+            
+            <!-- Actions rapides -->
+            <div class="card">
+                <h4>⚡ Actions rapides</h4>
+                <div class="quick-actions">
+                    <button class="quick-btn" onclick="createNewProperty()">
+                        ➕ Nouvelle fiche
+                    </button>
+                    <button class="quick-btn" onclick="viewContacts()">
+                        👥 Voir contacts
+                    </button>
+                    <button class="quick-btn" onclick="showSection('features')">
+                        ⚙️ Gérer outils
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Fonctionnalités ON/OFF -->
+        <section class="dashboard-section" id="featuresSection">
+            <h3>⚙️ Mes fonctionnalités</h3>
+            <p class="section-subtitle">Activez/désactivez vos outils selon vos besoins</p>
+            
+            <!-- API #1 Controls -->
+            <div class="card">
+                <h4>🤖 Outils intelligents (API #1)</h4>
+                <div class="features-controls">
+                    
+                    <div class="feature-control">
+                        <div class="feature-info">
+                            <h5>🤖 Analyse IA des fiches</h5>
+                            <p>L'IA analyse automatiquement vos propriétés et génère descriptions professionnelles</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="ia_analysis" onchange="toggleFeature('ia_analysis')">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="feature-control">
+                        <div class="feature-info">
+                            <h5>📧 Emails automatiques</h5>
+                            <p>Envoi automatique des fiches complètes par email</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="auto_email" onchange="toggleFeature('auto_email')">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="feature-control">
+                        <div class="feature-info">
+                            <h5>📷 Optimisation photos</h5>
+                            <p>Amélioration automatique qualité et format des photos</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="photo_optimization" onchange="toggleFeature('photo_optimization')">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <!-- API #2 Controls -->
+            <div class="card">
+                <h4>🌐 Marketing & Web (API #2)</h4>
+                <div class="features-controls">
+                    
+                    <div class="feature-control">
+                        <div class="feature-info">
+                            <h5>🌐 Site web public</h5>
+                            <p>Site web visible par tous avec vos propriétés</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="public_website" onchange="toggleFeature('public_website')">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="feature-control">
+                        <div class="feature-info">
+                            <h5>📱 Publicités automatiques</h5>
+                            <p>Création et gestion automatique pubs Facebook/Google</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="auto_advertising" onchange="toggleFeature('auto_advertising')">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="feature-control">
+                        <div class="feature-info">
+                            <h5>📊 Analytics & Suivi</h5>
+                            <p>Statistiques détaillées visiteurs et performance</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="analytics_tracking" onchange="toggleFeature('analytics_tracking')">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <!-- Contrôles d'urgence -->
+            <div class="card emergency-controls">
+                <h4>🚨 Contrôles d'urgence</h4>
+                <div class="emergency-actions">
+                    <button class="btn btn-outline" onclick="emergencyMode()">
+                        🛑 Tout désactiver (urgence)
+                    </button>
+                    <button class="btn btn-outline" onclick="resetToDefault()">
+                        🔄 Remettre par défaut
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section Propriétés -->
+        <section class="dashboard-section" id="propertiesSection">
+            <h3>🏠 Mes fiches</h3>
+            <div class="properties-list" id="propertiesList">
+                <div class="empty-state">
+                    <p>Aucune fiche créée encore.</p>
+                    <button class="btn btn-primary" onclick="createNewProperty()">
+                        ➕ Créer ma première fiche
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section Contacts -->
+        <section class="dashboard-section" id="contactsSection">
+            <h3>👥 Mes contacts</h3>
+            <div class="contacts-list" id="contactsList">
+                <div class="empty-state">
+                    <p>Aucun contact enregistré.</p>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- Scripts -->
+    <script src="../../config/features-control.js"></script>
+    <script src="../../assets/js/identity-protection.js"></script>
+    <script src="dashboard.js"></script>
+
+</body>
+</html>

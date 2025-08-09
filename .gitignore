@@ -1,0 +1,54 @@
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Fichiers temporaires
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Logs
+*.log
+logs/
+
+# Configuration locale
+.env
+*.local
+
+# Sauvegarde des éditeurs
+*~
+*.bak
+*.swp
+*.swo
+
+# Fichiers IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Fichiers Windows
+*.lnk
+*.bat
+*.exe
+
+# Dossiers de build/cache
+build/
+dist/
+cache/
+
+# Dossiers de sauvegarde
+backup/
+BACKUP/
+
+# Fichiers PDF volumineux (garder seulement les essentiels)
+*.pdf
+
+# Node modules si ajoutés plus tard
+node_modules/
+
+# Fichiers sensibles
+*password*
+*secret*
+*key*

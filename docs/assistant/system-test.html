@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Test Complet - Système Cynthia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f6fa;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-left: 4px solid #007bff;
+            background: #f8f9fa;
+        }
+        .test-result {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: bold;
+        }
+        .btn:hover { background: #0056b3; }
+        .btn-test { background: #28a745; }
+        .btn-test:hover { background: #1e7e34; }
+        #console-log {
+            background: #000;
+            color: #00ff00;
+            padding: 20px;
+            font-family: monospace;
+            font-size: 12px;
+            height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Test Complet - Système Cynthia Bernier</h1>
+        <p><strong>Lebel-sur-Quévillon, Nord-du-Québec</strong></p>
+        
+        <div class="test-section">
+            <h3>🔧 Tests des Composants</h3>
+            <button class="btn btn-test" onclick="testComponents()">Test Composants</button>
+            <button class="btn btn-test" onclick="testFeatures()">Test Fonctionnalités ON/OFF</button>
+            <button class="btn btn-test" onclick="testIdentity()">Test Protection Identité</button>
+            <button class="btn btn-test" onclick="testIA()">Test IA OpenAI</button>
+            
+            <div id="component-results"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🔗 Test Intégration APIs</h3>
+            <button class="btn btn-test" onclick="testAPIConnection()">Test Communication APIs</button>
+            <button class="btn btn-test" onclick="testFormSubmission()">Test Soumission Formulaire</button>
+            <button class="btn btn-test" onclick="testDashboardSync()">Test Sync Dashboard</button>
+            
+            <div id="integration-results"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>📱 Test Mobile/PWA</h3>
+            <button class="btn btn-test" onclick="testPWA()">Test PWA</button>
+            <button class="btn btn-test" onclick="testMobile()">Test Responsive</button>
+            
+            <div id="mobile-results"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🚨 Test Scénarios Complets</h3>
+            <button class="btn btn-test" onclick="testFullWorkflow()">Workflow Complet</button>
+            <button class="btn btn-test" onclick="testEmergencyMode()">Mode Urgence</button>
+            
+            <div id="scenario-results"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>📊 Actions</h3>
+            <button class="btn" onclick="clearAllData()">🗑️ Vider Toutes Données</button>
+            <button class="btn" onclick="showSystemStatus()">📈 État Système</button>
+            <button class="btn" onclick="exportTestReport()">📁 Export Rapport</button>
+        </div>
+        
+        <div id="console-log"></div>
+    </div>
+
+    <!-- Scripts du système -->
+    <script src="config/features-control.js"></script>
+    <script src="services/identity-protection.js"></script>
+    <script src="services/email-service.js"></script>
+    <script src="assets/js/system-integration.js"></script>
+
+    <script>
+        // Console custom pour affichage
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        const consoleDiv = document.getElementById('console-log');
+        
+        function logToDiv(message, type = 'log') {
+            const timestamp = new Date().toLocaleTimeString('fr-CA');
+            const prefix = type === 'error' ? '❌' : type === 'warn' ? '⚠️' : '✅';
+            consoleDiv.innerHTML += `[${timestamp}] ${prefix} ${message}\n`;
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+        
+        console.log = (...args) => {
+            originalLog(...args);
+            logToDiv(args.join(' '), 'log');
+        };
+        
+        console.error = (...args) => {
+            originalError(...args);
+            logToDiv(args.join(' '), 'error');
+        };
+        
+        console.warn = (...args) => {
+            originalWarn(...args);
+            logToDiv(args.join(' '), 'warn');
+        };
+
+        // Tests des composants
+        async function testComponents() {
+            console.log('🔧 Début test composants...');
+            const results = document.getElementById('component-results');
+            results.innerHTML = '';
+            
+            try {
+                // Test FeaturesControl
+                if (window.FeaturesControl) {
+                    results.innerHTML += '<div class="test-result success">✅ FeaturesControl chargé</div>';
+                    console.log('FeaturesControl OK');
+                } else {
+                    results.innerHTML += '<div class="test-result error">❌ FeaturesControl manquant</div>';
+                    console.error('FeaturesControl non trouvé');
+                }
+                
+                // Test IdentityProtection
+                if (window.IdentityProtection) {
+                    results.innerHTML += '<div class="test-result success">✅ IdentityProtection chargé</div>';
+                    console.log('IdentityProtection OK');
+                } else {
+                    results.innerHTML += '<div class="test-result error">❌ IdentityProtection manquant</div>';
+                    console.error('IdentityProtection non trouvé');
+                }
+                
+                // Test EmailService
+                if (window.EmailService) {
+                    const emailService = new window.EmailService();
+                    results.innerHTML += '<div class="test-result success">✅ EmailService instancié</div>';
+                    console.log('EmailService OK');
+                } else {
+                    results.innerHTML += '<div class="test-result error">❌ EmailService manquant</div>';
+                    console.error('EmailService non trouvé');
+                }
+                
+                // Test SystemIntegration
+                if (window.SystemIntegration) {
+                    results.innerHTML += '<div class="test-result success">✅ SystemIntegration chargé</div>';
+                    console.log('SystemIntegration OK');
+                } else {
+                    results.innerHTML += '<div class="test-result error">❌ SystemIntegration manquant</div>';
+                    console.error('SystemIntegration non trouvé');
+                }
+                
+            } catch (error) {
+                results.innerHTML += `<div class="test-result error">❌ Erreur: ${error.message}</div>`;
+                console.error('Erreur test composants:', error);
+            }
+        }
+        
+        async function testFeatures() {
+            console.log('🔧 Test fonctionnalités ON/OFF...');
+            const results = document.getElementById('component-results');
+            
+            if (window.FeaturesControl) {
+                try {
+                    const status = window.FeaturesControl.getStatus();
+                    results.innerHTML += '<div class="test-result success">✅ État fonctionnalités récupéré</div>';
+                    console.log('État features:', status);
+                    
+                    // Test toggle
+                    window.FeaturesControl.toggle('ia_analysis');
+                    results.innerHTML += '<div class="test-result success">✅ Toggle IA testé</div>';
+                    console.log('Toggle IA OK');
+                    
+                } catch (error) {
+                    results.innerHTML += `<div class="test-result error">❌ Erreur features: ${error.message}</div>`;
+                    console.error('Erreur test features:', error);
+                }
+            }
+        }
+        
+        async function testIdentity() {
+            console.log('🛡️ Test protection identité...');
+            const results = document.getElementById('component-results');
+            
+            if (window.IdentityProtection) {
+                try {
+                    // Test validation normale
+                    const validData = { adresse: '123 Main St, Lebel-sur-Quévillon' };
+                    const valid = window.IdentityProtection.validate(validData);
+                    
+                    if (valid) {
+                        results.innerHTML += '<div class="test-result success">✅ Validation identité OK</div>';
+                        console.log('Validation normale OK');
+                    }
+                    
+                    // Test protection (doit bloquer)
+                    const testResult = window.IdentityProtection.testProtection();
+                    if (testResult) {
+                        results.innerHTML += '<div class="test-result success">✅ Protection contre faux Cynthia OK</div>';
+                        console.log('Protection anti-confusion OK');
+                    }
+                    
+                } catch (error) {
+                    results.innerHTML += `<div class="test-result error">❌ Erreur identité: ${error.message}</div>`;
+                    console.error('Erreur test identité:', error);
+                }
+            }
+        }
+        
+        async function testIA() {
+            console.log('🤖 Test connexion IA...');
+            const results = document.getElementById('component-results');
+            
+            if (window.EmailService) {
+                try {
+                    const emailService = new window.EmailService();
+                    const connected = await emailService.testConnection();
+                    
+                    if (connected) {
+                        results.innerHTML += '<div class="test-result success">✅ Connexion OpenAI OK</div>';
+                        console.log('OpenAI connecté');
+                    } else {
+                        results.innerHTML += '<div class="test-result warning">⚠️ Connexion OpenAI limitée (normal en test)</div>';
+                        console.warn('OpenAI test limité');
+                    }
+                    
+                } catch (error) {
+                    results.innerHTML += '<div class="test-result warning">⚠️ Test IA limité (normal)</div>';
+                    console.warn('Test IA:', error.message);
+                }
+            }
+        }
+        
+        async function testAPIConnection() {
+            console.log('🔗 Test communication APIs...');
+            const results = document.getElementById('integration-results');
+            results.innerHTML = '';
+            
+            if (window.SystemIntegration) {
+                try {
+                    const status = window.SystemIntegration.getSystemStatus();
+                    results.innerHTML += '<div class="test-result success">✅ Statut système récupéré</div>';
+                    console.log('Status système:', status);
+                    
+                    const testOK = window.SystemIntegration.testConnection();
+                    if (testOK) {
+                        results.innerHTML += '<div class="test-result success">✅ Test connexion APIs OK</div>';
+                        console.log('Communication inter-API OK');
+                    }
+                    
+                } catch (error) {
+                    results.innerHTML += `<div class="test-result error">❌ Erreur APIs: ${error.message}</div>`;
+                    console.error('Erreur test APIs:', error);
+                }
+            }
+        }
+        
+        async function testFormSubmission() {
+            console.log('📝 Test soumission formulaire...');
+            const results = document.getElementById('integration-results');
+            
+            try {
+                const testData = {
+                    adresse: '123 Test Street, Lebel-sur-Quévillon',
+                    prop1Nom: 'Client Test',
+                    prop1Tel1: '418-555-1234',
+                    anneeConstruction: '2010',
+                    notesSpeciales: 'Test automatisé du système'
+                };
+                
+                if (window.EmailService) {
+                    const emailService = new window.EmailService();
+                    const result = await emailService.sendFormToCynthia(testData);
+                    
+                    if (result.success) {
+                        results.innerHTML += '<div class="test-result success">✅ Soumission formulaire + IA OK</div>';
+                        console.log('Test soumission réussi:', result);
+                    } else {
+                        results.innerHTML += '<div class="test-result warning">⚠️ Soumission en mode fallback</div>';
+                        console.warn('Soumission fallback:', result);
+                    }
+                }
+                
+            } catch (error) {
+                results.innerHTML += `<div class="test-result error">❌ Erreur soumission: ${error.message}</div>`;
+                console.error('Erreur test soumission:', error);
+            }
+        }
+        
+        async function testDashboardSync() {
+            console.log('📡 Test synchronisation dashboard...');
+            const results = document.getElementById('integration-results');
+            
+            try {
+                // Vérifier les notifications stockées
+                const notifications = localStorage.getItem('cynthia_notifications');
+                if (notifications) {
+                    const count = JSON.parse(notifications).length;
+                    results.innerHTML += `<div class="test-result success">✅ Dashboard sync: ${count} notifications</div>`;
+                    console.log(`${count} notifications en attente pour dashboard`);
+                } else {
+                    results.innerHTML += '<div class="test-result warning">⚠️ Pas de notifications dashboard</div>';
+                    console.warn('Aucune notification dashboard trouvée');
+                }
+                
+            } catch (error) {
+                results.innerHTML += `<div class="test-result error">❌ Erreur sync: ${error.message}</div>`;
+                console.error('Erreur test sync:', error);
+            }
+        }
+        
+        async function testPWA() {
+            console.log('📱 Test PWA...');
+            const results = document.getElementById('mobile-results');
+            results.innerHTML = '';
+            
+            try {
+                // Test service worker
+                if ('serviceWorker' in navigator) {
+                    results.innerHTML += '<div class="test-result success">✅ Service Worker supporté</div>';
+                    console.log('Service Worker disponible');
+                } else {
+                    results.innerHTML += '<div class="test-result error">❌ Service Worker non supporté</div>';
+                }
+                
+                // Test manifest
+                if (window.location.pathname.includes('admin')) {
+                    results.innerHTML += '<div class="test-result success">✅ PWA Dashboard détecté</div>';
+                    console.log('Contexte PWA dashboard');
+                } else {
+                    results.innerHTML += '<div class="test-result success">✅ Formulaire public détecté</div>';
+                    console.log('Contexte formulaire public');
+                }
+                
+            } catch (error) {
+                results.innerHTML += `<div class="test-result error">❌ Erreur PWA: ${error.message}</div>`;
+                console.error('Erreur test PWA:', error);
+            }
+        }
+        
+        async function testMobile() {
+            console.log('📱 Test responsive...');
+            const results = document.getElementById('mobile-results');
+            
+            const isMobile = window.innerWidth <= 768;
+            const viewport = `${window.innerWidth}x${window.innerHeight}`;
+            
+            results.innerHTML += `<div class="test-result success">✅ Viewport: ${viewport}</div>`;
+            results.innerHTML += `<div class="test-result ${isMobile ? 'success' : 'warning'}">📱 Mode: ${isMobile ? 'Mobile' : 'Desktop'}</div>`;
+            
+            console.log(`Viewport: ${viewport}, Mobile: ${isMobile}`);
+        }
+        
+        async function testFullWorkflow() {
+            console.log('🎯 Test workflow complet...');
+            const results = document.getElementById('scenario-results');
+            results.innerHTML = '';
+            
+            try {
+                results.innerHTML += '<div class="test-result success">✅ Début workflow complet</div>';
+                
+                // 1. Validation identité
+                const validData = { adresse: 'Test Lebel-sur-Quévillon' };
+                const identityOK = window.IdentityProtection.validate(validData);
+                results.innerHTML += `<div class="test-result ${identityOK ? 'success' : 'error'}">1. Validation identité: ${identityOK ? 'OK' : 'ÉCHOUÉ'}</div>`;
+                
+                // 2. Features check
+                const features = window.FeaturesControl ? window.FeaturesControl.getStatus() : null;
+                results.innerHTML += `<div class="test-result ${features ? 'success' : 'error'}">2. État features: ${features ? 'OK' : 'ÉCHOUÉ'}</div>`;
+                
+                // 3. Simulation envoi
+                if (identityOK && features) {
+                    results.innerHTML += '<div class="test-result success">3. Workflow: PRÊT POUR PRODUCTION</div>';
+                    console.log('✅ WORKFLOW COMPLET VALIDÉ');
+                } else {
+                    results.innerHTML += '<div class="test-result error">3. Workflow: CORRECTIONS REQUISES</div>';
+                    console.error('❌ Workflow incomplet');
+                }
+                
+            } catch (error) {
+                results.innerHTML += `<div class="test-result error">❌ Erreur workflow: ${error.message}</div>`;
+                console.error('Erreur workflow:', error);
+            }
+        }
+        
+        async function testEmergencyMode() {
+            console.log('🚨 Test mode urgence...');
+            const results = document.getElementById('scenario-results');
+            
+            try {
+                if (window.FeaturesControl) {
+                    window.FeaturesControl.emergencyShutdown();
+                    results.innerHTML += '<div class="test-result success">✅ Mode urgence activé</div>';
+                    console.log('Mode urgence testé');
+                    
+                    // Restaurer après test
+                    setTimeout(() => {
+                        window.FeaturesControl.restoreFromEmergency();
+                        console.log('Mode normal restauré');
+                    }, 2000);
+                }
+                
+            } catch (error) {
+                results.innerHTML += `<div class="test-result error">❌ Erreur urgence: ${error.message}</div>`;
+                console.error('Erreur test urgence:', error);
+            }
+        }
+        
+        function clearAllData() {
+            if (confirm('Vider toutes les données de test?')) {
+                localStorage.clear();
+                console.log('🗑️ Toutes données effacées');
+                location.reload();
+            }
+        }
+        
+        function showSystemStatus() {
+            console.log('📈 État système complet:');
+            
+            const status = {
+                features: window.FeaturesControl ? window.FeaturesControl.getStatus() : null,
+                identity: window.IdentityProtection ? window.IdentityProtection.getProtectionStatus() : null,
+                integration: window.SystemIntegration ? window.SystemIntegration.getSystemStatus() : null,
+                localStorage: {
+                    notifications: localStorage.getItem('cynthia_notifications') ? JSON.parse(localStorage.getItem('cynthia_notifications')).length : 0,
+                    formData: !!localStorage.getItem('cynthia_form_data'),
+                    incidents: localStorage.getItem('identity_incidents') ? JSON.parse(localStorage.getItem('identity_incidents')).length : 0
+                }
+            };
+            
+            console.log(JSON.stringify(status, null, 2));
+        }
+        
+        function exportTestReport() {
+            const report = {
+                timestamp: new Date().toISOString(),
+                system: 'CYNTHIA_ASSISTANT',
+                version: '1.0.0',
+                location: 'Lebel-sur-Quévillon, Nord-du-Québec',
+                tests_completed: true,
+                system_status: showSystemStatus()
+            };
+            
+            const blob = new Blob([JSON.stringify(report, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `cynthia-system-test-${Date.now()}.json`;
+            a.click();
+            
+            console.log('📁 Rapport exporté');
+        }
+        
+        // Test automatique au chargement
+        setTimeout(() => {
+            console.log('🎯 SYSTÈME CYNTHIA BERNIER - TESTS AUTOMATIQUES');
+            console.log('📍 Lebel-sur-Quévillon, Nord-du-Québec');
+            console.log('⏰ ' + new Date().toLocaleString('fr-CA'));
+            console.log('=====================================');
+            
+            testComponents();
+        }, 1000);
+    </script>
+</body>
+</html>

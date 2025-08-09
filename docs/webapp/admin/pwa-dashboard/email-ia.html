@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Emails & IA - Cynthia Bernier</title>
+    <meta name="description" content="Interface avancée de gestion des emails avec assistance IA pour Cynthia Bernier">
+    
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="email-ia.css">
+</head>
+<body class="email-ia-page">
+    
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="cynthia-info">
+                    <div class="cynthia-details">
+                        <h1>📧 Gestion Emails & IA</h1>
+                        <p>Assistant intelligent pour communication client - Lebel-sur-Quévillon</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button onclick="refreshEmailData()" class="btn-refresh">🔄 Actualiser</button>
+                    <button onclick="goBackToDashboard()" class="btn-portal">📊 Dashboard</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="email-ia-content" id="emailIaContent">
+        <div class="container">
+            
+            <!-- Stats emails rapides -->
+            <div class="stats-grid">
+                <div class="stat-card email-stat">
+                    <div class="stat-icon">📧</div>
+                    <div class="stat-info">
+                        <h3 id="totalEmails">0</h3>
+                        <p>Emails envoyés</p>
+                    </div>
+                </div>
+                <div class="stat-card template-stat">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-info">
+                        <h3 id="totalTemplates">5</h3>
+                        <p>Modèles actifs</p>
+                    </div>
+                </div>
+                <div class="stat-card ai-stat">
+                    <div class="stat-icon">🤖</div>
+                    <div class="stat-info">
+                        <h3 id="aiAssistance">12</h3>
+                        <p>Suggestions IA</p>
+                    </div>
+                </div>
+                <div class="stat-card response-stat">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-info">
+                        <h3 id="responseRate">68%</h3>
+                        <p>Taux réponse</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interface principale -->
+            <div class="email-ia-interface">
+                
+                <!-- Chat IA Assistant -->
+                <div class="card ai-chat-card">
+                    <h2>🤖 Assistant IA Cynthia</h2>
+                    <div class="ai-chat-container">
+                        <div class="chat-messages" id="aiChatMessages">
+                            <div class="message ai-message">
+                                <div class="message-content">
+                                    <p><strong>Assistant IA:</strong> Bonjour Cynthia ! Je suis votre assistant intelligent pour la gestion des emails. Comment puis-je vous aider aujourd'hui ?</p>
+                                    <small class="message-time">Maintenant</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-input-container">
+                            <input type="text" id="aiChatInput" placeholder="Demandez à l'IA d'analyser vos emails, générer des réponses..." class="chat-input">
+                            <button onclick="sendAiMessage()" class="send-btn">📤</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gestion des modèles d'emails -->
+                <div class="card email-templates-card">
+                    <h2>📝 Modèles d'emails intelligents</h2>
+                    <div class="templates-header">
+                        <button onclick="createNewTemplate()" class="btn-create-template">➕ Nouveau modèle</button>
+                        <button onclick="generateWithAI()" class="btn-ai-generate">🤖 Générer avec IA</button>
+                    </div>
+                    <div class="templates-list" id="templatesList">
+                        <!-- Templates seront chargés ici -->
+                    </div>
+                </div>
+
+                <!-- Email composer avancé -->
+                <div class="card email-composer-card">
+                    <h2>✍️ Rédaction email assistée</h2>
+                    <div class="composer-container">
+                        <div class="composer-header">
+                            <input type="text" id="emailTo" placeholder="Destinataire..." class="composer-input">
+                            <input type="text" id="emailSubject" placeholder="Sujet..." class="composer-input">
+                            <select id="templateSelect" class="template-select">
+                                <option value="">Choisir un modèle...</option>
+                            </select>
+                        </div>
+                        <div class="composer-body">
+                            <textarea id="emailBody" placeholder="Écrivez votre email ici... L'IA vous assistera en temps réel." class="composer-textarea"></textarea>
+                            <div class="ai-suggestions" id="aiSuggestions">
+                                <p><strong>💡 Suggestions IA:</strong> Commencez à taper pour des suggestions intelligentes</p>
+                            </div>
+                        </div>
+                        <div class="composer-actions">
+                            <button onclick="analyzeEmailWithAI()" class="btn-ai-analyze">🔍 Analyser avec IA</button>
+                            <button onclick="improveEmailWithAI()" class="btn-ai-improve">✨ Améliorer avec IA</button>
+                            <button onclick="sendEmail()" class="btn-send-email">📧 Envoyer</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Historique et analytics -->
+                <div class="card email-history-card">
+                    <h2>📊 Historique et Analytics</h2>
+                    <div class="history-tabs">
+                        <button onclick="showHistoryTab('recent')" class="history-tab active" data-tab="recent">Récents</button>
+                        <button onclick="showHistoryTab('analytics')" class="history-tab" data-tab="analytics">Analytics</button>
+                        <button onclick="showHistoryTab('ai-insights')" class="history-tab" data-tab="ai-insights">Insights IA</button>
+                    </div>
+                    <div class="history-content">
+                        <div id="recent-tab" class="tab-content active">
+                            <div class="email-list" id="recentEmailsList">
+                                <!-- Emails récents chargés ici -->
+                            </div>
+                        </div>
+                        <div id="analytics-tab" class="tab-content">
+                            <div class="analytics-grid">
+                                <div class="analytics-item">
+                                    <h4>Emails cette semaine</h4>
+                                    <div class="analytics-value">24</div>
+                                </div>
+                                <div class="analytics-item">
+                                    <h4>Taux ouverture moyen</h4>
+                                    <div class="analytics-value">72%</div>
+                                </div>
+                                <div class="analytics-item">
+                                    <h4>Temps réponse moyen</h4>
+                                    <div class="analytics-value">2.4h</div>
+                                </div>
+                                <div class="analytics-item">
+                                    <h4>Satisfaction client</h4>
+                                    <div class="analytics-value">4.8⭐</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="ai-insights-tab" class="tab-content">
+                            <div class="ai-insights-list" id="aiInsightsList">
+                                <!-- Insights IA chargés ici -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="email-ia.js"></script>
+
+</body>
+</html>

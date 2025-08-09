@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA Marketing & Publication - Cynthia Bernier</title>
+    <meta name="description" content="Interface IA pour marketing immobilier, gestion site web, publication fiches et réseaux sociaux">
+    
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="marketing-ia.css">
+    
+    <!-- PWA Meta -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#059669">
+    <link rel="apple-touch-icon" href="../../assets/images/icon-192.png">
+</head>
+<body class="marketing-ia-page">
+    
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="cynthia-info">
+                    <div class="cynthia-details">
+                        <h1>🌐 IA Marketing & Publication</h1>
+                        <p>Gestion site web, fiches et réseaux sociaux - Cynthia Bernier</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button onclick="refreshMarketingData()" class="btn-refresh">🔄 Actualiser</button>
+                    <button onclick="goBackToDashboard()" class="btn-portal">📊 Retour Dashboard</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="marketing-ia-content">
+        <div class="container">
+            
+            <!-- Stats Marketing -->
+            <div class="stats-grid">
+                <div class="stat-card web-stat">
+                    <div class="stat-icon">🌐</div>
+                    <div class="stat-info">
+                        <h3 id="websiteViews">1,247</h3>
+                        <p>Visiteurs site web</p>
+                    </div>
+                </div>
+                <div class="stat-card property-stat">
+                    <div class="stat-icon">🏠</div>
+                    <div class="stat-info">
+                        <h3 id="publishedProperties">8</h3>
+                        <p>Fiches publiées</p>
+                    </div>
+                </div>
+                <div class="stat-card social-stat">
+                    <div class="stat-icon">📱</div>
+                    <div class="stat-info">
+                        <h3 id="socialEngagement">324</h3>
+                        <p>Interactions sociales</p>
+                    </div>
+                </div>
+                <div class="stat-card marketing-stat">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-info">
+                        <h3 id="marketingCampaigns">12</h3>
+                        <p>Campagnes actives</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interface principale -->
+            <div class="marketing-ia-interface">
+                
+                <!-- Chat IA Marketing -->
+                <div class="card ai-marketing-chat-card">
+                    <h2>🤖 Assistant IA Marketing</h2>
+                    <div class="ai-chat-container">
+                        <div class="chat-messages" id="aiMarketingChatMessages">
+                            <!-- Messages IA générés dynamiquement -->
+                        </div>
+                        <div class="chat-input-container">
+                            <input type="text" id="aiMarketingChatInput" class="chat-input" placeholder="Demandez à votre assistant marketing IA...">
+                            <button onclick="sendMarketingAiMessage()" class="send-btn">📤</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gestion Site Web -->
+                <div class="card website-management-card">
+                    <h2>🌐 Gestion Site Web</h2>
+                    <div class="website-controls">
+                        <div class="website-status">
+                            <div class="status-indicator online">🟢</div>
+                            <span class="status-text">Site en ligne - cynthiabernier.com</span>
+                        </div>
+                        <div class="website-actions">
+                            <button onclick="previewWebsite()" class="btn-preview">👁️ Prévisualiser</button>
+                            <button onclick="editWebsite()" class="btn-edit-site">✏️ Éditer contenu</button>
+                            <button onclick="publishWebsite()" class="btn-publish">🚀 Publier changes</button>
+                        </div>
+                    </div>
+                    <div class="website-content-editor" id="websiteEditor">
+                        <div class="editor-tabs">
+                            <button onclick="showWebsiteTab('home')" class="editor-tab active" data-tab="home">🏠 Accueil</button>
+                            <button onclick="showWebsiteTab('about')" class="editor-tab" data-tab="about">👤 À propos</button>
+                            <button onclick="showWebsiteTab('services')" class="editor-tab" data-tab="services">🔧 Services</button>
+                            <button onclick="showWebsiteTab('contact')" class="editor-tab" data-tab="contact">📞 Contact</button>
+                        </div>
+                        <div class="editor-content">
+                            <div id="home-tab" class="editor-tab-content active">
+                                <label>Titre principal :</label>
+                                <input type="text" id="homeTitle" class="editor-input" value="Cynthia Bernier - Courtière Immobilière">
+                                <label>Description :</label>
+                                <textarea id="homeDescription" class="editor-textarea">Votre experte immobilière à Lebel-sur-Quévillon. Service personnalisé pour vente, achat et évaluation de propriétés résidentielles.</textarea>
+                            </div>
+                            <div id="about-tab" class="editor-tab-content">
+                                <label>Biographie :</label>
+                                <textarea id="aboutBio" class="editor-textarea">Courtière immobilière résidentielle expérimentée, je dessers la région de Lebel-sur-Quévillon avec passion et professionnalisme depuis plus de 10 ans.</textarea>
+                            </div>
+                            <div id="services-tab" class="editor-tab-content">
+                                <label>Services offerts :</label>
+                                <textarea id="servicesList" class="editor-textarea">• Vente résidentielle
+• Achat accompagné
+• Évaluation gratuite
+• Consultation marché immobilier</textarea>
+                            </div>
+                            <div id="contact-tab" class="editor-tab-content">
+                                <label>Coordonnées :</label>
+                                <textarea id="contactInfo" class="editor-textarea">📞 418-XXX-XXXX
+📧 cynthia@domain.com
+📍 Lebel-sur-Quévillon, QC</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Publication Fiches Immobilières -->
+            <div class="card property-publication-card">
+                <h2>🏠 Publication Fiches Immobilières</h2>
+                <div class="property-publisher">
+                    <div class="publisher-tabs">
+                        <button onclick="showPropertyTab('create')" class="property-tab active" data-tab="create">📝 Créer fiche</button>
+                        <button onclick="showPropertyTab('published')" class="property-tab" data-tab="published">📋 Fiches publiées</button>
+                        <button onclick="showPropertyTab('templates')" class="property-tab" data-tab="templates">📄 Templates</button>
+                    </div>
+                    <div class="publisher-content">
+                        <!-- Création nouvelle fiche -->
+                        <div id="create-tab" class="property-tab-content active">
+                            <div class="property-form">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label>📍 Adresse complète :</label>
+                                        <input type="text" id="propertyAddress" class="property-input" placeholder="123 Rue Principale, Lebel-sur-Quévillon">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>💰 Prix demandé :</label>
+                                        <input type="number" id="propertyPrice" class="property-input" placeholder="250000">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>🛏️ Chambres :</label>
+                                        <select id="propertyBedrooms" class="property-select">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option selected>3</option>
+                                            <option>4</option>
+                                            <option>5+</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>🛁 Salles de bain :</label>
+                                        <select id="propertyBathrooms" class="property-select">
+                                            <option selected>1</option>
+                                            <option>1.5</option>
+                                            <option>2</option>
+                                            <option>2.5</option>
+                                            <option>3+</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>📐 Superficie (pi²) :</label>
+                                        <input type="number" id="propertySize" class="property-input" placeholder="1200">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>🏠 Type :</label>
+                                        <select id="propertyType" class="property-select">
+                                            <option>Bungalow</option>
+                                            <option>Maison 2 étages</option>
+                                            <option>Condo</option>
+                                            <option>Duplex</option>
+                                            <option>Terrain</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>📝 Description détaillée :</label>
+                                    <textarea id="propertyDescription" class="property-textarea" placeholder="Décrivez les caractéristiques, avantages et particularités de la propriété..."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>📸 Photos (URLs ou upload) :</label>
+                                    <input type="text" id="propertyPhotos" class="property-input" placeholder="URLs des photos séparées par des virgules">
+                                    <button onclick="uploadPropertyPhotos()" class="btn-upload-photos">📤 Upload photos</button>
+                                </div>
+                                <div class="ai-property-assistance">
+                                    <h4>🤖 Assistance IA :</h4>
+                                    <button onclick="generatePropertyDescription()" class="btn-ai-generate">✨ Générer description IA</button>
+                                    <button onclick="optimizePropertyForSEO()" class="btn-ai-seo">🔍 Optimiser SEO</button>
+                                    <button onclick="analyzePropertyMarket()" class="btn-ai-analysis">📊 Analyser marché</button>
+                                </div>
+                                <div class="publication-actions">
+                                    <button onclick="previewProperty()" class="btn-preview-property">👁️ Prévisualiser</button>
+                                    <button onclick="publishProperty()" class="btn-publish-property">🚀 Publier fiche</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Fiches publiées -->
+                        <div id="published-tab" class="property-tab-content">
+                            <div class="published-properties-list" id="publishedPropertiesList">
+                                <!-- Fiches générées dynamiquement -->
+                            </div>
+                        </div>
+                        
+                        <!-- Templates -->
+                        <div id="templates-tab" class="property-tab-content">
+                            <div class="template-actions">
+                                <button onclick="createPropertyTemplate()" class="btn-create-template">➕ Nouveau template</button>
+                                <button onclick="importTemplate()" class="btn-import-template">📥 Importer template</button>
+                            </div>
+                            <div class="property-templates-list" id="propertyTemplatesList">
+                                <!-- Templates générés dynamiquement -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gestion Réseaux Sociaux -->
+            <div class="card social-media-card">
+                <h2>📱 Gestion Réseaux Sociaux</h2>
+                <div class="social-platforms">
+                    <div class="platform-grid">
+                        <!-- Facebook -->
+                        <div class="platform-card facebook-card">
+                            <div class="platform-header">
+                                <div class="platform-icon">📘</div>
+                                <h3>Facebook</h3>
+                                <div class="connection-status connected">🟢</div>
+                            </div>
+                            <div class="platform-stats">
+                                <p><strong>Abonnés :</strong> <span id="facebookFollowers">1,234</span></p>
+                                <p><strong>Portée :</strong> <span id="facebookReach">5,678</span></p>
+                            </div>
+                            <div class="platform-actions">
+                                <button onclick="postToFacebook()" class="btn-post">📝 Nouveau post</button>
+                                <button onclick="scheduleFacebookPost()" class="btn-schedule">⏰ Programmer</button>
+                                <button onclick="viewFacebookAnalytics()" class="btn-analytics">📊 Analytics</button>
+                            </div>
+                        </div>
+
+                        <!-- Instagram -->
+                        <div class="platform-card instagram-card">
+                            <div class="platform-header">
+                                <div class="platform-icon">📸</div>
+                                <h3>Instagram</h3>
+                                <div class="connection-status connected">🟢</div>
+                            </div>
+                            <div class="platform-stats">
+                                <p><strong>Abonnés :</strong> <span id="instagramFollowers">987</span></p>
+                                <p><strong>Stories vues :</strong> <span id="instagramStories">456</span></p>
+                            </div>
+                            <div class="platform-actions">
+                                <button onclick="postToInstagram()" class="btn-post">📷 Photo/Vidéo</button>
+                                <button onclick="createInstagramStory()" class="btn-story">📱 Story</button>
+                                <button onclick="viewInstagramInsights()" class="btn-analytics">📊 Insights</button>
+                            </div>
+                        </div>
+
+                        <!-- YouTube -->
+                        <div class="platform-card youtube-card">
+                            <div class="platform-header">
+                                <div class="platform-icon">📺</div>
+                                <h3>YouTube</h3>
+                                <div class="connection-status disconnected">🔴</div>
+                            </div>
+                            <div class="platform-stats">
+                                <p><strong>Abonnés :</strong> <span id="youtubeSubscribers">234</span></p>
+                                <p><strong>Vues totales :</strong> <span id="youtubeViews">12,345</span></p>
+                            </div>
+                            <div class="platform-actions">
+                                <button onclick="connectYoutube()" class="btn-connect">🔗 Connecter</button>
+                                <button onclick="uploadVideo()" class="btn-upload" disabled>🎬 Upload vidéo</button>
+                                <button onclick="viewYoutubeAnalytics()" class="btn-analytics" disabled>📊 Analytics</button>
+                            </div>
+                        </div>
+
+                        <!-- LinkedIn -->
+                        <div class="platform-card linkedin-card">
+                            <div class="platform-header">
+                                <div class="platform-icon">💼</div>
+                                <h3>LinkedIn</h3>
+                                <div class="connection-status connected">🟢</div>
+                            </div>
+                            <div class="platform-stats">
+                                <p><strong>Relations :</strong> <span id="linkedinConnections">456</span></p>
+                                <p><strong>Vues profil :</strong> <span id="linkedinProfileViews">123</span></p>
+                            </div>
+                            <div class="platform-actions">
+                                <button onclick="postToLinkedIn()" class="btn-post">📝 Article pro</button>
+                                <button onclick="sharePropertyLinkedIn()" class="btn-share">🏠 Partager fiche</button>
+                                <button onclick="viewLinkedInAnalytics()" class="btn-analytics">📊 Analytics</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Créateur de contenu social -->
+                <div class="social-content-creator">
+                    <h3>✨ Créateur de contenu IA</h3>
+                    <div class="content-creator-tabs">
+                        <button onclick="showContentTab('post')" class="content-tab active" data-tab="post">📝 Post</button>
+                        <button onclick="showContentTab('story')" class="content-tab" data-tab="story">📱 Story</button>
+                        <button onclick="showContentTab('video')" class="content-tab" data-tab="video">🎬 Vidéo</button>
+                    </div>
+                    <div class="content-creator-panel">
+                        <div id="post-tab" class="content-tab-content active">
+                            <select id="postType" class="content-select">
+                                <option>Nouvelle propriété</option>
+                                <option>Témoignage client</option>
+                                <option>Conseil immobilier</option>
+                                <option>Marché local</option>
+                                <option>Personnel/Behind the scenes</option>
+                            </select>
+                            <textarea id="postContent" class="content-textarea" placeholder="L'IA va générer le contenu..."></textarea>
+                            <div class="content-actions">
+                                <button onclick="generateSocialContent()" class="btn-generate">🤖 Générer avec IA</button>
+                                <button onclick="addHashtags()" class="btn-hashtags"># Hashtags</button>
+                                <button onclick="scheduleAllPlatforms()" class="btn-schedule-all">📅 Programmer partout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campagnes Marketing -->
+            <div class="card marketing-campaigns-card">
+                <h2>📈 Campagnes Marketing</h2>
+                <div class="campaigns-interface">
+                    <div class="campaigns-header">
+                        <button onclick="createMarketingCampaign()" class="btn-create-campaign">🚀 Nouvelle campagne</button>
+                        <button onclick="viewCampaignTemplates()" class="btn-templates">📄 Templates</button>
+                        <button onclick="analyzeCampaignROI()" class="btn-roi-analysis">💰 Analyse ROI</button>
+                    </div>
+                    <div class="active-campaigns" id="activeCampaignsList">
+                        <!-- Campagnes générées dynamiquement -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/identity-protection.js"></script>
+    <script src="marketing-ia.js"></script>
+
+</body>
+</html>

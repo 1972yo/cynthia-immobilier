@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>📋 Assistant Cynthia Bernier - Fiche d'inscription</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="apple-touch-icon" href="favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+    <!-- Header avec logo Cynthia -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Cynthia Bernier</h1>
+            <p>Courtier immobilier résidentiel</p>
+        </div>
+        
+        <!-- Menu navigation rapide avec contrôle d'accès -->
+        <div class="quick-nav" id="quickNav">
+            <!-- Mode CLIENT : Seulement site facade si activé -->
+            <button class="nav-btn client-nav" onclick="openSitePublic()" title="Site web public" style="display: none;">
+                🏠 Site Web
+            </button>
+            
+            <!-- Mode ADMIN : Accès complet (masqué par défaut) -->
+            <button class="nav-btn admin-nav" onclick="openDashboard()" title="Dashboard administrateur" style="display: none;">
+                📊 Dashboard
+            </button>
+            <button class="nav-btn admin-nav" onclick="openWebapp()" title="Portail web professionnel" style="display: none;">
+                🌐 Portail Admin
+            </button>
+            <button class="nav-btn admin-nav" onclick="openSiteComplet()" title="Site web complet" style="display: none;">
+                🏠 Site Complet
+            </button>
+            
+            <!-- Bouton activation mode admin (discret) -->
+            <button class="nav-btn admin-toggle" onclick="toggleAdminMode()" title="Mode administrateur">
+                🔑
+            </button>
+            
+            <button class="nav-btn toggle-btn" onclick="toggleQuickNav()" title="Menu">
+                ☰
+            </button>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+    </header>
+
+    <!-- Formulaire principal -->
+    <main class="main-container">
+        <form id="inscriptionForm" class="form-container">
+            
+            <!-- Section 1: Informations Propriété -->
+            <section class="form-section active" id="section1">
+                <h2>🏠 Informations de la propriété</h2>
+                
+                <div class="input-group">
+                    <label for="adresse">Adresse complète</label>
+                    <input type="text" id="adresse" name="adresse" required>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="numLot">Numéro de lot</label>
+                        <input type="text" id="numLot" name="numLot">
+                    </div>
+                    <div class="input-group">
+                        <label for="jlr">JLR</label>
+                        <input type="text" id="jlr" name="jlr">
+                    </div>
+                    <div class="input-group">
+                        <label for="cm">CM (Centimètres carrés)</label>
+                        <input type="text" id="cm" name="cm" placeholder="Ex: 1500 cm²">
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="anneeConstruction">Année de construction</label>
+                        <input type="number" id="anneeConstruction" name="anneeConstruction" min="1800" max="2025">
+                    </div>
+                    <div class="input-group">
+                        <label for="evaluationMunicipale">Évaluation municipale</label>
+                        <input type="text" id="evaluationMunicipale" name="evaluationMunicipale" placeholder="000 000 $">
+                    </div>
+                </div>
+
+                <!-- Mesures séparées -->
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="longueurTerrain">Longueur terrain (pieds)</label>
+                        <input type="number" id="longueurTerrain" name="longueurTerrain" placeholder="100">
+                    </div>
+                    <div class="input-group">
+                        <label for="largeurTerrain">Largeur terrain (pieds)</label>
+                        <input type="number" id="largeurTerrain" name="largeurTerrain" placeholder="50">
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="longueurBatiment">Longueur bâtiment (pieds)</label>
+                        <input type="number" id="longueurBatiment" name="longueurBatiment" placeholder="40">
+                    </div>
+                    <div class="input-group">
+                        <label for="largeurBatiment">Largeur bâtiment (pieds)</label>
+                        <input type="number" id="largeurBatiment" name="largeurBatiment" placeholder="30">
+                    </div>
+                </div>
+
+                <!-- Centris tracking -->
+                <div class="input-group">
+                    <label for="centrisId">Numéro CENTRIS (si inscrit)</label>
+                    <input type="text" id="centrisId" name="centrisId" placeholder="Ex: 12345678">
+                </div>
+
+                <button type="button" class="btn-next" onclick="nextSection()">Suivant →</button>
+            </section>
+
+            <!-- Section 2: Propriétaires & Locataires -->
+            <section class="form-section" id="section2">
+                <h2>👥 Propriétaires, Locataires & Contacts</h2>
+                
+                <div class="proprietaire-block">
+                    <h3>Propriétaire 1</h3>
+                    <div class="input-group">
+                        <label for="prop1Nom">Nom complet</label>
+                        <input type="text" id="prop1Nom" name="prop1Nom" required>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="prop1Tel1">Téléphone 1</label>
+                            <input type="tel" id="prop1Tel1" name="prop1Tel1">
+                        </div>
+                        <div class="input-group">
+                            <label for="prop1Tel2">Téléphone 2</label>
+                            <input type="tel" id="prop1Tel2" name="prop1Tel2">
+                        </div>
+                        <div class="input-group">
+                            <label for="prop1Email">Email</label>
+                            <input type="email" id="prop1Email" name="prop1Email">
+                        </div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="prop1Type" value="prospect">
+                            <span class="checkbox-custom"></span>
+                            Prospect
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="prop1Type" value="instanet">
+                            <span class="checkbox-custom"></span>
+                            Instanet
+                        </label>
+                    </div>
+                </div>
+
+                <div class="proprietaire-block">
+                    <h3>Propriétaire 2 (optionnel)</h3>
+                    <div class="input-group">
+                        <label for="prop2Nom">Nom complet</label>
+                        <input type="text" id="prop2Nom" name="prop2Nom">
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="prop2Tel1">Téléphone 1</label>
+                            <input type="tel" id="prop2Tel1" name="prop2Tel1">
+                        </div>
+                        <div class="input-group">
+                            <label for="prop2Tel2">Téléphone 2</label>
+                            <input type="tel" id="prop2Tel2" name="prop2Tel2">
+                        </div>
+                        <div class="input-group">
+                            <label for="prop2Email">Email</label>
+                            <input type="email" id="prop2Email" name="prop2Email">
+                        </div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="prop2Type" value="prospect">
+                            <span class="checkbox-custom"></span>
+                            Prospect
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="prop2Type" value="instanet">
+                            <span class="checkbox-custom"></span>
+                            Instanet
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Section LOCATAIRE -->
+                <div class="proprietaire-block">
+                    <h3>🏠 Locataire (si applicable)</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="locatairePresent" value="oui" onchange="toggleLocataireDetails()">
+                            <span class="checkbox-custom"></span>
+                            Propriété occupée par un locataire
+                        </label>
+                    </div>
+                    
+                    <div id="locataireDetails" class="hidden-section">
+                        <div class="input-group">
+                            <label for="locataireNom">Nom du locataire</label>
+                            <input type="text" id="locataireNom" name="locataireNom">
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="locataireTel">Téléphone locataire</label>
+                                <input type="tel" id="locataireTel" name="locataireTel">
+                            </div>
+                            <div class="input-group">
+                                <label for="loyerMensuel">Loyer mensuel ($)</label>
+                                <input type="number" id="loyerMensuel" name="loyerMensuel" placeholder="1200">
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="bailExpiration">Expiration du bail</label>
+                                <input type="date" id="bailExpiration" name="bailExpiration">
+                            </div>
+                            <div class="input-group">
+                                <label for="bailDuree">Durée du bail</label>
+                                <select id="bailDuree" name="bailDuree">
+                                    <option value="">Sélectionner</option>
+                                    <option value="6_mois">6 mois</option>
+                                    <option value="1_an">1 an</option>
+                                    <option value="2_ans">2 ans</option>
+                                    <option value="indetermine">Indéterminé</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="locataireCooperation" value="oui">
+                                <span class="checkbox-custom"></span>
+                                Locataire coopératif pour visites
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="scoreCanafe">Score CANAFE</label>
+                    <input type="text" id="scoreCanafe" name="scoreCanafe">
+                </div>
+
+                <div class="nav-buttons">
+                    <button type="button" class="btn-prev" onclick="prevSection()">← Précédent</button>
+                    <button type="button" class="btn-next" onclick="nextSection()">Suivant →</button>
+                </div>
+            </section>
+
+            <!-- Section 3: Caractéristiques techniques & Intérieur -->
+            <section class="form-section" id="section3">
+                <h2>🏗️ Caractéristiques techniques & Intérieur</h2>
+                
+                <!-- Fondation -->
+                <div class="checkbox-section">
+                    <h3>Fondation</h3>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fondation" value="beton_coule">
+                            <span class="checkbox-custom"></span>
+                            Béton coulé
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fondation" value="cages_bois">
+                            <span class="checkbox-custom"></span>
+                            Cages de bois
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fondation" value="chandelles">
+                            <span class="checkbox-custom"></span>
+                            Chandelles
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fondation" value="drain_francais">
+                            <span class="checkbox-custom"></span>
+                            Drain français
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fondation" value="drain_plancher">
+                            <span class="checkbox-custom"></span>
+                            Drain de plancher/Clapet
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fondation" value="fissures">
+                            <span class="checkbox-custom"></span>
+                            Fissures
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Revêtement toiture -->
+                <div class="checkbox-section">
+                    <h3>Revêtement toiture</h3>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="toiture" value="bardeaux_asphalte">
+                            <span class="checkbox-custom"></span>
+                            Bardeaux asphalte
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="toiture" value="tole">
+                            <span class="checkbox-custom"></span>
+                            Tôle
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="toiture" value="membrane_elastomere">
+                            <span class="checkbox-custom"></span>
+                            Membrane élastomère
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="toiture" value="bardeau_cedre">
+                            <span class="checkbox-custom"></span>
+                            Bardeau de cèdre
+                        </label>
+                    </div>
+                    <div class="input-group">
+                        <label for="anneeToiture">Année de la toiture</label>
+                        <input type="number" id="anneeToiture" name="anneeToiture" min="1980" max="2025">
+                    </div>
+                </div>
+
+                <!-- Revêtement extérieur -->
+                <div class="checkbox-section">
+                    <h3>Revêtement extérieur</h3>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="revetementExt" value="agregat">
+                            <span class="checkbox-custom"></span>
+                            Agrégat
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="revetementExt" value="aluminium">
+                            <span class="checkbox-custom"></span>
+                            Aluminium
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="revetementExt" value="bois">
+                            <span class="checkbox-custom"></span>
+                            Bois
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="revetementExt" value="brique">
+                            <span class="checkbox-custom"></span>
+                            Brique
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="revetementExt" value="pierre">
+                            <span class="checkbox-custom"></span>
+                            Pierre
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="revetementExt" value="pierre_beton">
+                            <span class="checkbox-custom"></span>
+                            Pierre de béton
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="revetementExt" value="canexel">
+                            <span class="checkbox-custom"></span>
+                            Canexel
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="revetementExt" value="vinyle">
+                            <span class="checkbox-custom"></span>
+                            Vinyle
+                        </label>
+                    </div>
+                </div>
+
+                <!-- FENESTRATION Détaillée -->
+                <div class="checkbox-section">
+                    <h3>🧽 Fenêtres & Portes (FENESTRATION)</h3>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fenetres" value="bois">
+                            <span class="checkbox-custom"></span>
+                            Fenêtres bois
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fenetres" value="aluminium">
+                            <span class="checkbox-custom"></span>
+                            Fenêtres aluminium
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fenetres" value="pvc">
+                            <span class="checkbox-custom"></span>
+                            Fenêtres PVC
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fenetres" value="hybride">
+                            <span class="checkbox-custom"></span>
+                            Fenêtres hybrides
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fenetres" value="simple_vitrage">
+                            <span class="checkbox-custom"></span>
+                            Simple vitrage
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fenetres" value="double_vitrage">
+                            <span class="checkbox-custom"></span>
+                            Double vitrage
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fenetres" value="triple_vitrage">
+                            <span class="checkbox-custom"></span>
+                            Triple vitrage
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="portes" value="bois">
+                            <span class="checkbox-custom"></span>
+                            Portes bois
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="portes" value="acier">
+                            <span class="checkbox-custom"></span>
+                            Portes acier
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="portes" value="fibre_verre">
+                            <span class="checkbox-custom"></span>
+                            Portes fibre de verre
+                        </label>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="anneeFenetres">Année remplacement fenêtres</label>
+                            <input type="number" id="anneeFenetres" name="anneeFenetres" min="1980" max="2025">
+                        </div>
+                        <div class="input-group">
+                            <label for="nombreFenetres">Nombre total de fenêtres</label>
+                            <input type="number" id="nombreFenetres" name="nombreFenetres" min="1">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PLAFONDS -->
+                <div class="checkbox-section">
+                    <h3>🖼️ Types de plafonds</h3>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="plafonds" value="platre">
+                            <span class="checkbox-custom"></span>
+                            Plâtre
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="plafonds" value="gyproc">
+                            <span class="checkbox-custom"></span>
+                            Gyproc
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="plafonds" value="bois">
+                            <span class="checkbox-custom"></span>
+                            Bois
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="plafonds" value="suspendus">
+                            <span class="checkbox-custom"></span>
+                            Plafonds suspendus
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="plafonds" value="toles">
+                            <span class="checkbox-custom"></span>
+                            Tôles décoratives
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="plafonds" value="cathedrale">
+                            <span class="checkbox-custom"></span>
+                            Plafond cathédrale
+                        </label>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button type="button" class="btn-prev" onclick="prevSection()">← Précédent</button>
+                    <button type="button" class="btn-next" onclick="nextSection()">Suivant →</button>
+                </div>
+            </section>
+
+            <!-- Section 4: Équipements & Systèmes -->
+            <section class="form-section" id="section4">
+                <h2>⚡ Équipements, Systèmes & Intérieur</h2>
+                
+                <!-- CHAUFFAGE Complet -->
+                <div class="checkbox-section">
+                    <h3>🔥 Système de chauffage principal</h3>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="chauffage" value="plinthe_electrique">
+                            <span class="checkbox-custom"></span>
+                            Plinthe électrique
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="chauffage" value="air_pulse">
+                            <span class="checkbox-custom"></span>
+                            Air pulsé
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="chauffage" value="radiant_plancher">
+                            <span class="checkbox-custom"></span>
+                            Radiant plancher
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="chauffage" value="calorifere">
+                            <span class="checkbox-custom"></span>
+                            Calorifère
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="chauffage" value="poele_bois">
+                            <span class="checkbox-custom"></span>
+                            Poêle à bois
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="chauffage" value="foyer_bois">
+                            <span class="checkbox-custom"></span>
+                            Foyer au bois
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="chauffage" value="foyer_gaz">
+                            <span class="checkbox-custom"></span>
+                            Foyer au gaz
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="chauffage" value="thermopompe">
+                            <span class="checkbox-custom"></span>
+                            Thermopompe
+                        </label>
+                    </div>
+                </div>
+
+                <!-- CHAUFFAGE D'APPOINT -->
+                <div class="checkbox-section">
+                    <h3>🔥 Chauffage d'appoint</h3>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="chauffageAppoint" value="poele_granules">
+                            <span class="checkbox-custom"></span>
+                            Poêle à granules
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="chauffageAppoint" value="chauffage_portable">
+                            <span class="checkbox-custom"></span>
+                            Chauffage portable
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="chauffageAppoint" value="radiateur_huile">
+                            <span class="checkbox-custom"></span>
+                            Radiateur à l'huile
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="chauffageAppoint" value="cheminee_decorative">
+                            <span class="checkbox-custom"></span>
+                            Cheminée décorative
+                        </label>
+                    </div>
+                </div>
+
+                <!-- TYPE D'ÉNERGIE -->
+                <div class="checkbox-section">
+                    <h3>⚡ Type d'énergie</h3>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="energie" value="bi_energie">
+                            <span class="checkbox-custom"></span>
+                            Bi-énergie
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="energie" value="bois">
+                            <span class="checkbox-custom"></span>
+                            Bois
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="energie" value="electricite">
+                            <span class="checkbox-custom"></span>
+                            Électricité
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="energie" value="mazout">
+                            <span class="checkbox-custom"></span>
+                            Mazout
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="energie" value="gaz_naturel">
+                            <span class="checkbox-custom"></span>
+                            Gaz naturel
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="energie" value="propane">
+                            <span class="checkbox-custom"></span>
+                            Propane
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="energie" value="geothermie">
+                            <span class="checkbox-custom"></span>
+                            Géothermie
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="energie" value="solaire">
+                            <span class="checkbox-custom"></span>
+                            Solaire
+                        </label>
+                    </div>
+                    <div class="input-group">
+                        <label for="autreEnergie">Autre type d'énergie</label>
+                        <input type="text" id="autreEnergie" name="autreEnergie" placeholder="Spécifiez...">
+                    </div>
+                </div>
+
+                <!-- SOUS-SOL Complet -->
+                <div class="checkbox-section">
+                    <h3>🏠 Sous-sol</h3>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sousSol" value="complet">
+                            <span class="checkbox-custom"></span>
+                            Sous-sol complet
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sousSol" value="partiel">
+                            <span class="checkbox-custom"></span>
+                            Sous-sol partiel
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sousSol" value="vide_sanitaire">
+                            <span class="checkbox-custom"></span>
+                            Vide sanitaire
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sousSol" value="aucun">
+                            <span class="checkbox-custom"></span>
+                            Aucun sous-sol
+                        </label>
+                    </div>
+                    
+                    <h4>Aménagement sous-sol</h4>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sousSolAmenage" value="amenage">
+                            <span class="checkbox-custom"></span>
+                            Aménagé
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sousSolAmenage" value="semi_amenage">
+                            <span class="checkbox-custom"></span>
+                            Semi-aménagé
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sousSolAmenage" value="non_amenage">
+                            <span class="checkbox-custom"></span>
+                            Non aménagé
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sousSolAmenage" value="inondable">
+                            <span class="checkbox-custom"></span>
+                            Sujets à inondation
+                        </label>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="hauteurSousSol">Hauteur plafond sous-sol (pieds)</label>
+                        <input type="number" id="hauteurSousSol" name="hauteurSousSol" step="0.5" min="5" max="12" placeholder="7.5">
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button type="button" class="btn-prev" onclick="prevSection()">← Précédent</button>
+                    <button type="button" class="btn-next" onclick="nextSection()">Suivant →</button>
+                </div>
+            </section>
+
+            <!-- Section 5: Salles de bains & Cuisine -->
+            <section class="form-section" id="section5">
+                <h2>🛁 Salles de bains & Cuisine</h2>
+                
+                <!-- SALLE DE BAINS Détaillée -->
+                <div class="checkbox-section">
+                    <h3>🛁 Salle(s) de bains</h3>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="nombreSallesBains">Nombre de salles de bains</label>
+                            <input type="number" id="nombreSallesBains" name="nombreSallesBains" min="1" max="10" placeholder="2">
+                        </div>
+                        <div class="input-group">
+                            <label for="nombreSallesEau">Nombre de salles d'eau</label>
+                            <input type="number" id="nombreSallesEau" name="nombreSallesEau" min="0" max="5" placeholder="1">
+                        </div>
+                    </div>
+                    
+                    <h4>Caractéristiques principales</h4>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sallesBains" value="bain_podium">
+                            <span class="checkbox-custom"></span>
+                            Bain podium
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sallesBains" value="bain_sur_pattes">
+                            <span class="checkbox-custom"></span>
+                            Bain sur pattes
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sallesBains" value="bain_jets">
+                            <span class="checkbox-custom"></span>
+                            Bain à jets/spa
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sallesBains" value="douche_italienne">
+                            <span class="checkbox-custom"></span>
+                            Douche à l'italienne
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sallesBains" value="douche_independante">
+                            <span class="checkbox-custom"></span>
+                            Douche indépendante
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sallesBains" value="combo_bain_douche">
+                            <span class="checkbox-custom"></span>
+                            Combo bain/douche
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sallesBains" value="double_lavabo">
+                            <span class="checkbox-custom"></span>
+                            Double lavabo
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sallesBains" value="plancher_chauffant">
+                            <span class="checkbox-custom"></span>
+                            Plancher chauffant
+                        </label>
+                    </div>
+                    
+                    <h4>Revêtements</h4>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sallesBainsRevetement" value="ceramique">
+                            <span class="checkbox-custom"></span>
+                            Céramique
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sallesBainsRevetement" value="marbre">
+                            <span class="checkbox-custom"></span>
+                            Marbre
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sallesBainsRevetement" value="granite">
+                            <span class="checkbox-custom"></span>
+                            Granite
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sallesBainsRevetement" value="quartz">
+                            <span class="checkbox-custom"></span>
+                            Quartz
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="sallesBainsRevetement" value="vinyle_luxe">
+                            <span class="checkbox-custom"></span>
+                            Vinyle de luxe
+                        </label>
+                    </div>
+                </div>
+
+                <!-- ARMOIRE CUISINE avec matériaux -->
+                <div class="checkbox-section">
+                    <h3>🍳 Cuisine & Armoires</h3>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="armoires" value="bois_massif">
+                            <span class="checkbox-custom"></span>
+                            Armoires bois massif
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="armoires" value="melamine">
+                            <span class="checkbox-custom"></span>
+                            Armoires mélamine
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="armoires" value="stratifie">
+                            <span class="checkbox-custom"></span>
+                            Armoires stratifié
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="armoires" value="laque">
+                            <span class="checkbox-custom"></span>
+                            Armoires laquées
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="armoires" value="thermoplastique">
+                            <span class="checkbox-custom"></span>
+                            Thermoplastique
+                        </label>
+                    </div>
+                    
+                    <h4>Comptoirs</h4>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="comptoirs" value="granite">
+                            <span class="checkbox-custom"></span>
+                            Granite
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="comptoirs" value="quartz">
+                            <span class="checkbox-custom"></span>
+                            Quartz
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="comptoirs" value="marbre">
+                            <span class="checkbox-custom"></span>
+                            Marbre
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="comptoirs" value="stratifie">
+                            <span class="checkbox-custom"></span>
+                            Stratifié
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="comptoirs" value="bois">
+                            <span class="checkbox-custom"></span>
+                            Bois
+                        </label>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="anneeRenoCuisine">Année rénovation cuisine</label>
+                            <input type="number" id="anneeRenoCuisine" name="anneeRenoCuisine" min="1980" max="2025">
+                        </div>
+                        <div class="input-group">
+                            <label for="couleurArmoires">Couleur armoires</label>
+                            <input type="text" id="couleurArmoires" name="couleurArmoires" placeholder="Ex: Blanc, Chêne, Noir">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LAVEUSE/SÉCHEUSE -->
+                <div class="checkbox-section">
+                    <h3>🔄 Laveuse/Sécheuse</h3>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="laveuse" value="incluses">
+                            <span class="checkbox-custom"></span>
+                            Laveuse/sécheuse incluses
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="laveuse" value="branchements_seulement">
+                            <span class="checkbox-custom"></span>
+                            Branchements seulement
+                        </label>
+                    </div>
+                    
+                    <h4>Emplacement</h4>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="emplacementLaveuse" value="salle_lavage">
+                            <span class="checkbox-custom"></span>
+                            Salle de lavage dédiée
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="emplacementLaveuse" value="placard_cuisine">
+                            <span class="checkbox-custom"></span>
+                            Placard cuisine
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="emplacementLaveuse" value="sous_sol">
+                            <span class="checkbox-custom"></span>
+                            Sous-sol
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="emplacementLaveuse" value="garage">
+                            <span class="checkbox-custom"></span>
+                            Garage
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="emplacementLaveuse" value="salle_bain">
+                            <span class="checkbox-custom"></span>
+                            Salle de bain
+                        </label>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button type="button" class="btn-prev" onclick="prevSection()">← Précédent</button>
+                    <button type="button" class="btn-next" onclick="nextSection()">Suivant →</button>
+                </div>
+            </section>
+
+            <!-- Section 6: Équipements & Problèmes -->
+            <section class="form-section" id="section6">
+                <h2>⚙️ Équipements & Inspection</h2>
+                
+                <!-- Équipements spéciaux -->
+                <div class="checkbox-section">
+                    <h3>Équipements spéciaux</h3>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="equipements" value="borne_recharge">
+                            <span class="checkbox-custom"></span>
+                            Borne de recharge VE
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="equipements" value="climatiseur_central">
+                            <span class="checkbox-custom"></span>
+                            Climatisation centrale
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="equipements" value="climatiseur_mural">
+                            <span class="checkbox-custom"></span>
+                            Climatiseurs muraux
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="equipements" value="aspirateur_central">
+                            <span class="checkbox-custom"></span>
+                            Aspirateur central
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="equipements" value="ouvre_porte_garage">
+                            <span class="checkbox-custom"></span>
+                            Ouvre-porte garage
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="equipements" value="systeme_alarme">
+                            <span class="checkbox-custom"></span>
+                            Système d'alarme
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="equipements" value="cameras_surveillance">
+                            <span class="checkbox-custom"></span>
+                            Caméras surveillance
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="equipements" value="domotique">
+                            <span class="checkbox-custom"></span>
+                            Domotique/Maison intelligente
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Piscine détaillée -->
+                <div class="checkbox-section">
+                    <h3>🏊 Piscine</h3>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="piscine" value="hors_terre" onchange="togglePiscineDetails()">
+                            <span class="checkbox-custom"></span>
+                            Hors-terre
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="piscine" value="creusee" onchange="togglePiscineDetails()">
+                            <span class="checkbox-custom"></span>
+                            Creusée
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="piscine" value="chauffee">
+                            <span class="checkbox-custom"></span>
+                            Chauffée
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="piscine" value="salee">
+                            <span class="checkbox-custom"></span>
+                            Salée
+                        </label>
+                    </div>
+                    
+                    <div id="piscineDetails" class="hidden-section">
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="anneeToilePiscine">Année de la toile</label>
+                                <input type="number" id="anneeToilePiscine" name="anneeToilePiscine" min="2000" max="2025">
+                            </div>
+                            <div class="input-group">
+                                <label for="dimensionsPiscine">Dimensions (LxlxP)</label>
+                                <input type="text" id="dimensionsPiscine" name="dimensionsPiscine" placeholder="24x12x4">
+                            </div>
+                        </div>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="piscineFiltration" value="sel">
+                                <span class="checkbox-custom"></span>
+                                Filtration au sel
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="piscineFiltration" value="sable">
+                                <span class="checkbox-custom"></span>
+                                Filtration au sable
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="piscineFiltration" value="cartouche">
+                                <span class="checkbox-custom"></span>
+                                Filtration à cartouche
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INFILTRATION/DÉVERSEMENT/FUITE -->
+                <div class="checkbox-section">
+                    <h3>⚠️ Problèmes détectés</h3>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="problemes" value="infiltration_eau">
+                            <span class="checkbox-custom"></span>
+                            Infiltration d'eau
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="problemes" value="deversement_sous_sol">
+                            <span class="checkbox-custom"></span>
+                            Déversement sous-sol
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="problemes" value="fuite_toiture">
+                            <span class="checkbox-custom"></span>
+                            Fuite toiture
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="problemes" value="fuite_plomberie">
+                            <span class="checkbox-custom"></span>
+                            Fuite plomberie
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="problemes" value="moisissure_visible">
+                            <span class="checkbox-custom"></span>
+                            Moisissures visibles
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="problemes" value="probleme_electrique">
+                            <span class="checkbox-custom"></span>
+                            Problèmes électriques
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="problemes" value="probleme_chauffage">
+                            <span class="checkbox-custom"></span>
+                            Problèmes chauffage
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="problemes" value="isolation_deficiente">
+                            <span class="checkbox-custom"></span>
+                            Isolation déficiente
+                        </label>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="detailsProblemes">Détails des problèmes</label>
+                        <textarea id="detailsProblemes" name="detailsProblemes" rows="3" placeholder="Décrivez les problèmes détectés, leur localisation, etc."></textarea>
+                    </div>
+                </div>
+
+                <!-- Notes additionnelles -->
+                <div class="input-group">
+                    <label for="notesSpeciales">Notes spéciales / Points intéressants</label>
+                    <textarea id="notesSpeciales" name="notesSpeciales" rows="4" placeholder="Détails importants, travaux récents, particularités, améliorations..."></textarea>
+                </div>
+
+                <div class="nav-buttons">
+                    <button type="button" class="btn-prev" onclick="prevSection()">← Précédent</button>
+                    <button type="submit" class="btn-submit">📧 Envoyer à Cynthia</button>
+                </div>
+            </section>
+        </form>
+
+        <!-- Confirmation -->
+        <div id="confirmation" class="confirmation hidden">
+            <div class="success-message">
+                <h2>✅ Fiche envoyée avec succès !</h2>
+                <p>Cynthia Bernier recevra votre fiche d'inscription par email et vous contactera rapidement.</p>
+                <button onclick="resetForm()" class="btn-new">📝 Nouvelle fiche</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Configuration et scripts -->
+    <script src="config/features-control.js"></script>
+    <script src="services/identity-protection.js"></script>
+    <script src="services/email-service.js"></script>
+    <script src="assets/js/system-integration.js"></script>
+    <script src="config.js"></script>
+    <script src="email-config.js"></script>
+    <script src="script.js"></script>
+    
+    <!-- EmailJS CDN -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</body>
+</html>
