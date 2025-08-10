@@ -211,10 +211,40 @@ body {
     box-shadow: 0 8px 32px rgba(30, 64, 175, 0.35) !important;
 }
 
+/* Bouton pour gestionnaire de site */
+.action-btn-site {
+    background: linear-gradient(135deg, #ea580c 0%, #f97316 100%) !important;
+    color: white !important;
+    border: 2px solid rgba(234, 88, 12, 0.3) !important;
+    box-shadow: 0 6px 24px rgba(234, 88, 12, 0.25) !important;
+}
+
+.action-btn-site:hover {
+    background: linear-gradient(135deg, #c2410c 0%, #ea580c 100%) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 32px rgba(234, 88, 12, 0.35) !important;
+}
+
+/* Bouton pour gestionnaire de fiches */
+.action-btn-fiche {
+    background: linear-gradient(135deg, #7c2d12 0%, #a16207 100%) !important;
+    color: white !important;
+    border: 2px solid rgba(124, 45, 18, 0.3) !important;
+    box-shadow: 0 6px 24px rgba(124, 45, 18, 0.25) !important;
+}
+
+.action-btn-fiche:hover {
+    background: linear-gradient(135deg, #451a03 0%, #7c2d12 100%) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 32px rgba(124, 45, 18, 0.35) !important;
+}
+
 .action-btn-featured .action-icon,
 .action-btn-featured-marketing .action-icon,
 .action-btn-editor .action-icon,
-.action-btn-pwa .action-icon {
+.action-btn-pwa .action-icon,
+.action-btn-site .action-icon,
+.action-btn-fiche .action-icon {
     font-size: 3rem !important;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -222,7 +252,9 @@ body {
 .action-btn-featured h4,
 .action-btn-featured-marketing h4,
 .action-btn-editor h4,
-.action-btn-pwa h4 {
+.action-btn-pwa h4,
+.action-btn-site h4,
+.action-btn-fiche h4 {
     color: white !important;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
@@ -230,7 +262,9 @@ body {
 .action-btn-featured p,
 .action-btn-featured-marketing p,
 .action-btn-editor p,
-.action-btn-pwa p {
+.action-btn-pwa p,
+.action-btn-site p,
+.action-btn-fiche p {
     color: rgba(255, 255, 255, 0.9) !important;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }

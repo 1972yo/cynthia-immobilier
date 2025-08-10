@@ -460,6 +460,40 @@ function openHomePWA() {
     }
 }
 
+function openSiteManager() {
+    // Ouvrir interface de gestion du site web (Marketing IA)
+    const siteManagerUrl = 'marketing-ia.html';
+    const newWindow = window.open(siteManagerUrl, '_blank', 'width=1400,height=900');
+    
+    if (!newWindow) {
+        alert('⚠️ Popup bloquée.\n\nL\'interface de gestion de site va s\'ouvrir dans un nouvel onglet.');
+        window.open(siteManagerUrl, '_blank');
+    } else {
+        console.log('🌐 Ouverture gestionnaire de site');
+        
+        if (window.cynthiaDashboard) {
+            window.cynthiaDashboard.addNotification('🌐', 'Site Manager ouvert', 'Interface de gestion site web et marketing lancée', 'info');
+        }
+    }
+}
+
+function openFicheManager() {
+    // Ouvrir interface de gestion des fiches clients  
+    const ficheManagerUrl = '../assistant/admin/pwa-dashboard/index.html';
+    const newWindow = window.open(ficheManagerUrl, '_blank', 'width=1400,height=900');
+    
+    if (!newWindow) {
+        alert('⚠️ Popup bloquée.\n\nL\'interface de gestion des fiches va s\'ouvrir dans un nouvel onglet.');
+        window.open(ficheManagerUrl, '_blank');
+    } else {
+        console.log('📋 Ouverture gestionnaire de fiches');
+        
+        if (window.cynthiaDashboard) {
+            window.cynthiaDashboard.addNotification('📋', 'Fiche Manager ouvert', 'Interface de gestion des fiches clients lancée', 'info');
+        }
+    }
+}
+
 function exportData() {
     console.log('📤 Export des données...');
     
