@@ -8,7 +8,43 @@ class EmailIAManager {
         this.aiConversation = [];
         this.currentTemplateEdit = null;
         
+        // Configuration OpenAI WebApp
+        this.openAIConfig = this.loadOpenAIConfig();
+        
         this.init();
+    }
+
+    loadOpenAIConfig() {
+        // Utiliser la configuration WebApp séparée
+        if (typeof window !== 'undefined' && window.WebAppConfig) {
+            return {
+                apiKey: window.WebAppConfig.getOpenAIKey(),
+                endpoint: window.WebAppConfig.get('openai.endpoint'),
+                model: window.WebAppConfig.get('openai.model'),
+                maxTokens: window.WebAppConfig.get('openai.maxTokens'),
+                temperature: window.WebAppConfig.get('openai.temperature')
+            };
+        }
+        
+        // Fallback depuis les variables d'environnement
+        if (typeof window !== 'undefined' && window.ENV && window.ENV.CYNTHIA_WEBAPP_OPENAI_KEY) {
+            return {
+                apiKey: window.ENV.CYNTHIA_WEBAPP_OPENAI_KEY,
+                endpoint: 'https://api.openai.com/v1/chat/completions',
+                model: 'gpt-4',
+                maxTokens: 800,
+                temperature: 0.4
+            };
+        }
+        
+        // Configuration par défaut
+        return {
+            apiKey: 'CYNTHIA_WEBAPP_OPENAI_KEY_HERE',
+            endpoint: 'https://api.openai.com/v1/chat/completions',
+            model: 'gpt-4',
+            maxTokens: 800,
+            temperature: 0.4
+        };
     }
 
     async init() {
@@ -306,6 +342,54 @@ Cynthia Bernier
                 <div class="insight-content">${insight.content}</div>
             </div>
         `).join('');
+    }
+
+    // Nouvelle méthode pour appeler OpenAI WebApp
+    async callOpenAIWebApp(prompt, systemMessage = null) {
+        try {
+            if (this.openAIConfig.apiKey.includes('HERE')) {
+                throw new Error('Clé OpenAI WebApp non configurée');
+            }
+
+            const messages = [];
+            
+            if (systemMessage) {
+                messages.push({
+                    role: 'system',
+                    content: systemMessage
+                });
+            }
+            
+            messages.push({
+                role: 'user',
+                content: prompt
+            });
+
+            const response = await fetch(this.openAIConfig.endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.openAIConfig.apiKey}`
+                },
+                body: JSON.stringify({
+                    model: this.openAIConfig.model,
+                    messages: messages,
+                    temperature: this.openAIConfig.temperature,
+                    max_tokens: this.openAIConfig.maxTokens
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`API OpenAI WebApp error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.choices[0].message.content;
+            
+        } catch (error) {
+            console.error('❌ Erreur OpenAI WebApp:', error);
+            throw error;
+        }
     }
 
     // Méthodes d'interaction IA

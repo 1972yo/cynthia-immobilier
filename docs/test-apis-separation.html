@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Test de Séparation des APIs - Cynthia Bernier</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .test-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .test-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-success { background: #4CAF50; }
+        .status-warning { background: #FF9800; }
+        .status-error { background: #F44336; }
+        
+        .result-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 8px 8px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .config-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .config-card.assistant {
+            border-color: #28a745;
+        }
+        
+        .config-card.webapp {
+            border-color: #007bff;
+        }
+        
+        .key-display {
+            font-family: 'Courier New', monospace;
+            background: #e9ecef;
+            padding: 8px;
+            border-radius: 4px;
+            margin: 5px 0;
+            font-size: 12px;
+            word-break: break-all;
+        }
+        
+        .input-group {
+            margin: 10px 0;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="header">
+        <h1>🧪 Test de Séparation des APIs</h1>
+        <p><strong>Cynthia Bernier</strong> - Vérification des configurations OpenAI</p>
+        <p>Assistant vs WebApp - Deux clés distinctes</p>
+    </div>
+
+    <!-- Configuration rapide -->
+    <div class="test-section">
+        <h2>⚙️ Configuration rapide des clés</h2>
+        <p>Pour tester, saisissez des clés OpenAI distinctes :</p>
+        
+        <div class="config-grid">
+            <div class="config-card assistant">
+                <h3>🔧 Assistant API</h3>
+                <div class="input-group">
+                    <label>Clé OpenAI Assistant</label>
+                    <input type="password" id="assistantKey" placeholder="sk-assistant-your-key-here">
+                </div>
+                <p><small>Utilisée pour l'analyse des fiches immobilières</small></p>
+            </div>
+            
+            <div class="config-card webapp">
+                <h3>🌐 WebApp API</h3>
+                <div class="input-group">
+                    <label>Clé OpenAI WebApp</label>
+                    <input type="password" id="webappKey" placeholder="sk-webapp-your-key-here">
+                </div>
+                <p><small>Utilisée pour la génération d'emails et templates</small></p>
+            </div>
+        </div>
+        
+        <button class="test-button" onclick="configureKeys()">🔑 Configurer les clés</button>
+        <button class="test-button" onclick="generateTestKeys()">🎲 Générer des clés de test</button>
+        
+        <div id="configResult" class="result-box" style="display: none;"></div>
+    </div>
+
+    <!-- Tests de vérification -->
+    <div class="test-section">
+        <h2>🔍 Tests de vérification</h2>
+        
+        <button class="test-button" onclick="testConfigurationLoad()">📋 Charger configurations</button>
+        <button class="test-button" onclick="testAPISeparation()">🔬 Tester séparation</button>
+        <button class="test-button" onclick="testAPIConnections()">🌐 Tester connexions</button>
+        <button class="test-button" onclick="showFullStatus()">📊 Statut complet</button>
+        
+        <div id="testResults" class="result-box" style="display: none;"></div>
+    </div>
+
+    <!-- Statut actuel -->
+    <div class="test-section">
+        <h2>📊 Statut actuel</h2>
+        <div id="currentStatus">
+            <p>Chargement des configurations...</p>
+        </div>
+    </div>
+
+    <!-- Console de debug -->
+    <div class="test-section">
+        <h2>🔧 Console de debug</h2>
+        <p>Commandes utiles à exécuter dans la console du navigateur :</p>
+        <div class="result-box">
+// Vérifier la séparation des APIs
+window.checkAPIsSeparation();
+
+// Afficher le statut complet
+window.showConfigStatus();
+
+// Obtenir de l'aide
+window.helpConfigureCynthia();
+
+// Configurer rapidement
+window.quickConfigureKeys('sk-assistant-...', 'sk-webapp-...');
+
+// Vérifier les clés actuelles
+console.log('Assistant:', window.AppConfig?.get('openai.apiKey'));
+console.log('WebApp:', window.WebAppConfig?.getOpenAIKey());
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="init-config.js"></script>
+    <script src="assistant/config.js"></script>
+    <script src="webapp/webapp-config.js"></script>
+    
+    <script>
+        // 🧪 FONCTIONS DE TEST
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️';
+            return `${timestamp} ${icon} ${message}`;
+        }
+        
+        function updateResults(elementId, content, show = true) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = content;
+            if (show) element.style.display = 'block';
+        }
+        
+        function generateTestKeys() {
+            // Générer des clés de test fictives pour la démonstration
+            const assistantKey = 'sk-assistant-test-' + Math.random().toString(36).substring(2, 15);
+            const webappKey = 'sk-webapp-test-' + Math.random().toString(36).substring(2, 15);
+            
+            document.getElementById('assistantKey').value = assistantKey;
+            document.getElementById('webappKey').value = webappKey;
+            
+            updateResults('configResult', log('Clés de test générées (fictives)', 'warning'), true);
+        }
+        
+        function configureKeys() {
+            const assistantKey = document.getElementById('assistantKey').value;
+            const webappKey = document.getElementById('webappKey').value;
+            
+            if (!assistantKey || !webappKey) {
+                updateResults('configResult', log('Veuillez saisir les deux clés', 'error'), true);
+                return;
+            }
+            
+            if (assistantKey === webappKey) {
+                updateResults('configResult', log('ERREUR: Les clés doivent être différentes !', 'error'), true);
+                return;
+            }
+            
+            try {
+                // Configurer via la fonction globale
+                const result = window.quickConfigureKeys(assistantKey, webappKey);
+                
+                let output = log('Configuration des clés réussie !', 'success') + '\n';
+                output += log(`Assistant configuré: ${result.assistantConfigured}`, result.assistantConfigured ? 'success' : 'error') + '\n';
+                output += log(`WebApp configuré: ${result.webappConfigured}`, result.webappConfigured ? 'success' : 'error') + '\n';
+                output += log(`Clés séparées: ${result.keysSeparated}`, result.keysSeparated ? 'success' : 'error') + '\n';
+                output += log(`Statut global: ${result.status}`, result.status === 'success' ? 'success' : 'warning');
+                
+                updateResults('configResult', output, true);
+                updateCurrentStatus();
+                
+            } catch (error) {
+                updateResults('configResult', log('Erreur configuration: ' + error.message, 'error'), true);
+            }
+        }
+        
+        function testConfigurationLoad() {
+            let output = log('Test de chargement des configurations...', 'info') + '\n';
+            
+            try {
+                // Test AppConfig (Assistant)
+                if (window.AppConfig) {
+                    const assistantKey = window.AppConfig.get('openai.apiKey');
+                    output += log(`Assistant Config chargé: ${assistantKey ? 'OUI' : 'NON'}`, assistantKey ? 'success' : 'error') + '\n';
+                    if (assistantKey) {
+                        output += log(`Clé Assistant: ${assistantKey.substring(0, 15)}...`, 'info') + '\n';
+                    }
+                } else {
+                    output += log('AppConfig non disponible', 'error') + '\n';
+                }
+                
+                // Test WebAppConfig
+                if (window.WebAppConfig) {
+                    const webappKey = window.WebAppConfig.getOpenAIKey();
+                    output += log(`WebApp Config chargé: ${webappKey ? 'OUI' : 'NON'}`, webappKey ? 'success' : 'error') + '\n';
+                    if (webappKey) {
+                        output += log(`Clé WebApp: ${webappKey.substring(0, 15)}...`, 'info') + '\n';
+                    }
+                } else {
+                    output += log('WebAppConfig non disponible', 'error') + '\n';
+                }
+                
+            } catch (error) {
+                output += log('Erreur test: ' + error.message, 'error') + '\n';
+            }
+            
+            updateResults('testResults', output, true);
+        }
+        
+        function testAPISeparation() {
+            let output = log('Test de séparation des APIs...', 'info') + '\n';
+            
+            try {
+                const status = window.checkAPIsSeparation();
+                
+                output += log(`Assistant configuré: ${status.assistantConfigured}`, status.assistantConfigured ? 'success' : 'error') + '\n';
+                output += log(`WebApp configuré: ${status.webappConfigured}`, status.webappConfigured ? 'success' : 'error') + '\n';
+                output += log(`Clés distinctes: ${status.keysSeparated}`, status.keysSeparated ? 'success' : 'error') + '\n';
+                output += log(`Statut final: ${status.status}`, status.status === 'success' ? 'success' : 'warning') + '\n';
+                
+                if (status.status === 'success') {
+                    output += log('🎉 EXCELLENT ! Les APIs sont correctement séparées', 'success');
+                } else {
+                    output += log('⚠️ Configuration incomplète ou problème détecté', 'warning');
+                }
+                
+            } catch (error) {
+                output += log('Erreur test séparation: ' + error.message, 'error');
+            }
+            
+            updateResults('testResults', output, true);
+        }
+        
+        function testAPIConnections() {
+            let output = log('Test des connexions API (simulation)...', 'info') + '\n';
+            
+            try {
+                // Simuler des tests de connexion
+                const assistantKey = window.AppConfig?.get('openai.apiKey');
+                const webappKey = window.WebAppConfig?.getOpenAIKey();
+                
+                if (assistantKey && !assistantKey.includes('HERE')) {
+                    output += log('Assistant API: Clé valide format', 'success') + '\n';
+                    output += log('Assistant API: Prêt pour analyse fiches', 'info') + '\n';
+                } else {
+                    output += log('Assistant API: Clé non configurée', 'error') + '\n';
+                }
+                
+                if (webappKey && !webappKey.includes('HERE')) {
+                    output += log('WebApp API: Clé valide format', 'success') + '\n';
+                    output += log('WebApp API: Prêt pour génération emails', 'info') + '\n';
+                } else {
+                    output += log('WebApp API: Clé non configurée', 'error') + '\n';
+                }
+                
+                // Simulation de tests avancés
+                output += log('NOTE: Tests de connexion réels nécessitent des clés OpenAI valides', 'warning');
+                
+            } catch (error) {
+                output += log('Erreur test connexions: ' + error.message, 'error');
+            }
+            
+            updateResults('testResults', output, true);
+        }
+        
+        function showFullStatus() {
+            try {
+                window.showConfigStatus();
+                updateResults('testResults', log('Statut complet affiché dans la popup', 'info'), true);
+            } catch (error) {
+                updateResults('testResults', log('Erreur affichage statut: ' + error.message, 'error'), true);
+            }
+        }
+        
+        function updateCurrentStatus() {
+            try {
+                const status = window.checkAPIsSeparation();
+                
+                let html = '<div class="config-grid">';
+                
+                // Assistant Status
+                html += '<div class="config-card assistant">';
+                html += '<h3>🔧 Assistant API</h3>';
+                html += `<p><span class="status-indicator ${status.assistantConfigured ? 'status-success' : 'status-error'}"></span>`;
+                html += `${status.assistantConfigured ? 'Configuré' : 'Non configuré'}</p>`;
+                if (window.AppConfig) {
+                    const key = window.AppConfig.get('openai.apiKey');
+                    html += `<div class="key-display">${key ? key.substring(0, 20) + '...' : 'Aucune clé'}</div>`;
+                }
+                html += '</div>';
+                
+                // WebApp Status
+                html += '<div class="config-card webapp">';
+                html += '<h3>🌐 WebApp API</h3>';
+                html += `<p><span class="status-indicator ${status.webappConfigured ? 'status-success' : 'status-error'}"></span>`;
+                html += `${status.webappConfigured ? 'Configuré' : 'Non configuré'}</p>`;
+                if (window.WebAppConfig) {
+                    const key = window.WebAppConfig.getOpenAIKey();
+                    html += `<div class="key-display">${key ? key.substring(0, 20) + '...' : 'Aucune clé'}</div>`;
+                }
+                html += '</div>';
+                
+                html += '</div>';
+                
+                // Status global
+                html += `<p style="text-align: center; margin-top: 20px;">`;
+                html += `<span class="status-indicator ${status.status === 'success' ? 'status-success' : status.status === 'partial' ? 'status-warning' : 'status-error'}"></span>`;
+                html += `<strong>Statut global: ${status.status === 'success' ? 'EXCELLENT' : status.status === 'partial' ? 'PARTIEL' : 'PROBLÈME'}</strong>`;
+                html += `</p>`;
+                
+                document.getElementById('currentStatus').innerHTML = html;
+                
+            } catch (error) {
+                document.getElementById('currentStatus').innerHTML = `<p>❌ Erreur chargement statut: ${error.message}</p>`;
+            }
+        }
+        
+        // Initialisation au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                updateCurrentStatus();
+            }, 1000);
+        });
+    </script>
+
+</body>
+</html>

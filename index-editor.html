@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 Éditeur Fiches - Cynthia Bernier Immobilier</title>
+    <style>
+        :root {
+            --primary: #c53030;
+            --secondary: #2b6cb0;
+            --accent: #d69e2e;
+            --success: #38a169;
+            --bg-light: #f8f9fa;
+            --text: #2d3748;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-light);
+            color: var(--text);
+        }
+
+        .editor-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr 350px;
+            height: 100vh;
+            gap: 0;
+        }
+
+        /* Sidebar Tools */
+        .tools-sidebar {
+            background: white;
+            border-right: 1px solid var(--border);
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .tools-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tools-header h2 {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .tool-section {
+            margin-bottom: 2rem;
+        }
+
+        .tool-section h3 {
+            color: var(--text);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .template-card {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+        }
+
+        .template-card:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .template-card.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .element-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .element-item {
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: grab;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .element-item:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .color-controls {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 0.5rem;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .color-input {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .ai-assistant {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .ai-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 6px;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .ai-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            width: 100%;
+        }
+
+        /* Main Editor */
+        .main-editor {
+            background: #f0f0f0;
+            position: relative;
+            overflow: auto;
+            padding: 2rem;
+        }
+
+        .editor-toolbar {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            right: 1rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .toolbar-left {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .toolbar-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toolbar-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .toolbar-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .canvas-container {
+            margin-top: 5rem;
+            display: flex;
+            justify-content: center;
+            min-height: calc(100vh - 8rem);
+        }
+
+        .fiche-canvas {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: visible;
+        }
+
+        .fiche-element {
+            position: absolute;
+            cursor: move;
+            border: 2px dashed transparent;
+            transition: border-color 0.3s;
+        }
+
+        .fiche-element:hover {
+            border-color: var(--primary);
+        }
+
+        .fiche-element.selected {
+            border-color: var(--secondary);
+            border-style: solid;
+        }
+
+        .element-controls {
+            position: absolute;
+            top: -30px;
+            right: 0;
+            display: none;
+            gap: 5px;
+        }
+
+        .fiche-element.selected .element-controls {
+            display: flex;
+        }
+
+        .control-btn {
+            width: 24px;
+            height: 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-edit {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .control-delete {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Properties Panel */
+        .properties-panel {
+            background: white;
+            border-left: 1px solid var(--border);
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .properties-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .property-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .property-group h4 {
+            color: var(--text);
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .property-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .property-slider {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .quick-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            flex: 1;
+            min-width: 80px;
+        }
+
+        .btn-save {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-preview {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-print {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Templates par défaut */
+        .template-vendeur {
+            padding: 2rem;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+
+        .template-acheteur {
+            padding: 2rem;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .editor-layout {
+                grid-template-columns: 250px 1fr 280px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .editor-layout {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr auto;
+            }
+
+            .tools-sidebar,
+            .properties-panel {
+                height: auto;
+                max-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="editor-layout">
+        <!-- Sidebar Tools -->
+        <div class="tools-sidebar">
+            <div class="tools-header">
+                <span>🎨</span>
+                <h2>Éditeur Fiches</h2>
+            </div>
+
+            <!-- IA Assistant -->
+            <div class="ai-assistant">
+                <h4>🤖 Assistant IA</h4>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">
+                    Demandez des modifications en langage naturel
+                </p>
+                <input type="text" class="ai-input" placeholder="Ex: Ajoute un logo en haut à droite">
+                <button class="ai-btn" onclick="processAIRequest()">✨ Appliquer</button>
+            </div>
+
+            <!-- Templates -->
+            <div class="tool-section">
+                <h3>📄 Templates</h3>
+                <div class="template-grid">
+                    <div class="template-card active" onclick="loadTemplate('vendeur')">
+                        <div>🏠</div>
+                        <div>Vendeur</div>
+                    </div>
+                    <div class="template-card" onclick="loadTemplate('acheteur')">
+                        <div>🔍</div>
+                        <div>Acheteur</div>
+                    </div>
+                    <div class="template-card" onclick="loadTemplate('evaluation')">
+                        <div>📊</div>
+                        <div>Évaluation</div>
+                    </div>
+                    <div class="template-card" onclick="loadTemplate('contrat')">
+                        <div>📝</div>
+                        <div>Contrat</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Éléments à ajouter -->
+            <div class="tool-section">
+                <h3>➕ Éléments</h3>
+                <div class="element-list">
+                    <div class="element-item" draggable="true" data-element="text">
+                        <span>📝</span>
+                        <span>Zone de texte</span>
+                    </div>
+                    <div class="element-item" draggable="true" data-element="title">
+                        <span>🔤</span>
+                        <span>Titre</span>
+                    </div>
+                    <div class="element-item" draggable="true" data-element="image">
+                        <span>🖼️</span>
+                        <span>Image/Logo</span>
+                    </div>
+                    <div class="element-item" draggable="true" data-element="signature">
+                        <span>✍️</span>
+                        <span>Signature</span>
+                    </div>
+                    <div class="element-item" draggable="true" data-element="contact">
+                        <span>📞</span>
+                        <span>Contact</span>
+                    </div>
+                    <div class="element-item" draggable="true" data-element="checkbox">
+                        <span>☑️</span>
+                        <span>Checkbox</span>
+                    </div>
+                    <div class="element-item" draggable="true" data-element="table">
+                        <span>📋</span>
+                        <span>Tableau</span>
+                    </div>
+                    <div class="element-item" draggable="true" data-element="divider">
+                        <span>➖</span>
+                        <span>Séparateur</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Couleurs rapides -->
+            <div class="tool-section">
+                <h3>🎨 Couleurs</h3>
+                <div class="color-controls">
+                    <label>Principal:</label>
+                    <input type="color" class="color-input" value="#c53030" onchange="updateColor('primary', this.value)">
+                </div>
+                <div class="color-controls">
+                    <label>Secondaire:</label>
+                    <input type="color" class="color-input" value="#2b6cb0" onchange="updateColor('secondary', this.value)">
+                </div>
+                <div class="color-controls">
+                    <label>Accent:</label>
+                    <input type="color" class="color-input" value="#d69e2e" onchange="updateColor('accent', this.value)">
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Editor -->
+        <div class="main-editor">
+            <div class="editor-toolbar">
+                <div class="toolbar-left">
+                    <button class="toolbar-btn active" onclick="setMode('select')" title="Sélectionner">
+                        🔍
+                    </button>
+                    <button class="toolbar-btn" onclick="setMode('text')" title="Ajouter texte">
+                        📝
+                    </button>
+                    <button class="toolbar-btn" onclick="setMode('image')" title="Ajouter image">
+                        🖼️
+                    </button>
+                    <select id="zoomSelect" onchange="setZoom(this.value)" style="padding: 0.5rem;">
+                        <option value="0.5">50%</option>
+                        <option value="0.75">75%</option>
+                        <option value="1" selected>100%</option>
+                        <option value="1.25">125%</option>
+                        <option value="1.5">150%</option>
+                    </select>
+                </div>
+                <div class="toolbar-right">
+                    <button class="toolbar-btn" onclick="undoAction()" title="Annuler">
+                        ↶
+                    </button>
+                    <button class="toolbar-btn" onclick="redoAction()" title="Refaire">
+                        ↷
+                    </button>
+                </div>
+            </div>
+
+            <div class="canvas-container">
+                <div class="fiche-canvas" id="ficheCanvas">
+                    <!-- Contenu dynamique généré ici -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Properties Panel -->
+        <div class="properties-panel">
+            <div class="properties-header">
+                <span>⚙️</span>
+                <h3>Propriétés</h3>
+            </div>
+
+            <div id="propertiesContent">
+                <div class="property-group">
+                    <h4>Document</h4>
+                    <input type="text" class="property-input" placeholder="Nom de la fiche" value="Fiche Vendeur">
+                    <select class="property-input">
+                        <option>Format A4</option>
+                        <option>Format Lettre</option>
+                        <option>Format Legal</option>
+                    </select>
+                </div>
+
+                <div class="property-group">
+                    <h4>Élément sélectionné</h4>
+                    <p style="color: #666; font-size: 0.9rem;">
+                        Sélectionnez un élément pour modifier ses propriétés
+                    </p>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <button class="quick-btn btn-save" onclick="saveFiche()">
+                    💾 Sauver
+                </button>
+                <button class="quick-btn btn-preview" onclick="previewFiche()">
+                    👀 Aperçu
+                </button>
+                <button class="quick-btn btn-print" onclick="printFiche()">
+                    🖨️ Imprimer
+                </button>
+            </div>
+
+            <!-- Accès Dashboard -->
+            <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+                <a href="docs/webapp/admin/pwa-dashboard/index.html" 
+                   style="display: block; text-align: center; padding: 1rem; background: var(--primary); color: white; text-decoration: none; border-radius: 8px;">
+                    📊 Dashboard Cynthia
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTemplate = 'vendeur';
+        let selectedElement = null;
+        let editorMode = 'select';
+        let undoStack = [];
+        let redoStack = [];
+
+        // Templates prédéfinis
+        const templates = {
+            vendeur: {
+                name: "Fiche Vendeur",
+                elements: [
+                    {
+                        type: 'title',
+                        content: 'FICHE D\'INSCRIPTION VENDEUR',
+                        style: {
+                            fontSize: '24px',
+                            fontWeight: 'bold',
+                            color: '#c53030',
+                            textAlign: 'center',
+                            top: '30px',
+                            left: '50px',
+                            width: '500px'
+                        }
+                    },
+                    {
+                        type: 'contact',
+                        content: 'Cynthia Bernier, Courtière immobilière\nTél: (819) 555-1234\nEmail: cynthia@exemple.com',
+                        style: {
+                            top: '80px',
+                            right: '30px',
+                            width: '250px',
+                            fontSize: '12px',
+                            textAlign: 'right'
+                        }
+                    },
+                    {
+                        type: 'text',
+                        content: 'Informations sur la propriété:',
+                        style: {
+                            top: '150px',
+                            left: '30px',
+                            fontSize: '16px',
+                            fontWeight: 'bold'
+                        }
+                    }
+                ]
+            },
+            acheteur: {
+                name: "Fiche Acheteur", 
+                elements: [
+                    {
+                        type: 'title',
+                        content: 'FICHE D\'INSCRIPTION ACHETEUR',
+                        style: {
+                            fontSize: '24px',
+                            fontWeight: 'bold',
+                            color: '#2b6cb0',
+                            textAlign: 'center',
+                            top: '30px',
+                            left: '50px',
+                            width: '500px'
+                        }
+                    }
+                ]
+            }
+        };
+
+        // Charger template
+        function loadTemplate(templateId) {
+            document.querySelectorAll('.template-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            event.target.closest('.template-card').classList.add('active');
+            
+            currentTemplate = templateId;
+            renderTemplate(templates[templateId]);
+            saveState();
+        }
+
+        // Render template
+        function renderTemplate(template) {
+            const canvas = document.getElementById('ficheCanvas');
+            canvas.innerHTML = '';
+            
+            template.elements.forEach((element, index) => {
+                createElement(element, index);
+            });
+        }
+
+        // Créer élément
+        function createElement(elementData, id = Date.now()) {
+            const canvas = document.getElementById('ficheCanvas');
+            const element = document.createElement('div');
+            element.className = 'fiche-element';
+            element.dataset.id = id;
+            element.dataset.type = elementData.type;
+            
+            // Appliquer styles
+            Object.assign(element.style, elementData.style);
+            element.style.position = 'absolute';
+            
+            // Contenu selon type
+            switch(elementData.type) {
+                case 'text':
+                case 'title':
+                    element.innerHTML = `
+                        <div class="element-controls">
+                            <button class="control-btn control-edit" onclick="editElement('${id}')">✏️</button>
+                            <button class="control-btn control-delete" onclick="deleteElement('${id}')">🗑️</button>
+                        </div>
+                        <div contenteditable="true" style="outline: none; min-height: 20px;">
+                            ${elementData.content}
+                        </div>
+                    `;
+                    break;
+                case 'image':
+                    element.innerHTML = `
+                        <div class="element-controls">
+                            <button class="control-btn control-edit" onclick="editElement('${id}')">✏️</button>
+                            <button class="control-btn control-delete" onclick="deleteElement('${id}')">🗑️</button>
+                        </div>
+                        <img src="${elementData.content || 'https://via.placeholder.com/150x100'}" 
+                             style="max-width: 100%; height: auto;">
+                    `;
+                    break;
+                case 'contact':
+                    element.innerHTML = `
+                        <div class="element-controls">
+                            <button class="control-btn control-edit" onclick="editElement('${id}')">✏️</button>
+                            <button class="control-btn control-delete" onclick="deleteElement('${id}')">🗑️</button>
+                        </div>
+                        <div contenteditable="true" style="outline: none; white-space: pre-line;">
+                            ${elementData.content}
+                        </div>
+                    `;
+                    break;
+            }
+            
+            // Events
+            element.addEventListener('click', () => selectElement(element));
+            element.addEventListener('mousedown', startDrag);
+            
+            canvas.appendChild(element);
+        }
+
+        // Sélectionner élément
+        function selectElement(element) {
+            document.querySelectorAll('.fiche-element').forEach(el => {
+                el.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            selectedElement = element;
+            updateProperties(element);
+        }
+
+        // Mettre à jour propriétés
+        function updateProperties(element) {
+            const propertiesContent = document.getElementById('propertiesContent');
+            const type = element.dataset.type;
+            
+            propertiesContent.innerHTML = `
+                <div class="property-group">
+                    <h4>Élément: ${type}</h4>
+                    <label>Largeur:</label>
+                    <input type="range" class="property-slider" min="50" max="500" 
+                           value="${parseInt(element.style.width) || 200}"
+                           onchange="updateElementStyle('width', this.value + 'px')">
+                    
+                    <label>Position X:</label>
+                    <input type="range" class="property-slider" min="0" max="600"
+                           value="${parseInt(element.style.left) || 0}"
+                           onchange="updateElementStyle('left', this.value + 'px')">
+                    
+                    <label>Position Y:</label>
+                    <input type="range" class="property-slider" min="0" max="800"
+                           value="${parseInt(element.style.top) || 0}"
+                           onchange="updateElementStyle('top', this.value + 'px')">
+                    
+                    <label>Taille police:</label>
+                    <input type="range" class="property-slider" min="8" max="48"
+                           value="${parseInt(element.style.fontSize) || 16}"
+                           onchange="updateElementStyle('fontSize', this.value + 'px')">
+                </div>
+            `;
+        }
+
+        // Assistant IA
+        function processAIRequest() {
+            const input = document.querySelector('.ai-input');
+            const request = input.value.trim();
+            
+            if (!request) return;
+            
+            // Simulation traitement IA
+            const responses = [
+                "Logo ajouté en haut à droite",
+                "Couleurs mises à jour selon votre demande", 
+                "Nouveau champ ajouté au formulaire",
+                "Mise en page optimisée",
+                "Élément repositionné"
+            ];
+            
+            const response = responses[Math.floor(Math.random() * responses.length)];
+            alert(`IA: ${response}`);
+            
+            input.value = '';
+            saveState();
+        }
+
+        // Actions
+        function updateElementStyle(property, value) {
+            if (selectedElement) {
+                selectedElement.style[property] = value;
+                saveState();
+            }
+        }
+
+        function deleteElement(id) {
+            const element = document.querySelector(`[data-id="${id}"]`);
+            if (element) {
+                element.remove();
+                saveState();
+            }
+        }
+
+        function saveFiche() {
+            const ficheData = {
+                template: currentTemplate,
+                elements: Array.from(document.querySelectorAll('.fiche-element')).map(el => ({
+                    id: el.dataset.id,
+                    type: el.dataset.type,
+                    content: el.textContent.trim(),
+                    style: el.style.cssText
+                }))
+            };
+            
+            localStorage.setItem('cynthia_fiche_' + currentTemplate, JSON.stringify(ficheData));
+            alert('Fiche sauvegardée !');
+        }
+
+        function previewFiche() {
+            const canvas = document.getElementById('ficheCanvas');
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head><title>Aperçu Fiche</title></head>
+                    <body style="margin: 0; padding: 20px;">
+                        ${canvas.outerHTML}
+                    </body>
+                </html>
+            `);
+        }
+
+        function printFiche() {
+            window.print();
+        }
+
+        function saveState() {
+            // Système undo/redo basique
+            const currentState = document.getElementById('ficheCanvas').innerHTML;
+            undoStack.push(currentState);
+            redoStack = [];
+        }
+
+        function undoAction() {
+            if (undoStack.length > 1) {
+                redoStack.push(undoStack.pop());
+                document.getElementById('ficheCanvas').innerHTML = undoStack[undoStack.length - 1];
+            }
+        }
+
+        function redoAction() {
+            if (redoStack.length > 0) {
+                const state = redoStack.pop();
+                undoStack.push(state);
+                document.getElementById('ficheCanvas').innerHTML = state;
+            }
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTemplate('vendeur');
+            
+            // Drag & drop pour éléments
+            document.addEventListener('dragover', e => e.preventDefault());
+            document.addEventListener('drop', function(e) {
+                e.preventDefault();
+                const elementType = e.dataTransfer.getData('text/plain');
+                if (elementType) {
+                    const rect = document.getElementById('ficheCanvas').getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    createElement({
+                        type: elementType,
+                        content: 'Nouveau ' + elementType,
+                        style: {
+                            left: x + 'px',
+                            top: y + 'px',
+                            width: '200px',
+                            fontSize: '14px'
+                        }
+                    });
+                    saveState();
+                }
+            });
+            
+            // Setup drag pour éléments de la sidebar
+            document.querySelectorAll('.element-item').forEach(item => {
+                item.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('text/plain', this.dataset.element);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

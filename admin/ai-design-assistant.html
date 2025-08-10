@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 Assistant Design IA - Cynthia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #2d3748;
+            min-height: 100vh;
+        }
+        
+        .ai-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .ai-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ai-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .ai-header h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .ai-header p {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .ai-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .chat-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        .message {
+            margin-bottom: 2rem;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message.ai {
+            text-align: left;
+        }
+        
+        .message.user {
+            text-align: right;
+        }
+        
+        .message-content {
+            display: inline-block;
+            max-width: 70%;
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .message.ai .message-content {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .message.user .message-content {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .message-header {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+        
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .quick-action {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .quick-action:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-1px);
+        }
+        
+        .chat-input-area {
+            padding: 2rem;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .chat-input-container {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            font-size: 1rem;
+            resize: none;
+            min-height: 50px;
+            max-height: 120px;
+            transition: border-color 0.3s;
+        }
+        
+        .chat-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .send-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            min-width: 120px;
+        }
+        
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .send-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .suggestions {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        
+        .suggestions h3 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .suggestion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .suggestion-card {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            padding: 1.5rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .suggestion-card:hover {
+            transform: translateY(-3px);
+            border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+        
+        .suggestion-emoji {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .suggestion-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+        
+        .suggestion-desc {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            color: #667eea;
+            font-style: italic;
+        }
+        
+        .typing-dots {
+            display: flex;
+            gap: 3px;
+        }
+        
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background: #667eea;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite;
+        }
+        
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+        
+        @media (max-width: 768px) {
+            .ai-container {
+                padding: 1rem;
+            }
+            
+            .chat-container {
+                height: 500px;
+            }
+            
+            .chat-input-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .send-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="ai-container">
+        <!-- Header -->
+        <div class="ai-header">
+            <h1>🤖 Assistant Design IA</h1>
+            <p>Bonjour Cynthia ! Je suis là pour personnaliser votre site selon vos goûts</p>
+            <div class="ai-status">
+                <span>🟢</span>
+                <span>IA Active - Prête à vous aider</span>
+            </div>
+        </div>
+        
+        <!-- Chat -->
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai">
+                    <div class="message-content">
+                        <div class="message-header">🤖 Assistant IA</div>
+                        <div>
+                            Bonjour Cynthia ! 👋<br><br>
+                            Je suis votre assistant design personnel. Je peux vous aider à :
+                            <br><br>
+                            • 🎨 Changer les couleurs de votre site<br>
+                            • 🖼️ Optimiser vos images<br>
+                            • 🏠 Organiser vos propriétés<br>
+                            • ✨ Créer un design professionnel
+                            <br><br>
+                            Que voulez-vous changer aujourd'hui ?
+                        </div>
+                        <div class="quick-actions">
+                            <span class="quick-action" onclick="sendQuickMessage('Change les couleurs pour du bleu et blanc')">🔵 Bleu & Blanc</span>
+                            <span class="quick-action" onclick="sendQuickMessage('Rend le site plus luxueux')">💎 Plus Luxueux</span>
+                            <span class="quick-action" onclick="sendQuickMessage('Adapte pour Lebel-sur-Quévillon')">🏠 Style Local</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="typing-indicator" id="typingIndicator">
+                <span>L'IA réfléchit</span>
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+            
+            <div class="chat-input-area">
+                <div class="chat-input-container">
+                    <textarea 
+                        class="chat-input" 
+                        id="chatInput" 
+                        placeholder="Dites-moi ce que vous voulez changer... par exemple : 'Rend mon site plus moderne' ou 'Change la couleur rouge pour du vert'"
+                        onkeydown="handleKeyPress(event)"
+                    ></textarea>
+                    <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                        Envoyer ✨
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Suggestions -->
+        <div class="suggestions">
+            <h3>💡 Suggestions populaires :</h3>
+            <div class="suggestion-grid">
+                <div class="suggestion-card" onclick="sendQuickMessage('Je veux un site plus professionnel pour l\'immobilier')">
+                    <span class="suggestion-emoji">👔</span>
+                    <div class="suggestion-title">Style Professionnel</div>
+                    <div class="suggestion-desc">Design classique et crédible pour l'immobilier</div>
+                </div>
+                
+                <div class="suggestion-card" onclick="sendQuickMessage('Change les couleurs pour que ça attire plus les jeunes familles')">
+                    <span class="suggestion-emoji">👨‍👩‍👧‍👦</span>
+                    <div class="suggestion-title">Pour Jeunes Familles</div>
+                    <div class="suggestion-desc">Couleurs chaleureuses et accueillantes</div>
+                </div>
+                
+                <div class="suggestion-card" onclick="sendQuickMessage('Optimise mes photos de maisons pour qu\'elles soient plus belles')">
+                    <span class="suggestion-emoji">📸</span>
+                    <div class="suggestion-title">Photos Optimales</div>
+                    <div class="suggestion-desc">Améliorer l'impact visuel de vos propriétés</div>
+                </div>
+                
+                <div class="suggestion-card" onclick="sendQuickMessage('Adapte le site pour la région de Lebel-sur-Quévillon')">
+                    <span class="suggestion-emoji">🌲</span>
+                    <div class="suggestion-title">Style Régional</div>
+                    <div class="suggestion-desc">Refléter l'ambiance Nord-du-Québec</div>
+                </div>
+                
+                <div class="suggestion-card" onclick="sendQuickMessage('Aide-moi à mettre en avant ma propriété prioritaire')">
+                    <span class="suggestion-emoji">⭐</span>
+                    <div class="suggestion-title">Propriété Vedette</div>
+                    <div class="suggestion-desc">Mettre en lumière votre meilleure offre</div>
+                </div>
+                
+                <div class="suggestion-card" onclick="sendQuickMessage('Crée un design qui inspire confiance aux clients')">
+                    <span class="suggestion-emoji">🤝</span>
+                    <div class="suggestion-title">Inspirer Confiance</div>
+                    <div class="suggestion-desc">Design qui rassure et fidélise</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Configuration de l'IA
+        const AI_RESPONSES = {
+            color_change: {
+                patterns: ['couleur', 'bleu', 'rouge', 'vert', 'change', 'teinte'],
+                responses: [
+                    "Parfait ! Je vais changer les couleurs pour vous. Quelle ambiance souhaitez-vous créer ?",
+                    "Excellente idée ! Les couleurs influencent beaucoup l'impression des visiteurs.",
+                    "Je m'occupe des couleurs tout de suite ! Ça va transformer votre site."
+                ]
+            },
+            professional: {
+                patterns: ['professionnel', 'crédible', 'sérieux', 'classique', 'élégant'],
+                responses: [
+                    "Je vais créer un design plus professionnel pour renforcer votre crédibilité !",
+                    "Excellent choix ! Un style professionnel rassure les clients immobilier.",
+                    "Je vais adapter le design pour refléter votre expertise professionnelle."
+                ]
+            },
+            luxury: {
+                patterns: ['luxe', 'luxueux', 'haut de gamme', 'premium', 'élégant'],
+                responses: [
+                    "Parfait ! Je vais créer une ambiance luxueuse pour valoriser vos propriétés haut de gamme.",
+                    "Excellent ! Un design luxueux augmente la perception de valeur de vos biens.",
+                    "Je vais transformer votre site en vitrine premium pour attirer les clients aisés."
+                ]
+            },
+            local: {
+                patterns: ['lebel', 'quévillon', 'région', 'local', 'nord', 'québec'],
+                responses: [
+                    "Je vais adapter le design pour refléter l'authenticité de la région Nord-du-Québec !",
+                    "Excellente idée ! Un style qui évoque votre territoire créera plus de connexion.",
+                    "Je vais intégrer des éléments qui rappellent la beauté de Lebel-sur-Quévillon."
+                ]
+            },
+            photos: {
+                patterns: ['photo', 'image', 'optimise', 'belle', 'propriété', 'maison'],
+                responses: [
+                    "Je vais optimiser l'affichage de vos photos pour maximiser leur impact !",
+                    "Parfait ! De belles photos bien mises en valeur vendent mieux les propriétés.",
+                    "Je m'occupe de la présentation de vos images pour qu'elles brillent !"
+                ]
+            }
+        };
+        
+        // État de la conversation
+        let conversationHistory = [];
+        let isTyping = false;
+        
+        // Envoyer message
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message || isTyping) return;
+            
+            // Ajouter message utilisateur
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Montrer que l'IA tape
+            showTyping();
+            
+            // Simuler traitement IA (remplacer par vraie API)
+            setTimeout(() => {
+                const response = generateAIResponse(message);
+                hideTyping();
+                addMessage(response.text, 'ai', response.actions);
+                
+                // Appliquer les changements si nécessaire
+                if (response.changes) {
+                    applyDesignChanges(response.changes);
+                }
+            }, 2000);
+        }
+        
+        // Ajouter message au chat
+        function addMessage(text, sender, actions = []) {
+            const messagesContainer = document.getElementById('chatMessages');
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            let actionsHTML = '';
+            if (actions.length > 0) {
+                actionsHTML = `
+                    <div class="quick-actions">
+                        ${actions.map(action => 
+                            `<span class="quick-action" onclick="sendQuickMessage('${action.query}')">${action.emoji} ${action.text}</span>`
+                        ).join('')}
+                    </div>
+                `;
+            }
+            
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <div class="message-header">${sender === 'ai' ? '🤖 Assistant IA' : '👩 Cynthia'}</div>
+                    <div>${text}</div>
+                    ${actionsHTML}
+                </div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        // Générer réponse IA
+        function generateAIResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            // Analyser le message pour déterminer l'intention
+            for (const [category, config] of Object.entries(AI_RESPONSES)) {
+                const hasPattern = config.patterns.some(pattern => 
+                    lowerMessage.includes(pattern)
+                );
+                
+                if (hasPattern) {
+                    const responseText = config.responses[Math.floor(Math.random() * config.responses.length)];
+                    
+                    return {
+                        text: responseText + "<br><br>✨ <em>Changements appliqués automatiquement !</em>",
+                        changes: generateDesignChanges(category),
+                        actions: generateFollowUpActions(category)
+                    };
+                }
+            }
+            
+            // Réponse générale
+            return {
+                text: `Je comprends que vous souhaitez "${message}". Laissez-moi voir ce que je peux faire pour améliorer votre site selon vos préférences !<br><br>✨ <em>Analyse en cours...</em>`,
+                actions: [
+                    { emoji: '🎨', text: 'Changer couleurs', query: 'Change les couleurs principales' },
+                    { emoji: '📱', text: 'Style moderne', query: 'Rend le site plus moderne' },
+                    { emoji: '🏠', text: 'Focus immobilier', query: 'Optimise pour l\'immobilier' }
+                ]
+            };
+        }
+        
+        // Générer changements design
+        function generateDesignChanges(category) {
+            const changes = {
+                color_change: {
+                    primaryColor: '#2b6cb0',
+                    secondaryColor: '#38b2ac',
+                    accentColor: '#ed8936'
+                },
+                professional: {
+                    primaryColor: '#1a365d',
+                    secondaryColor: '#2c5282',
+                    accentColor: '#d4af37'
+                },
+                luxury: {
+                    primaryColor: '#744210',
+                    secondaryColor: '#c53030',
+                    accentColor: '#d4af37'
+                },
+                local: {
+                    primaryColor: '#2f855a',
+                    secondaryColor: '#38a169',
+                    accentColor: '#d69e2e'
+                }
+            };
+            
+            return changes[category] || changes.professional;
+        }
+        
+        // Actions de suivi
+        function generateFollowUpActions(category) {
+            const actions = {
+                color_change: [
+                    { emoji: '🔄', text: 'Autre palette', query: 'Essaie une autre combinaison de couleurs' },
+                    { emoji: '📱', text: 'Voir aperçu', query: 'Montre-moi un aperçu du résultat' }
+                ],
+                professional: [
+                    { emoji: '👔', text: 'Plus formel', query: 'Rend encore plus professionnel' },
+                    { emoji: '🏆', text: 'Ajouter crédibilité', query: 'Ajoute des éléments de crédibilité' }
+                ],
+                luxury: [
+                    { emoji: '💎', text: 'Plus premium', query: 'Encore plus luxueux' },
+                    { emoji: '✨', text: 'Effets dorés', query: 'Ajoute des accents dorés' }
+                ]
+            };
+            
+            return actions[category] || [];
+        }
+        
+        // Appliquer changements design
+        function applyDesignChanges(changes) {
+            if (changes.primaryColor) {
+                document.documentElement.style.setProperty('--primary-color', changes.primaryColor);
+            }
+            if (changes.secondaryColor) {
+                document.documentElement.style.setProperty('--secondary-color', changes.secondaryColor);
+            }
+            if (changes.accentColor) {
+                document.documentElement.style.setProperty('--accent-color', changes.accentColor);
+            }
+            
+            // Sauvegarder dans localStorage
+            const currentConfig = JSON.parse(localStorage.getItem('cynthia_site_config') || '{}');
+            currentConfig.colors = {
+                primary: changes.primaryColor || currentConfig.colors?.primary || '#c53030',
+                secondary: changes.secondaryColor || currentConfig.colors?.secondary || '#2b6cb0',
+                accent: changes.accentColor || currentConfig.colors?.accent || '#d69e2e'
+            };
+            localStorage.setItem('cynthia_site_config', JSON.stringify(currentConfig));
+            
+            console.log('Design changes applied:', changes);
+        }
+        
+        // Message rapide
+        function sendQuickMessage(message) {
+            document.getElementById('chatInput').value = message;
+            sendMessage();
+        }
+        
+        // Afficher indicateur de frappe
+        function showTyping() {
+            isTyping = true;
+            document.getElementById('typingIndicator').style.display = 'flex';
+            document.getElementById('sendBtn').disabled = true;
+            
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        // Cacher indicateur de frappe
+        function hideTyping() {
+            isTyping = false;
+            document.getElementById('typingIndicator').style.display = 'none';
+            document.getElementById('sendBtn').disabled = false;
+        }
+        
+        // Gérer pression touche
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+        
+        // Auto-resize textarea
+        document.getElementById('chatInput').addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Charger historique si existant
+            const savedHistory = localStorage.getItem('cynthia_ai_chat_history');
+            if (savedHistory) {
+                conversationHistory = JSON.parse(savedHistory);
+            }
+            
+            console.log('Assistant IA Design initialisé pour Cynthia');
+        });
+    </script>
+</body>
+</html>

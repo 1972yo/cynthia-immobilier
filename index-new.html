@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cynthia Bernier - Courtière Immobilière | Lebel-sur-Quévillon</title>
+    <meta name="description" content="Cynthia Bernier, courtière immobilière résidentielle à Lebel-sur-Quévillon. Services personnalisés d'achat et vente de propriétés dans le Nord-du-Québec.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #c53030;
+            --secondary-color: #2b6cb0;
+            --accent-color: #d69e2e;
+            --background-color: #ffffff;
+            --text-color: #1a202c;
+            --text-light: #666;
+            --gradient-bg: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            --shadow: 0 10px 40px rgba(0,0,0,0.1);
+            --shadow-hover: 0 20px 60px rgba(0,0,0,0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--background-color);
+            overflow-x: hidden;
+        }
+        
+        /* Header Hero Section */
+        .hero {
+            background: var(--gradient-bg);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.1)), 
+                        url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&h=800&fit=crop&crop=center') center/cover;
+            z-index: -1;
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero .tagline {
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        
+        .hero .description {
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: rgba(255,255,255,0.9);
+            color: var(--primary-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-primary:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 5rem 2rem;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .service-card p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        
+        /* About Section */
+        .about {
+            padding: 5rem 2rem;
+            background: white;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .about-text h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+        }
+        
+        .about-text p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .about-image {
+            position: relative;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 5rem 2rem;
+            background: var(--gradient-bg);
+            color: white;
+        }
+        
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        
+        .contact-info h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
+            margin-bottom: 2rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            font-size: 1.5rem;
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .contact-form {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-control::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.15);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        /* Admin Links */
+        .admin-section {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+        
+        .admin-toggle {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .admin-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+        
+        .admin-menu {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-hover);
+            padding: 1rem;
+            display: none;
+            min-width: 200px;
+        }
+        
+        .admin-menu.show {
+            display: block;
+        }
+        
+        .admin-link {
+            display: block;
+            padding: 0.75rem;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+            margin-bottom: 0.5rem;
+        }
+        
+        .admin-link:hover {
+            background: #f8f9fa;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .admin-section {
+                bottom: 1rem;
+                right: 1rem;
+            }
+            
+            .hero-content {
+                padding: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .services {
+                padding: 3rem 1rem;
+            }
+            
+            .about {
+                padding: 3rem 1rem;
+            }
+            
+            .contact {
+                padding: 3rem 1rem;
+            }
+            
+            .service-card {
+                padding: 1.5rem;
+            }
+            
+            .contact-form {
+                padding: 1.5rem;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .service-card {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        .service-card:nth-child(1) { animation-delay: 0.1s; }
+        .service-card:nth-child(2) { animation-delay: 0.2s; }
+        .service-card:nth-child(3) { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h1>Cynthia Bernier</h1>
+            <p class="tagline">Courtière immobilière résidentielle</p>
+            <p class="description">
+                Spécialisée dans l'achat et la vente de propriétés résidentielles à Lebel-sur-Quévillon et région. 
+                Service personnalisé et expertise locale pour concrétiser vos projets immobiliers.
+            </p>
+            <div class="hero-actions">
+                <a href="#contact" class="btn btn-primary">
+                    📞 Me contacter
+                </a>
+                <a href="#services" class="btn btn-secondary">
+                    🏠 Mes services
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Mes Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🏠</div>
+                    <h3>Vente Résidentielle</h3>
+                    <p>Évaluation professionnelle, marketing ciblé et négociation experte pour maximiser la valeur de votre propriété.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🔍</div>
+                    <h3>Achat Résidentiel</h3>
+                    <p>Accompagnement personnalisé dans votre recherche, visites guidées et conseil pour trouver la propriété idéale.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>Évaluation & Conseil</h3>
+                    <p>Analyse de marché approfondie et conseils stratégiques pour prendre les meilleures décisions immobilières.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>À propos de Cynthia</h2>
+                    <p>
+                        Passionnée par l'immobilier et native de la région de Lebel-sur-Quévillon, 
+                        je mets mon expertise et ma connaissance locale au service de vos projets.
+                    </p>
+                    <p>
+                        Chaque transaction est unique et mérite une attention personnalisée. 
+                        Je m'engage à vous accompagner avec professionnalisme et transparence.
+                    </p>
+                    <div class="stats">
+                        <div class="stat">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Transactions</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">5★</div>
+                            <div class="stat-label">Satisfaction</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">7j/7</div>
+                            <div class="stat-label">Disponibilité</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=500&h=600&fit=crop&crop=center" 
+                         alt="Cynthia Bernier, courtière immobilière">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>Contactez-moi</h2>
+                    <p style="margin-bottom: 2rem;">
+                        Prêt à concrétiser votre projet immobilier ? 
+                        Je suis là pour vous accompagner à chaque étape.
+                    </p>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div>
+                            <strong>Téléphone</strong><br>
+                            <a href="tel:+18195551234" style="color: white; text-decoration: none;">
+                                (819) 555-1234
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div>
+                            <strong>Email</strong><br>
+                            <a href="mailto:cynthia.bernier@example.com" style="color: white; text-decoration: none;">
+                                cynthia.bernier@example.com
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div>
+                            <strong>Secteur d'activité</strong><br>
+                            Lebel-sur-Quévillon et région<br>
+                            Nord-du-Québec
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3 style="margin-bottom: 1.5rem;">Demande d'information</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nom complet *</label>
+                            <input type="text" id="name" name="name" class="form-control" 
+                                   placeholder="Votre nom" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" class="form-control" 
+                                   placeholder="votre@email.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Téléphone</label>
+                            <input type="tel" id="phone" name="phone" class="form-control" 
+                                   placeholder="(819) 555-1234">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" class="form-control" 
+                                      placeholder="Décrivez votre projet immobilier..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            Envoyer le message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Panel Access -->
+    <div class="admin-section">
+        <button class="admin-toggle" onclick="toggleAdminMenu()" title="Administration">
+            ⚙️
+        </button>
+        <div class="admin-menu" id="adminMenu">
+            <a href="docs/webapp/admin/pwa-dashboard/index.html" class="admin-link">
+                📊 Dashboard Cynthia
+            </a>
+            <a href="admin/ai-design-assistant.html" class="admin-link">
+                🤖 Assistant IA Design
+            </a>
+            <a href="admin/customization-panel.html" class="admin-link">
+                🎨 Panel Customisation
+            </a>
+            <a href="docs/assistant/index.html" class="admin-link">
+                📋 Formulaires Clients
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Admin Menu Toggle
+        function toggleAdminMenu() {
+            const menu = document.getElementById('adminMenu');
+            menu.classList.toggle('show');
+        }
+
+        // Close admin menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const adminSection = document.querySelector('.admin-section');
+            if (!adminSection.contains(event.target)) {
+                document.getElementById('adminMenu').classList.remove('show');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Contact form handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const phone = formData.get('phone');
+            const message = formData.get('message');
+            
+            // Simple validation
+            if (!name || !email || !message) {
+                alert('Veuillez remplir tous les champs obligatoires.');
+                return;
+            }
+            
+            // Simulate form submission
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.textContent = 'Envoi en cours...';
+            submitButton.disabled = true;
+            
+            setTimeout(() => {
+                alert('Message envoyé avec succès ! Cynthia vous contactera bientôt.');
+                this.reset();
+                submitButton.textContent = 'Envoyer le message';
+                submitButton.disabled = false;
+            }, 2000);
+        });
+
+        // Load saved customizations
+        function loadCustomizations() {
+            const config = localStorage.getItem('cynthia_site_config');
+            if (config) {
+                const settings = JSON.parse(config);
+                if (settings.colors) {
+                    const root = document.documentElement;
+                    Object.entries(settings.colors).forEach(([key, value]) => {
+                        root.style.setProperty(`--${key.replace('_', '-')}-color`, value);
+                    });
+                }
+                
+                // Apply hero background if set
+                if (settings.images && settings.images.hero) {
+                    const hero = document.querySelector('.hero::before');
+                    if (hero) {
+                        document.documentElement.style.setProperty('--hero-bg', `url(${settings.images.hero})`);
+                    }
+                }
+            }
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCustomizations();
+        });
+    </script>
+</body>
+</html>

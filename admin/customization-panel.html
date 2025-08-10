@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 Personnalisation - Cynthia Bernier Immobilier</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #2d3748;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #c53030;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .customization-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .panel {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .panel h2 {
+            color: #2b6cb0;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .theme-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .theme-card:hover {
+            border-color: #c53030;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(197, 48, 48, 0.2);
+        }
+        
+        .theme-card.active {
+            border-color: #c53030;
+            background: linear-gradient(135deg, #c53030, #e53e3e);
+            color: white;
+        }
+        
+        .theme-preview {
+            width: 100%;
+            height: 80px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            overflow: hidden;
+        }
+        
+        .color-strip {
+            flex: 1;
+            height: 100%;
+        }
+        
+        .color-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .color-control {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .color-control label {
+            flex: 1;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+        
+        .color-picker {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .color-value {
+            font-family: 'Monaco', monospace;
+            font-size: 0.9rem;
+            background: white;
+            padding: 0.5rem;
+            border-radius: 4px;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .upload-area {
+            border: 2px dashed #c53030;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+        
+        .upload-area:hover {
+            background: rgba(197, 48, 48, 0.05);
+        }
+        
+        .upload-area.dragover {
+            border-color: #e53e3e;
+            background: rgba(197, 48, 48, 0.1);
+        }
+        
+        .upload-input {
+            display: none;
+        }
+        
+        .property-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: #2d3748;
+        }
+        
+        .form-control {
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #c53030;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #c53030, #e53e3e);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(197, 48, 48, 0.3);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #2b6cb0, #3182ce);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(43, 108, 176, 0.3);
+        }
+        
+        .preview-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .preview-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            color: white;
+            background: linear-gradient(135deg, var(--primary-color, #c53030), var(--secondary-color, #2b6cb0));
+        }
+        
+        .property-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .property-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .property-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .property-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .property-content {
+            padding: 1.5rem;
+        }
+        
+        .property-price {
+            color: var(--secondary-color, #2b6cb0);
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .property-details {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: #666;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            padding: 1rem 2rem;
+            background: #48bb78;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        @media (max-width: 768px) {
+            .customization-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .property-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎨 Personnalisation de votre site</h1>
+            <p>Cynthia, personnalisez votre site immobilier selon vos goûts !</p>
+        </div>
+        
+        <div class="customization-grid">
+            <!-- Sélection des thèmes -->
+            <div class="panel">
+                <h2>🎭 Choisir un thème</h2>
+                <div class="theme-grid">
+                    <div class="theme-card active" onclick="selectTheme('classic_luxury')">
+                        <div class="theme-preview">
+                            <div class="color-strip" style="background: #1a365d;"></div>
+                            <div class="color-strip" style="background: #d4af37;"></div>
+                            <div class="color-strip" style="background: #8b4513;"></div>
+                            <div class="color-strip" style="background: #f8f9fa;"></div>
+                        </div>
+                        <strong>Luxe Classique</strong>
+                        <small style="display: block; margin-top: 0.5rem;">Élégance intemporelle</small>
+                    </div>
+                    
+                    <div class="theme-card" onclick="selectTheme('modern_clean')">
+                        <div class="theme-preview">
+                            <div class="color-strip" style="background: #2b6cb0;"></div>
+                            <div class="color-strip" style="background: #38b2ac;"></div>
+                            <div class="color-strip" style="background: #ed8936;"></div>
+                            <div class="color-strip" style="background: #ffffff;"></div>
+                        </div>
+                        <strong>Moderne Épuré</strong>
+                        <small style="display: block; margin-top: 0.5rem;">Design contemporain</small>
+                    </div>
+                    
+                    <div class="theme-card" onclick="selectTheme('rustic_warm')">
+                        <div class="theme-preview">
+                            <div class="color-strip" style="background: #744210;"></div>
+                            <div class="color-strip" style="background: #c53030;"></div>
+                            <div class="color-strip" style="background: #d69e2e;"></div>
+                            <div class="color-strip" style="background: #faf5f0;"></div>
+                        </div>
+                        <strong>Rustique Chaleureux</strong>
+                        <small style="display: block; margin-top: 0.5rem;">Ambiance chaleureuse</small>
+                    </div>
+                    
+                    <div class="theme-card" onclick="selectTheme('custom')">
+                        <div class="theme-preview">
+                            <div class="color-strip" style="background: #c53030;"></div>
+                            <div class="color-strip" style="background: #2b6cb0;"></div>
+                            <div class="color-strip" style="background: #d69e2e;"></div>
+                            <div class="color-strip" style="background: #ffffff;"></div>
+                        </div>
+                        <strong>Personnalisé</strong>
+                        <small style="display: block; margin-top: 0.5rem;">Votre signature</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Personnalisation couleurs -->
+            <div class="panel">
+                <h2>🎨 Personnaliser les couleurs</h2>
+                <div class="color-controls">
+                    <div class="color-control">
+                        <label>Couleur principale</label>
+                        <input type="color" class="color-picker" value="#c53030" onchange="updateColor('primary', this.value)">
+                        <span class="color-value">#c53030</span>
+                    </div>
+                    
+                    <div class="color-control">
+                        <label>Couleur secondaire</label>
+                        <input type="color" class="color-picker" value="#2b6cb0" onchange="updateColor('secondary', this.value)">
+                        <span class="color-value">#2b6cb0</span>
+                    </div>
+                    
+                    <div class="color-control">
+                        <label>Couleur d'accent</label>
+                        <input type="color" class="color-picker" value="#d69e2e" onchange="updateColor('accent', this.value)">
+                        <span class="color-value">#d69e2e</span>
+                    </div>
+                    
+                    <div class="color-control">
+                        <label>Arrière-plan</label>
+                        <input type="color" class="color-picker" value="#ffffff" onchange="updateColor('background', this.value)">
+                        <span class="color-value">#ffffff</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="customization-grid">
+            <!-- Upload d'images -->
+            <div class="panel">
+                <h2>🖼️ Images de fond</h2>
+                
+                <h3 style="margin-bottom: 1rem;">Image d'accueil :</h3>
+                <div class="upload-area" onclick="document.getElementById('hero-upload').click()">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🏠</div>
+                    <p><strong>Cliquez pour choisir une image</strong></p>
+                    <p>ou glissez-déposez ici</p>
+                    <input type="file" id="hero-upload" class="upload-input" accept="image/*" onchange="uploadImage('hero', this.files[0])">
+                </div>
+                
+                <h3 style="margin: 2rem 0 1rem;">Image section À propos :</h3>
+                <div class="upload-area" onclick="document.getElementById('about-upload').click()">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">👩‍💼</div>
+                    <p><strong>Cliquez pour choisir une image</strong></p>
+                    <p>Photo professionnelle recommandée</p>
+                    <input type="file" id="about-upload" class="upload-input" accept="image/*" onchange="uploadImage('about', this.files[0])">
+                </div>
+            </div>
+            
+            <!-- Ajout de propriétés -->
+            <div class="panel">
+                <h2>🏡 Ajouter une propriété</h2>
+                
+                <form class="property-form" onsubmit="addProperty(event)">
+                    <div class="form-group">
+                        <label>Adresse</label>
+                        <input type="text" class="form-control" name="address" placeholder="123 Rue Principale" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Prix ($)</label>
+                        <input type="number" class="form-control" name="price" placeholder="250000" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Chambres</label>
+                        <input type="number" class="form-control" name="bedrooms" placeholder="3" min="1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Salles de bain</label>
+                        <input type="number" class="form-control" name="bathrooms" placeholder="2" min="1" step="0.5" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Superficie (pi²)</label>
+                        <input type="number" class="form-control" name="squareFeet" placeholder="1500" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Priorité</label>
+                        <select class="form-control" name="priority">
+                            <option value="normal">Normale</option>
+                            <option value="high">Élevée (photo d'accueil)</option>
+                            <option value="low">Faible</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label>Description</label>
+                        <textarea class="form-control" name="description" rows="3" placeholder="Belle maison familiale..."></textarea>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label>Photos de la propriété</label>
+                        <input type="file" class="form-control" name="photos" accept="image/*" multiple>
+                        <small style="color: #666;">Sélectionnez plusieurs photos (la première sera la photo principale)</small>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            ➕ Ajouter la propriété
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Aperçu -->
+        <div class="preview-section">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #2d3748;">👀 Aperçu de votre site</h2>
+            
+            <div class="preview-header" id="preview-header">
+                <h1 style="margin-bottom: 1rem;">Cynthia Bernier</h1>
+                <p style="font-size: 1.2rem;">Courtière immobilière résidentielle - Lebel-sur-Quévillon</p>
+            </div>
+            
+            <div class="property-gallery" id="properties-preview">
+                <!-- Les propriétés ajoutées apparaîtront ici -->
+                <div class="property-card">
+                    <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400&h=200&fit=crop" 
+                         alt="Exemple propriété" class="property-image">
+                    <div class="property-content">
+                        <div class="property-price">$275,000</div>
+                        <h3 style="margin-bottom: 1rem; color: #2d3748;">Exemple de propriété</h3>
+                        <div class="property-details">
+                            <span>🛏️ 3</span>
+                            <span>🚿 2</span>
+                            <span>📐 1,650 pi²</span>
+                        </div>
+                        <p style="color: #666;">Magnifique maison familiale dans un quartier paisible...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Actions -->
+        <div class="actions">
+            <button class="btn btn-primary" onclick="saveConfiguration()">
+                💾 Sauvegarder les changements
+            </button>
+            <button class="btn btn-secondary" onclick="resetToDefault()">
+                🔄 Réinitialiser
+            </button>
+            <button class="btn btn-secondary" onclick="exportConfiguration()">
+                📤 Exporter la configuration
+            </button>
+        </div>
+    </div>
+    
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <span id="notification-text"></span>
+    </div>
+    
+    <script>
+        // Configuration globale
+        let currentConfig = {
+            theme: 'classic_luxury',
+            colors: {
+                primary: '#c53030',
+                secondary: '#2b6cb0',
+                accent: '#d69e2e',
+                background: '#ffffff',
+                text: '#2d3748'
+            },
+            images: {},
+            properties: []
+        };
+        
+        // Charger configuration sauvegardée
+        function loadConfiguration() {
+            const saved = localStorage.getItem('cynthia_site_config');
+            if (saved) {
+                currentConfig = { ...currentConfig, ...JSON.parse(saved) };
+            }
+            applyConfiguration();
+        }
+        
+        // Sélectionner thème
+        function selectTheme(themeId) {
+            document.querySelectorAll('.theme-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            event.target.closest('.theme-card').classList.add('active');
+            
+            const themes = {
+                classic_luxury: { primary: '#1a365d', secondary: '#d4af37', accent: '#8b4513', background: '#f8f9fa' },
+                modern_clean: { primary: '#2b6cb0', secondary: '#38b2ac', accent: '#ed8936', background: '#ffffff' },
+                rustic_warm: { primary: '#744210', secondary: '#c53030', accent: '#d69e2e', background: '#faf5f0' },
+                custom: { primary: '#c53030', secondary: '#2b6cb0', accent: '#d69e2e', background: '#ffffff' }
+            };
+            
+            if (themes[themeId]) {
+                currentConfig.theme = themeId;
+                currentConfig.colors = themes[themeId];
+                updateColorPickers();
+                applyConfiguration();
+                showNotification('Thème appliqué avec succès !');
+            }
+        }
+        
+        // Mettre à jour couleur
+        function updateColor(colorType, value) {
+            currentConfig.colors[colorType] = value;
+            currentConfig.theme = 'custom'; // Passer en mode personnalisé
+            
+            // Mettre à jour l'affichage de la valeur
+            const colorControl = event.target.closest('.color-control');
+            const valueSpan = colorControl.querySelector('.color-value');
+            valueSpan.textContent = value;
+            
+            applyConfiguration();
+        }
+        
+        // Mettre à jour les sélecteurs de couleur
+        function updateColorPickers() {
+            const pickers = document.querySelectorAll('.color-picker');
+            const values = document.querySelectorAll('.color-value');
+            
+            Object.entries(currentConfig.colors).forEach(([key, value], index) => {
+                if (pickers[index]) {
+                    pickers[index].value = value;
+                    values[index].textContent = value;
+                }
+            });
+        }
+        
+        // Appliquer configuration
+        function applyConfiguration() {
+            const root = document.documentElement;
+            Object.entries(currentConfig.colors).forEach(([key, value]) => {
+                root.style.setProperty(`--${key}-color`, value);
+            });
+            
+            // Mettre à jour l'aperçu
+            const previewHeader = document.getElementById('preview-header');
+            previewHeader.style.background = `linear-gradient(135deg, ${currentConfig.colors.primary}, ${currentConfig.colors.secondary})`;
+            
+            // Mettre à jour les prix des propriétés
+            document.querySelectorAll('.property-price').forEach(el => {
+                el.style.color = currentConfig.colors.secondary;
+            });
+        }
+        
+        // Upload d'image
+        function uploadImage(section, file) {
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                currentConfig.images[section] = e.target.result;
+                showNotification(`Image ${section} mise à jour !`);
+                
+                // Si c'est une image prioritaire, l'appliquer à l'aperçu
+                if (section === 'hero') {
+                    const previewHeader = document.getElementById('preview-header');
+                    previewHeader.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${e.target.result})`;
+                    previewHeader.style.backgroundSize = 'cover';
+                    previewHeader.style.backgroundPosition = 'center';
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        // Ajouter propriété
+        function addProperty(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            const property = {
+                id: Date.now(),
+                address: formData.get('address'),
+                price: parseInt(formData.get('price')),
+                bedrooms: parseInt(formData.get('bedrooms')),
+                bathrooms: parseFloat(formData.get('bathrooms')),
+                squareFeet: parseInt(formData.get('squareFeet')),
+                description: formData.get('description'),
+                priority: formData.get('priority'),
+                photos: [],
+                dateAdded: new Date().toISOString()
+            };
+            
+            // Traiter les photos
+            const photoFiles = formData.getAll('photos');
+            if (photoFiles.length > 0 && photoFiles[0].size > 0) {
+                // Pour la démo, on utilise une image placeholder
+                property.photos = ['https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400&h=200&fit=crop'];
+            }
+            
+            currentConfig.properties.push(property);
+            
+            // Si priorité élevée, utiliser comme image d'accueil
+            if (property.priority === 'high' && property.photos.length > 0) {
+                currentConfig.images.hero = property.photos[0];
+                applyConfiguration();
+            }
+            
+            updatePropertiesPreview();
+            form.reset();
+            showNotification('Propriété ajoutée avec succès !');
+        }
+        
+        // Mettre à jour aperçu des propriétés
+        function updatePropertiesPreview() {
+            const container = document.getElementById('properties-preview');
+            
+            // Garder l'exemple + ajouter les nouvelles propriétés
+            const newProperties = currentConfig.properties.map(property => `
+                <div class="property-card">
+                    <img src="${property.photos[0] || 'https://via.placeholder.com/400x200'}" 
+                         alt="${property.address}" class="property-image">
+                    <div class="property-content">
+                        <div class="property-price">$${property.price.toLocaleString()}</div>
+                        <h3 style="margin-bottom: 1rem; color: #2d3748;">${property.address}</h3>
+                        <div class="property-details">
+                            <span>🛏️ ${property.bedrooms}</span>
+                            <span>🚿 ${property.bathrooms}</span>
+                            <span>📐 ${property.squareFeet.toLocaleString()} pi²</span>
+                        </div>
+                        <p style="color: #666;">${property.description}</p>
+                        ${property.priority === 'high' ? '<span style="background: #c53030; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem;">PRIORITÉ</span>' : ''}
+                    </div>
+                </div>
+            `).join('');
+            
+            // Ajouter après l'exemple
+            const example = container.querySelector('.property-card');
+            if (newProperties) {
+                container.innerHTML = example.outerHTML + newProperties;
+            }
+        }
+        
+        // Sauvegarder configuration
+        function saveConfiguration() {
+            localStorage.setItem('cynthia_site_config', JSON.stringify(currentConfig));
+            showNotification('Configuration sauvegardée avec succès !');
+            
+            // Ici on pourrait aussi envoyer vers un serveur
+            console.log('Configuration sauvegardée:', currentConfig);
+        }
+        
+        // Réinitialiser
+        function resetToDefault() {
+            if (confirm('Êtes-vous sûre de vouloir réinitialiser tous les changements ?')) {
+                localStorage.removeItem('cynthia_site_config');
+                location.reload();
+            }
+        }
+        
+        // Exporter configuration
+        function exportConfiguration() {
+            const dataStr = JSON.stringify(currentConfig, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = 'cynthia_site_config.json';
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showNotification('Configuration exportée !');
+        }
+        
+        // Afficher notification
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const text = document.getElementById('notification-text');
+            
+            text.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Support drag & drop
+        document.querySelectorAll('.upload-area').forEach(area => {
+            area.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                area.classList.add('dragover');
+            });
+            
+            area.addEventListener('dragleave', () => {
+                area.classList.remove('dragover');
+            });
+            
+            area.addEventListener('drop', (e) => {
+                e.preventDefault();
+                area.classList.remove('dragover');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    const section = area.querySelector('input').id.replace('-upload', '');
+                    uploadImage(section, files[0]);
+                }
+            });
+        });
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            loadConfiguration();
+        });
+    </script>
+</body>
+</html>

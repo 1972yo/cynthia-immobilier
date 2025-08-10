@@ -17,11 +17,14 @@ class AppConfig {
                 publicKey: 'your_emailjs_public_key_here'
             },
             
-            // OpenAI
+            // OpenAI - Configuration spécifique ASSISTANT
             openai: {
+                apiKey: 'CYNTHIA_ASSISTANT_OPENAI_KEY_HERE',
                 model: 'gpt-4',
                 maxTokens: 500,
-                temperature: 0.3
+                temperature: 0.3,
+                endpoint: 'https://api.openai.com/v1/chat/completions',
+                service: 'assistant'
             },
             
             // Application
@@ -68,6 +71,8 @@ class AppConfig {
                 if (env.CYNTHIA_EMAIL) this.config.email.to = env.CYNTHIA_EMAIL;
                 if (env.CYNTHIA_NAME) this.config.email.toName = env.CYNTHIA_NAME;
                 
+                if (env.CYNTHIA_ASSISTANT_OPENAI_KEY) this.config.openai.apiKey = env.CYNTHIA_ASSISTANT_OPENAI_KEY;
+                
                 if (env.APP_ENV) this.config.app.environment = env.APP_ENV;
                 if (env.APP_VERSION) this.config.app.version = env.APP_VERSION;
                 
@@ -84,6 +89,11 @@ class AppConfig {
         // Validation EmailJS
         if (this.config.emailjs.publicKey.includes('your_')) {
             issues.push('Clé EmailJS non configurée');
+        }
+        
+        // Validation OpenAI Assistant
+        if (this.config.openai.apiKey.includes('HERE')) {
+            issues.push('Clé OpenAI Assistant non configurée');
         }
         
         // Validation email destination

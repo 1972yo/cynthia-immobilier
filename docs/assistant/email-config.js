@@ -17,14 +17,21 @@ class EmailService {
     }
     
     loadOpenAIKey() {
-        // En production, cette clé viendrait du backend sécurisé
-        // Pour le développement, on peut la charger depuis window.ENV
-        if (typeof window !== 'undefined' && window.ENV && window.ENV.OPENAI_API_KEY) {
-            return window.ENV.OPENAI_API_KEY;
+        // Charger la clé OpenAI spécifique pour l'Assistant
+        if (typeof window !== 'undefined' && window.AppConfig) {
+            const assistantKey = window.AppConfig.get('openai.apiKey');
+            if (assistantKey && !assistantKey.includes('HERE')) {
+                return assistantKey;
+            }
         }
         
-        // Fallback : clé depuis le .env local (simulation)
-        return 'YOUR_OPENAI_API_KEY_HERE';
+        // Fallback depuis les variables d'environnement
+        if (typeof window !== 'undefined' && window.ENV && window.ENV.CYNTHIA_ASSISTANT_OPENAI_KEY) {
+            return window.ENV.CYNTHIA_ASSISTANT_OPENAI_KEY;
+        }
+        
+        // Fallback par défaut
+        return 'CYNTHIA_ASSISTANT_OPENAI_KEY_HERE';
     }
 
     init() {
