@@ -1,0 +1,25 @@
+{
+  "functions": {
+    "docs/assistant/admin/pwa-dashboard/index.html": {
+      "runtime": "@vercel/static"
+    }
+  },
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/docs/assistant/admin/pwa-dashboard",
+      "dest": "/docs/assistant/admin/pwa-dashboard/index.html"
+    },
+    {
+      "src": "/docs/webapp/admin/pwa-dashboard",
+      "dest": "/docs/webapp/admin/pwa-dashboard/index.html"
+    },
+    {
+      "src": "/index-editor",
+      "dest": "/index-editor.html"
+    }
+  ]
+}
