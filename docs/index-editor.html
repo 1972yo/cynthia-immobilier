@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Éditeur de Fiches - Cynthia Bernier</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        .content {
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .feature-title {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .feature-description {
+            color: #6c757d;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            background: #3498db;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+            margin-left: 10px;
+        }
+        
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        
+        .coming-soon {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+        
+        .back-nav {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-nav:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-development {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-available {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <a href="javascript:history.back()" class="back-nav">← Retour Dashboard</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Éditeur de Fiches</h1>
+            <p>Cynthia Bernier - Outils de création et personnalisation</p>
+        </div>
+        
+        <div class="content">
+            <!-- Formulaire d'inscription personnalisable -->
+            <div class="feature-card status-available">
+                <div class="feature-icon">📋</div>
+                <div class="feature-title">Formulaire d'Inscription</div>
+                <div class="feature-description">
+                    Formulaire complet pour l'inscription des propriétés avec 6 sections détaillées.
+                    Sauvegarde automatique, validation intelligente et envoi par email.
+                </div>
+                <span class="status-badge status-available">Disponible</span>
+                <div style="margin-top: 15px;">
+                    <a href="/docs/assistant/index.html" target="_blank" class="btn">
+                        Ouvrir le formulaire
+                    </a>
+                    <button onclick="previewForm()" class="btn btn-secondary">
+                        Aperçu
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Marketing et Site Web -->
+            <div class="feature-card status-available">
+                <div class="feature-icon">🌐</div>
+                <div class="feature-title">Marketing IA & Site Web</div>
+                <div class="feature-description">
+                    Gestion du contenu marketing, emails automatisés et configuration du site web
+                    avec assistant IA intégré pour optimiser vos communications client.
+                </div>
+                <span class="status-badge status-available">Disponible</span>
+                <div style="margin-top: 15px;">
+                    <a href="/docs/webapp/admin/pwa-dashboard/marketing-ia.html" target="_blank" class="btn">
+                        Ouvrir Marketing IA
+                    </a>
+                    <a href="/docs/webapp/admin/pwa-dashboard/email-ia.html" target="_blank" class="btn btn-secondary">
+                        Email IA
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Gestionnaire de Fiches Clients -->
+            <div class="feature-card status-available">
+                <div class="feature-icon">👥</div>
+                <div class="feature-title">Gestionnaire de Fiches Clients</div>
+                <div class="feature-description">
+                    Dashboard PWA pour la gestion des fiches clients, suivi des prospects,
+                    analyse des données et génération de rapports automatiques.
+                </div>
+                <span class="status-badge status-available">Disponible</span>
+                <div style="margin-top: 15px;">
+                    <a href="/docs/assistant/admin/pwa-dashboard/index.html" target="_blank" class="btn">
+                        Ouvrir Gestionnaire
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Éditeur Visual (En développement) -->
+            <div class="feature-card coming-soon">
+                <div class="feature-icon">🎨</div>
+                <div class="feature-title">Éditeur Visual de Fiches</div>
+                <div class="feature-description">
+                    Éditeur graphique pour personnaliser l'apparence des formulaires,
+                    créer des templates sur mesure et adapter l'interface selon vos besoins.
+                </div>
+                <span class="status-badge status-development">En développement</span>
+                <div style="margin-top: 15px;">
+                    <button onclick="comingSoon()" class="btn" style="opacity: 0.6;" disabled>
+                        Bientôt disponible
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Générateur de PDF -->
+            <div class="feature-card coming-soon">
+                <div class="feature-icon">📄</div>
+                <div class="feature-title">Générateur PDF Personnalisé</div>
+                <div class="feature-description">
+                    Création automatique de fiches PDF professionnelles à partir des données clients
+                    avec votre branding et mise en page personnalisée.
+                </div>
+                <span class="status-badge status-development">En développement</span>
+                <div style="margin-top: 15px;">
+                    <button onclick="comingSoon()" class="btn" style="opacity: 0.6;" disabled>
+                        Bientôt disponible
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function previewForm() {
+            alert('📋 APERÇU FORMULAIRE\n\nLe formulaire d\'inscription contient :\n\n1. Informations Propriété\n2. Propriétaires & Contacts  \n3. Locataire (si applicable)\n4. Caractéristiques Techniques\n5. Équipements & Piscine\n6. Problèmes & Notes\n\nSauvegarde automatique et validation en temps réel.');
+        }
+        
+        function comingSoon() {
+            alert('🚧 FONCTIONNALITÉ EN DÉVELOPPEMENT\n\nCette fonctionnalité sera bientôt disponible.\n\nEn attendant, vous pouvez utiliser :\n• Le formulaire d\'inscription complet\n• Les outils Marketing IA\n• Le gestionnaire de fiches clients');
+        }
+        
+        console.log('🎨 Éditeur de Fiches - Interface chargée');
+    </script>
+</body>
+</html>
