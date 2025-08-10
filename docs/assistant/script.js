@@ -764,43 +764,44 @@ function openDashboard() {
 }
 
 function openWebapp() {
-    // Ouvrir le portail web WEBAPP via GitHub Pages
-    const webappUrl = '../webapp/portal/index.html';
+    // Ouvrir le dashboard admin WEBAPP (pas le portail visiteur)
+    const webappUrl = '../webapp/admin/pwa-dashboard/index.html';
     const newWindow = window.open(webappUrl, '_blank');
     
     if (!newWindow) {
-        alert('⚠️ Portail web non disponible. Assurez-vous que CYNTHIA_WEBAPP est démarré sur le port 8081.');
-        console.log('💡 Conseil: Lancez bouton.bat dans le dossier CYNTHIA_WEBAPP');
+        alert('⚠️ Dashboard admin non disponible.\n\nLe dashboard va s\'ouvrir dans un nouvel onglet.');
+        window.open(webappUrl, '_blank');
     } else {
-        console.log('🌐 Ouverture portail web professionnel');
+        console.log('🌐 Ouverture dashboard admin');
     }
 }
 
+// Variable pour gérer le double-clic
+let siteCompletClickTime = 0;
+
 function openSiteComplet() {
-    // Tenter d'ouvrir le site complet CYNTHIA B
-    const siteUrl = 'http://localhost:3000';
-    const newWindow = window.open(siteUrl, '_blank');
+    const now = Date.now();
     
-    if (!newWindow) {
-        // Fallback vers d'autres ports possibles
-        const fallbackPorts = ['http://localhost:5173', 'http://localhost:4000', 'http://localhost:8082'];
-        let opened = false;
+    // Protection double-clic (2 clics en moins de 3 secondes)
+    if (now - siteCompletClickTime < 3000) {
+        // Deuxième clic confirmé - ouvrir le site complet
+        const siteUrl = 'https://cynthia-immobilier.vercel.app/';
+        const newWindow = window.open(siteUrl, '_blank');
         
-        for (const url of fallbackPorts) {
-            const testWindow = window.open(url, '_blank');
-            if (testWindow) {
-                opened = true;
-                console.log(`🏠 Site complet ouvert sur ${url}`);
-                break;
-            }
+        if (!newWindow) {
+            alert('⚠️ Popup bloquée.\n\nLe site complet va s\'ouvrir dans un nouvel onglet.');
+            window.open(siteUrl, '_blank');
+        } else {
+            console.log('🏠 Site complet ouvert (double-clic confirmé)');
         }
         
-        if (!opened) {
-            alert('⚠️ Site web complet non disponible. Démarrez CYNTHIA B avec DEMARRER_SITE_CYNTHIA.bat');
-            console.log('💡 Conseil: Lancez DEMARRER_SITE_CYNTHIA.bat dans le dossier CYNTHIA B');
-        }
+        // Réinitialiser le timer
+        siteCompletClickTime = 0;
     } else {
-        console.log('🏠 Ouverture site web complet');
+        // Premier clic - demander confirmation
+        siteCompletClickTime = now;
+        alert('🔒 PROTECTION MODE ADMIN\n\nPour éviter de sortir accidentellement du mode admin,\ncliquez à nouveau sur "Site Complet" dans les 3 secondes\npour confirmer l\'ouverture du site public.');
+        console.log('🔒 Premier clic - confirmation requise pour sortie mode admin');
     }
 }
 
