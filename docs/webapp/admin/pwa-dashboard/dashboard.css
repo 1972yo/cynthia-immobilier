@@ -197,23 +197,40 @@ body {
     box-shadow: 0 8px 32px rgba(220, 38, 38, 0.35) !important;
 }
 
+/* Bouton pour PWA d'accueil */
+.action-btn-pwa {
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%) !important;
+    color: white !important;
+    border: 2px solid rgba(30, 64, 175, 0.3) !important;
+    box-shadow: 0 6px 24px rgba(30, 64, 175, 0.25) !important;
+}
+
+.action-btn-pwa:hover {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 32px rgba(30, 64, 175, 0.35) !important;
+}
+
 .action-btn-featured .action-icon,
 .action-btn-featured-marketing .action-icon,
-.action-btn-editor .action-icon {
+.action-btn-editor .action-icon,
+.action-btn-pwa .action-icon {
     font-size: 3rem !important;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .action-btn-featured h4,
 .action-btn-featured-marketing h4,
-.action-btn-editor h4 {
+.action-btn-editor h4,
+.action-btn-pwa h4 {
     color: white !important;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .action-btn-featured p,
 .action-btn-featured-marketing p,
-.action-btn-editor p {
+.action-btn-editor p,
+.action-btn-pwa p {
     color: rgba(255, 255, 255, 0.9) !important;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }

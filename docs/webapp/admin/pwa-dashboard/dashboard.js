@@ -443,6 +443,23 @@ function openFicheEditor() {
     }
 }
 
+function openHomePWA() {
+    // Ouvrir la PWA d'accueil - URL de production
+    const homeUrl = 'https://cynthia-immobilier.vercel.app/';
+    const newWindow = window.open(homeUrl, '_blank');
+    
+    if (!newWindow) {
+        alert('⚠️ Popup bloquée.\n\nVotre site PWA va s\'ouvrir dans un nouvel onglet.');
+        window.open(homeUrl, '_blank');
+    } else {
+        console.log('🏠 Ouverture PWA d\'accueil');
+        
+        if (window.cynthiaDashboard) {
+            window.cynthiaDashboard.addNotification('🏠', 'Site ouvert', 'PWA d\'accueil ouverte dans un nouvel onglet', 'info');
+        }
+    }
+}
+
 function exportData() {
     console.log('📤 Export des données...');
     
