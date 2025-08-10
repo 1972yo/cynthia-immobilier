@@ -426,6 +426,23 @@ function openCentris() {
     console.log('🔗 Ouverture Centris.ca');
 }
 
+function openFicheEditor() {
+    // Ouvrir l'éditeur de fiches personnalisées dans nouvel onglet
+    const editorUrl = '../../../index-editor.html';
+    const newWindow = window.open(editorUrl, '_blank', 'width=1400,height=900');
+    
+    if (!newWindow) {
+        alert('⚠️ Popup bloquée.\n\nL\'éditeur de fiches va s\'ouvrir dans un nouvel onglet.');
+        window.open(editorUrl, '_blank');
+    } else {
+        console.log('🎨 Ouverture éditeur de fiches');
+        
+        if (window.cynthiaDashboard) {
+            window.cynthiaDashboard.addNotification('🎨', 'Éditeur ouvert', 'Éditeur de fiches personnalisées lancé', 'info');
+        }
+    }
+}
+
 function exportData() {
     console.log('📤 Export des données...');
     

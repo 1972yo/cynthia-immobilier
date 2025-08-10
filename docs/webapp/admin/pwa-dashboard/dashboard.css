@@ -183,20 +183,37 @@ body {
     box-shadow: 0 12px 40px rgba(5, 150, 105, 0.4) !important;
 }
 
+/* Bouton pour Éditeur de fiches */
+.action-btn-editor {
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%) !important;
+    color: white !important;
+    border: 2px solid rgba(220, 38, 38, 0.3) !important;
+    box-shadow: 0 6px 24px rgba(220, 38, 38, 0.25) !important;
+}
+
+.action-btn-editor:hover {
+    background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 32px rgba(220, 38, 38, 0.35) !important;
+}
+
 .action-btn-featured .action-icon,
-.action-btn-featured-marketing .action-icon {
+.action-btn-featured-marketing .action-icon,
+.action-btn-editor .action-icon {
     font-size: 3rem !important;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .action-btn-featured h4,
-.action-btn-featured-marketing h4 {
+.action-btn-featured-marketing h4,
+.action-btn-editor h4 {
     color: white !important;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .action-btn-featured p,
-.action-btn-featured-marketing p {
+.action-btn-featured-marketing p,
+.action-btn-editor p {
     color: rgba(255, 255, 255, 0.9) !important;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
