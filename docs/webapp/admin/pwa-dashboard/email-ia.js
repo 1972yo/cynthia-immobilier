@@ -8,6 +8,11 @@ class EmailIAManager {
         this.aiConversation = [];
         this.currentTemplateEdit = null;
         
+        // Ajout gestion des fiches
+        this.fiches = [];
+        this.ficheAnalyses = [];
+        this.currentFiche = null;
+        
         // Configuration OpenAI WebApp
         this.openAIConfig = this.loadOpenAIConfig();
         

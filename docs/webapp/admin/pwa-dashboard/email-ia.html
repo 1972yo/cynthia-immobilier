@@ -8,6 +8,7 @@
     
     <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="email-ia.css">
+    <link rel="stylesheet" href="email-ia-fiches.css">
 </head>
 <body class="email-ia-page">
     
@@ -124,6 +125,74 @@
                     </div>
                 </div>
 
+                <!-- Gestion complète des fiches clients IA -->
+                <div class="card fiches-management-card">
+                    <h2>📋 Gestion Complète des Fiches Clients IA</h2>
+                    <div class="fiches-header">
+                        <button onclick="openFormulaire()" class="btn-formulaire">📝 Nouveau Formulaire</button>
+                        <button onclick="analyzeAllFiches()" class="btn-analyze-all">🤖 Analyser Toutes</button>
+                        <button onclick="generateReport()" class="btn-generate-report">📊 Rapport IA</button>
+                    </div>
+                    
+                    <!-- Stats fiches -->
+                    <div class="fiches-stats-grid">
+                        <div class="fiche-stat-item">
+                            <div class="stat-icon">📄</div>
+                            <div class="stat-details">
+                                <h4 id="totalFiches">0</h4>
+                                <p>Fiches totales</p>
+                            </div>
+                        </div>
+                        <div class="fiche-stat-item">
+                            <div class="stat-icon">🤖</div>
+                            <div class="stat-details">
+                                <h4 id="fichesPro cessees">0</h4>
+                                <p>Analysées par IA</p>
+                            </div>
+                        </div>
+                        <div class="fiche-stat-item">
+                            <div class="stat-icon">🏠</div>
+                            <div class="stat-details">
+                                <h4 id="proprietesActive s">0</h4>
+                                <p>Propriétés actives</p>
+                            </div>
+                        </div>
+                        <div class="fiche-stat-item">
+                            <div class="stat-icon">⭐</div>
+                            <div class="stat-details">
+                                <h4 id="scoreM oyen">0</h4>
+                                <p>Score CANAFE moyen</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Liste des fiches avec IA -->
+                    <div class="fiches-list-container">
+                        <div class="fiches-filters">
+                            <select id="ficheFilter" class="fiche-filter">
+                                <option value="all">Toutes les fiches</option>
+                                <option value="analyzed">Analysées IA</option>
+                                <option value="pending">En attente analyse</option>
+                                <option value="high-priority">Priorité élevée</option>
+                                <option value="low-score">Score faible</option>
+                            </select>
+                            <input type="text" id="ficheSearch" placeholder="Rechercher par adresse, client..." class="fiche-search">
+                        </div>
+                        
+                        <div class="fiches-list" id="fichesList">
+                            <!-- Les fiches seront chargées ici -->
+                        </div>
+                    </div>
+                    
+                    <!-- Analyse IA en temps réel -->
+                    <div class="ai-analysis-container">
+                        <h3>🔍 Analyse IA en Temps Réel</h3>
+                        <div class="ai-analysis-content" id="aiAnalysisContent">
+                            <p>Sélectionnez une fiche pour voir l'analyse IA détaillée...</p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Historique et analytics -->
                 <div class="card email-history-card">
                     <h2>📊 Historique et Analytics</h2>
@@ -131,6 +200,7 @@
                         <button onclick="showHistoryTab('recent')" class="history-tab active" data-tab="recent">Récents</button>
                         <button onclick="showHistoryTab('analytics')" class="history-tab" data-tab="analytics">Analytics</button>
                         <button onclick="showHistoryTab('ai-insights')" class="history-tab" data-tab="ai-insights">Insights IA</button>
+                        <button onclick="showHistoryTab('fiches-report')" class="history-tab" data-tab="fiches-report">Rapport Fiches</button>
                     </div>
                     <div class="history-content">
                         <div id="recent-tab" class="tab-content active">
@@ -163,6 +233,37 @@
                                 <!-- Insights IA chargés ici -->
                             </div>
                         </div>
+                        <div id="fiches-report-tab" class="tab-content">
+                            <div class="fiches-report-container">
+                                <div class="report-summary">
+                                    <h4>📈 Résumé Mensuel des Fiches</h4>
+                                    <div class="report-stats">
+                                        <div class="report-item">
+                                            <span>Nouvelles fiches:</span>
+                                            <strong id="newFichesCount">0</strong>
+                                        </div>
+                                        <div class="report-item">
+                                            <span>Analyses IA terminées:</span>
+                                            <strong id="completedAnalysesCount">0</strong>
+                                        </div>
+                                        <div class="report-item">
+                                            <span>Propriétés vendues:</span>
+                                            <strong id="soldPropertiesCount">0</strong>
+                                        </div>
+                                        <div class="report-item">
+                                            <span>Taux de conversion:</span>
+                                            <strong id="conversionRate">0%</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ai-recommendations">
+                                    <h4>🤖 Recommandations IA</h4>
+                                    <div id="aiRecommendations">
+                                        <!-- Recommandations IA chargées ici -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -174,6 +275,7 @@
     <script src="../../init-config.js"></script>
     <script src="../../webapp-config.js"></script>
     <script src="email-ia.js"></script>
+    <script src="email-ia-fiches.js"></script>
 
 </body>
 </html>
