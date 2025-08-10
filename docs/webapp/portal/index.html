@@ -180,7 +180,7 @@
         // Fonctions de fallback si portal.js n'initialise pas correctement
         function openVenteDirecte() {
             console.log('🏠 Ouverture formulaire vente résidentielle');
-            const inscriptionUrl = 'http://localhost:8080';
+            const inscriptionUrl = '../assistant/index.html';
             const newWindow = window.open(inscriptionUrl, '_blank', 'width=1200,height=800');
             
             if (!newWindow) {
@@ -195,7 +195,7 @@
             const confirmation = confirm('🏠 INSCRIPTION ACHETEUR\n\nLe formulaire d\'inscription va s\'ouvrir pour collecter vos critères de recherche.\n\nCynthia utilisera ces informations pour vous trouver la propriété idéale.\n\nContinuer ?');
             
             if (confirmation) {
-                const inscriptionUrl = 'http://localhost:8080';
+                const inscriptionUrl = '../assistant/index.html';
                 const newWindow = window.open(inscriptionUrl, '_blank', 'width=1200,height=800');
                 
                 if (!newWindow) {

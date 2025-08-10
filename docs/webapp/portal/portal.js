@@ -333,7 +333,7 @@ Cynthia utilisera ces informations pour vous trouver la propriété idéale.
 Continuer ?`);
         
         if (confirmation) {
-            const inscriptionUrl = 'http://localhost:8080';
+            const inscriptionUrl = '../assistant/index.html';
             const newWindow = window.open(inscriptionUrl, '_blank', 'width=1200,height=800');
             
             if (!newWindow) {
