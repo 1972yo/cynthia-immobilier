@@ -18,6 +18,57 @@ class MarketingIAManager {
         this.init();
     }
 
+    // Méthode pour appeler OpenAI WebApp spécifiquement pour le marketing
+    async callOpenAIWebAppMarketing(prompt, systemMessage = null) {
+        try {
+            // Utiliser les variables d'environnement Vercel
+            const apiKey = window.ENV?.CYNTHIA_WEBAPP_OPENAI_KEY || process.env.CYNTHIA_WEBAPP_OPENAI_KEY;
+            
+            if (!apiKey || apiKey.includes('HERE')) {
+                throw new Error('Clé OpenAI WebApp non configurée');
+            }
+
+            const messages = [];
+            
+            if (systemMessage) {
+                messages.push({
+                    role: 'system',
+                    content: systemMessage
+                });
+            }
+            
+            messages.push({
+                role: 'user',
+                content: prompt
+            });
+
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    model: 'gpt-4',
+                    messages: messages,
+                    temperature: 0.4,
+                    max_tokens: 800
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`API OpenAI WebApp Marketing error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.choices[0].message.content;
+            
+        } catch (error) {
+            console.error('❌ Erreur OpenAI WebApp Marketing:', error);
+            throw error;
+        }
+    }
+
     async init() {
         console.log('🌐 Initialisation IA Marketing & Publication...');
         
@@ -196,7 +247,7 @@ class MarketingIAManager {
     }
 
     // 🤖 Fonctions IA Marketing Chat
-    sendMarketingAiMessage() {
+    async sendMarketingAiMessage() {
         const input = document.getElementById('aiMarketingChatInput');
         const message = input.value.trim();
         
@@ -209,18 +260,43 @@ class MarketingIAManager {
             timestamp: new Date()
         });
         
-        // Générer réponse IA Marketing
-        const aiResponse = this.generateMarketingAIResponse(message);
+        // Afficher "IA en cours de réflexion..."
         this.aiMarketingConversation.push({
             type: 'ai',
-            content: aiResponse,
+            content: '🤔 Analyse en cours...',
             timestamp: new Date()
         });
         
         this.renderAIMarketingConversation();
-        this.saveAIMarketingConversation();
-        
         input.value = '';
+        
+        try {
+            // Appel réel à l'API OpenAI WebApp pour le marketing
+            const aiResponse = await this.callOpenAIWebAppMarketing(
+                message,
+                "Tu es l'assistante IA marketing de Cynthia Bernier, courtière immobilière à Lebel-sur-Quévillon. Tu aides avec le marketing, la gestion du site web, les réseaux sociaux, et la publication de propriétés. Réponds avec expertise en marketing immobilier."
+            );
+            
+            // Remplacer le message temporaire
+            this.aiMarketingConversation[this.aiMarketingConversation.length - 1] = {
+                type: 'ai',
+                content: aiResponse,
+                timestamp: new Date()
+            };
+            
+        } catch (error) {
+            console.error('Erreur API OpenAI Marketing:', error);
+            
+            // Message d'erreur si API ne fonctionne pas
+            this.aiMarketingConversation[this.aiMarketingConversation.length - 1] = {
+                type: 'ai',
+                content: '⚠️ Service marketing temporairement indisponible. Veuillez réessayer dans quelques instants.',
+                timestamp: new Date()
+            };
+        }
+        
+        this.renderAIMarketingConversation();
+        this.saveAIMarketingConversation();
     }
 
     generateMarketingAIResponse(userMessage) {

@@ -39,7 +39,7 @@ class EmailIAManager {
         
         // Configuration par défaut
         return {
-            apiKey: 'CYNTHIA_WEBAPP_OPENAI_KEY_HERE',
+            apiKey: process.env.CYNTHIA_WEBAPP_OPENAI_KEY || 'API_KEY_NOT_SET',
             endpoint: 'https://api.openai.com/v1/chat/completions',
             model: 'gpt-4',
             maxTokens: 800,
@@ -393,7 +393,7 @@ Cynthia Bernier
     }
 
     // Méthodes d'interaction IA
-    sendAiMessage() {
+    async sendAiMessage() {
         const input = document.getElementById('aiChatInput');
         const message = input.value.trim();
         
@@ -406,18 +406,43 @@ Cynthia Bernier
             timestamp: new Date()
         });
         
-        // Simuler réponse IA intelligente
-        const aiResponse = this.generateAIResponse(message);
+        // Afficher "IA en cours de réflexion..."
         this.aiConversation.push({
             type: 'ai',
-            content: aiResponse,
+            content: '🤔 Je réfléchis...',
             timestamp: new Date()
         });
         
         this.renderAIConversation();
-        this.saveAIConversation();
-        
         input.value = '';
+        
+        try {
+            // Appel réel à l'API OpenAI WebApp
+            const aiResponse = await this.callOpenAIWebApp(
+                message,
+                "Tu es Cynthia, assistante IA experte en immobilier à Lebel-sur-Quévillon. Tu aides avec les emails, templates, et gestion client. Réponds de manière professionnelle et personnalisée."
+            );
+            
+            // Remplacer le message temporaire
+            this.aiConversation[this.aiConversation.length - 1] = {
+                type: 'ai',
+                content: aiResponse,
+                timestamp: new Date()
+            };
+            
+        } catch (error) {
+            console.error('Erreur API OpenAI:', error);
+            
+            // Message d'erreur si API ne fonctionne pas
+            this.aiConversation[this.aiConversation.length - 1] = {
+                type: 'ai',
+                content: '⚠️ Désolé, je ne peux pas répondre maintenant. Vérifiez votre connexion ou contactez le support.',
+                timestamp: new Date()
+            };
+        }
+        
+        this.renderAIConversation();
+        this.saveAIConversation();
     }
 
     generateAIResponse(userMessage) {
