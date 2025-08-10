@@ -32,6 +32,14 @@ class CynthiaDashboard {
     validateAccess() {
         // Protection simple - vérifier que c'est bien Cynthia
         const userConfirmed = sessionStorage.getItem('cynthia_dashboard_access');
+        const permanentSession = localStorage.getItem('cynthia_admin_permanent');
+        
+        // Si session permanente existe, pas besoin de re-vérifier
+        if (permanentSession === 'true') {
+            sessionStorage.setItem('cynthia_dashboard_access', 'true');
+            console.log('🔓 Session permanente détectée - Accès automatique accordé');
+            return true;
+        }
         
         if (!userConfirmed) {
             const isAuthentic = confirm(`
@@ -43,12 +51,16 @@ Cette vérification protège vos données confidentielles.
             `);
             
             if (!isAuthentic) {
-                alert('❌ Accès refusé. Redirection...');
-                window.location.href = '../../../portal/index.html';
+                alert('❌ Accès refusé. Restez sur la page d\'accueil.');
+                // Mode admin : ne pas rediriger, rester sur place
                 return false;
             }
             
+            // Session permanente pour Cynthia (pas besoin de re-login)
             sessionStorage.setItem('cynthia_dashboard_access', 'true');
+            localStorage.setItem('cynthia_admin_permanent', 'true');
+            
+            console.log('🔒 Session admin permanente activée pour Cynthia');
         }
         
         return true;

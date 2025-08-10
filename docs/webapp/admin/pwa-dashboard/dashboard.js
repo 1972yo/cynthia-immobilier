@@ -385,17 +385,26 @@ function refreshDashboard() {
 }
 
 function openPortal() {
-    // Retourner au portail principal
-    window.location.href = '../../portal/index.html';
+    // Mode Admin : Rester dans le dashboard, juste actualiser
+    console.log('🔒 Mode Admin : Restez dans votre espace de travail');
+    
+    // Actualiser le dashboard au lieu de sortir
+    if (typeof window.cynthiaDashboard !== 'undefined') {
+        window.cynthiaDashboard.refreshAllData();
+    }
+    
+    // Message pour Cynthia
+    showNotification('🏠', 'Mode Admin', 'Vous restez dans votre espace de travail', 'info');
 }
 
 function openFormulaire() {
-    // Ouvrir CYNTHIA_ASSISTANT
-    const formulaireUrl = 'http://localhost:8080';
+    // Ouvrir formulaire d'inscription dans nouvel onglet (reste en mode admin)
+    const formulaireUrl = '../../assistant/index.html';
     const newWindow = window.open(formulaireUrl, '_blank', 'width=1200,height=800');
     
     if (!newWindow) {
-        alert('⚠️ Impossible d\'ouvrir le formulaire.\n\nAssurez-vous que CYNTHIA_ASSISTANT est démarré sur le port 8080.');
+        alert('⚠️ Popup bloquée.\n\nLe formulaire va s\'ouvrir dans un nouvel onglet.');
+        window.open(formulaireUrl, '_blank');
     } else {
         console.log('📝 Ouverture formulaire CYNTHIA_ASSISTANT');
         
