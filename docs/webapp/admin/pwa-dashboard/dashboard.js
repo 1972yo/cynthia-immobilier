@@ -100,7 +100,7 @@ class CynthiaDashboard {
     async loadFromCynthiaAssistant() {
         // Tenter de charger données depuis CYNTHIA_ASSISTANT si disponible
         try {
-            const response = await fetch('http://localhost:8080/api/dashboard-data.json').catch(() => null);
+            const response = await fetch('/api/dashboard-data.json').catch(() => null);
             if (response && response.ok) {
                 const assistantData = await response.json();
                 this.mergeDashboardData(assistantData);
