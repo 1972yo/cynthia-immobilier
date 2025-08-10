@@ -1,33 +1,36 @@
 {
-  "functions": {
-    "docs/assistant/admin/pwa-dashboard/index.html": {
-      "runtime": "@vercel/static"
-    }
-  },
   "routes": [
     {
       "src": "/",
       "dest": "/docs/webapp/portal/index.html"
     },
     {
-      "src": "/docs/assistant/admin/pwa-dashboard/(.*)",
-      "dest": "/docs/assistant/admin/pwa-dashboard/index.html"
-    },
-    {
-      "src": "/docs/webapp/admin/pwa-dashboard/(.*)",
-      "dest": "/docs/webapp/admin/pwa-dashboard/index.html"
-    },
-    {
-      "src": "/docs/webapp/admin/assistant/admin/pwa-dashboard/(.*)",
-      "dest": "/docs/webapp/admin/pwa-dashboard/index.html"
-    },
-    {
-      "src": "/index-editor(.*)",
+      "src": "/docs/index-editor.html",
       "dest": "/docs/index-editor.html"
     },
     {
-      "src": "/api/(.*)",
-      "dest": "/docs/api/$1"
+      "src": "/docs/webapp/admin/pwa-dashboard/marketing-ia.html",
+      "dest": "/docs/webapp/admin/pwa-dashboard/marketing-ia.html"
+    },
+    {
+      "src": "/docs/assistant/admin/pwa-dashboard/index.html",
+      "dest": "/docs/assistant/admin/pwa-dashboard/index.html"
+    },
+    {
+      "src": "/docs/assistant/index.html",
+      "dest": "/docs/assistant/index.html"
+    },
+    {
+      "src": "/docs/assistant/(.*)",
+      "dest": "/docs/assistant/$1"
+    },
+    {
+      "src": "/docs/webapp/(.*)",
+      "dest": "/docs/webapp/$1"
+    },
+    {
+      "src": "/docs/(.*)",
+      "dest": "/docs/$1"
     }
   ]
 }
