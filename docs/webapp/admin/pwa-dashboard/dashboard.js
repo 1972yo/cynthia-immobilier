@@ -428,7 +428,7 @@ function openCentris() {
 
 function openFicheEditor() {
     // Ouvrir l'éditeur de fiches personnalisées dans nouvel onglet
-    const editorUrl = '../../../index-editor.html';
+    const editorUrl = '/index-editor.html';
     const newWindow = window.open(editorUrl, '_blank', 'width=1400,height=900');
     
     if (!newWindow) {
@@ -479,7 +479,7 @@ function openSiteManager() {
 
 function openFicheManager() {
     // Ouvrir interface de gestion des fiches clients  
-    const ficheManagerUrl = '../assistant/admin/pwa-dashboard/index.html';
+    const ficheManagerUrl = '/docs/assistant/admin/pwa-dashboard/index.html';
     const newWindow = window.open(ficheManagerUrl, '_blank', 'width=1400,height=900');
     
     if (!newWindow) {
