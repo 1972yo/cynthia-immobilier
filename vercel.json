@@ -7,19 +7,27 @@
   "routes": [
     {
       "src": "/",
-      "dest": "/index.html"
+      "dest": "/docs/webapp/portal/index.html"
     },
     {
-      "src": "/docs/assistant/admin/pwa-dashboard",
+      "src": "/docs/assistant/admin/pwa-dashboard/(.*)",
       "dest": "/docs/assistant/admin/pwa-dashboard/index.html"
     },
     {
-      "src": "/docs/webapp/admin/pwa-dashboard",
+      "src": "/docs/webapp/admin/pwa-dashboard/(.*)",
       "dest": "/docs/webapp/admin/pwa-dashboard/index.html"
     },
     {
-      "src": "/index-editor",
-      "dest": "/index-editor.html"
+      "src": "/docs/webapp/admin/assistant/admin/pwa-dashboard/(.*)",
+      "dest": "/docs/webapp/admin/pwa-dashboard/index.html"
+    },
+    {
+      "src": "/index-editor(.*)",
+      "dest": "/docs/index-editor.html"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/docs/api/$1"
     }
   ]
 }
